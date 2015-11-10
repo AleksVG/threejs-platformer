@@ -34,14 +34,10 @@ function setupTestCube() {
             
 	testCube = new Physijs.BoxMesh(new THREE.BoxGeometry(5, 5, 5), testCubeMaterial, 15);
 
-	testCube.position.y = 30;	
+	testCube.position.y = 30;
+	
 	scene.add(testCube);
-	
-//	var yAxisConstraint = new Physijs.DOFConstraint(testCube, testCube.position);
-//	scene.addConstraint(yAxisConstraint);
-//	yAxisConstraint.setAngularLowerLimit({x: 0, y: 0, z: 0});
-//	yAxisConstraint.setAngularUpperLimit({x: 1, y: 1, z: 1});
-	
+	testCube.setAngularFactor(new THREE.Vector3(0, 1, 0));
 }
 
 function setupKeys() {
@@ -85,6 +81,8 @@ function setupControls() {
 	var controls = new THREE.OrbitControls( camera, renderer.domElement );
 	controls.userRotateSpeed = 0.5;
 	controls.center = testCube.position;
+	controls.minDistance = 50;
+	controls.maxDistance = 50;
 	
 	return controls;
 }
@@ -138,6 +136,7 @@ function moveLeftInRelationToView() {
 	// http://stackoverflow.com/questions/14813902/three-js-get-the-direction-in-which-the-camera-is-looking
 	var vector = new THREE.Vector3(0, 0, -1);
 	vector.applyQuaternion(camera.quaternion);
+	vector = new THREE.Vector3(20 * vector.x, 0, 20 * vector.z);
 	
 	testCube.setLinearVelocity(vector);
 }
@@ -146,8 +145,8 @@ function moveForwardInRelationToView() {
 	// http://stackoverflow.com/questions/14813902/three-js-get-the-direction-in-which-the-camera-is-looking
 	var vector = new THREE.Vector3(0, 0, -1);
 	vector.applyQuaternion(camera.quaternion);
-	vector = new THREE.Vector3(20 * vector.x, 20 * vector.y, 20 * vector.z);
-	
+	vector = new THREE.Vector3(20 * vector.x, 0, 20 * vector.z);
+	console.log(camera.zoom);
 	testCube.setLinearVelocity(vector);
 }
 
@@ -155,7 +154,7 @@ function moveBackwardInRelationToView() {
 	// http://stackoverflow.com/questions/14813902/three-js-get-the-direction-in-which-the-camera-is-looking
 	var vector = new THREE.Vector3(0, 0, -1);
 	vector.applyQuaternion(camera.quaternion);
-	vector = new THREE.Vector3(20 * vector.x, 20 * vector.y, 20 * vector.z);
+	vector = new THREE.Vector3(20 * vector.x, 0, 20 * vector.z);
 	vector = new THREE.Vector3(-vector.x, -vector.y, -vector.z);
 	
 	testCube.setLinearVelocity(vector);
