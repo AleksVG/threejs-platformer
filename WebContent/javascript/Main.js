@@ -1,5 +1,7 @@
 currentlyPressedKeys = {};
-keys = {A: 65, S: 83, D: 68, W: 87};
+keys = {A: 65, S: 83, D: 68, W: 87, SPACEBAR: 32};
+onGround = true;
+speed = 80;
 
 function main() {
 	setupRenderer();
@@ -9,15 +11,17 @@ function main() {
 	Physijs.scripts.ammo = 'ammo.js';
 
     scene = new Physijs.Scene;
-    scene.setGravity(new THREE.Vector3(0, -20, 0));
+    scene.setGravity(new THREE.Vector3(0, -80, 0));
+    
+	loadModels();
 
 	setupTestCube();
+    //testCube = scene.getObjectByName("testCube");
 	
 	camera = setupCamera(perspectiveView = true);
 	scene.add(camera);
 	
 	controls = setupControls();
-	loadModels();
 	setupLights();
     render();
 }
@@ -29,15 +33,20 @@ function setupTestCube() {
                         color: 0x000000,
                         ambient: 0x000000,
                         specular: 0x000000}),
-            2,
+            5,
             0.01);
             
 	testCube = new Physijs.BoxMesh(new THREE.BoxGeometry(5, 5, 5), testCubeMaterial, 15);
 
 	testCube.position.y = 30;
 	
+	testCube.addEventListener('collision', function(other_object, relative_velocity, relative_rotation, contact_normal) {
+		if (other_object.type == "basic_platform")
+			onGround = true;
+	});
+	
 	scene.add(testCube);
-	testCube.setAngularFactor(new THREE.Vector3(0, 1, 0));
+	testCube.setAngularFactor(new THREE.Vector3(0, 0, 0));
 }
 
 function setupKeys() {
@@ -114,21 +123,22 @@ function handleKeys() {
 	
 	if (currentlyPressedKeys[keys.A]) {
 		moveLeftInRelationToView();
-		//testCube.setLinearVelocity(new THREE.Vector3(-30, 0, 0));
 	}
 	
 	if (currentlyPressedKeys[keys.D]) {
-		//testCube.setLinearVelocity(new THREE.Vector3(30, 0, 0));
+		moveRightInRelationToView();
 	}
 	
 	if (currentlyPressedKeys[keys.S]) {
 		moveBackwardInRelationToView();
-		//testCube.setLinearVelocity(new THREE.Vector3(0, 0, 30));
 	}
 	
 	if (currentlyPressedKeys[keys.W]) {
 		moveForwardInRelationToView();
-		//testCube.setLinearVelocity(new THREE.Vector3(0, 0, -30));
+	}
+	
+	if (currentlyPressedKeys[keys.SPACEBAR]) {
+		jump();
 	}
 }
 
@@ -136,28 +146,73 @@ function moveLeftInRelationToView() {
 	// http://stackoverflow.com/questions/14813902/three-js-get-the-direction-in-which-the-camera-is-looking
 	var vector = new THREE.Vector3(0, 0, -1);
 	vector.applyQuaternion(camera.quaternion);
-	vector = new THREE.Vector3(20 * vector.x, 0, 20 * vector.z);
+	vector = new THREE.Vector3(speed * vector.x, 0, speed * vector.z);
 	
-	testCube.setLinearVelocity(vector);
+	// http://stackoverflow.com/questions/14607640/rotating-a-vector-in-3d-space
+	var newX = (vector.x * Math.cos(Math.PI/2)) + (vector.z * Math.sin(Math.PI/2));
+	var newZ = (-vector.x * Math.sin(Math.PI/2)) + (vector.z * Math.cos(Math.PI/2));
+	
+	vector = new THREE.Vector3(newX, vector.y, newZ);
+	
+	testCube.applyCentralImpulse(vector);
+	//clampMovementSpeed(testCube);
+}
+
+function moveRightInRelationToView() {
+	// http://stackoverflow.com/questions/14813902/three-js-get-the-direction-in-which-the-camera-is-looking
+	var vector = new THREE.Vector3(0, 0, -1);
+	vector.applyQuaternion(camera.quaternion);
+	vector = new THREE.Vector3(speed * vector.x, 0, speed * vector.z);
+	
+	// http://stackoverflow.com/questions/14607640/rotating-a-vector-in-3d-space
+	var newX = (vector.x * Math.cos(-Math.PI/2)) + (vector.z * Math.sin(-Math.PI/2));
+	var newZ = (-vector.x * Math.sin(-Math.PI/2)) + (vector.z * Math.cos(-Math.PI/2));
+	
+	vector = new THREE.Vector3(newX, vector.y, newZ);
+	
+	testCube.applyCentralImpulse(vector);
+	//clampMovementSpeed(testCube);
 }
 
 function moveForwardInRelationToView() {
 	// http://stackoverflow.com/questions/14813902/three-js-get-the-direction-in-which-the-camera-is-looking
 	var vector = new THREE.Vector3(0, 0, -1);
 	vector.applyQuaternion(camera.quaternion);
-	vector = new THREE.Vector3(20 * vector.x, 0, 20 * vector.z);
-	console.log(camera.zoom);
-	testCube.setLinearVelocity(vector);
+	vector = new THREE.Vector3(speed * vector.x, 0, speed * vector.z);
+
+	testCube.applyCentralImpulse(vector);
+	//clampMovementSpeed(testCube);
 }
 
 function moveBackwardInRelationToView() {
 	// http://stackoverflow.com/questions/14813902/three-js-get-the-direction-in-which-the-camera-is-looking
 	var vector = new THREE.Vector3(0, 0, -1);
 	vector.applyQuaternion(camera.quaternion);
-	vector = new THREE.Vector3(20 * vector.x, 0, 20 * vector.z);
+	vector = new THREE.Vector3(speed * vector.x, 0, speed * vector.z);
 	vector = new THREE.Vector3(-vector.x, -vector.y, -vector.z);
 	
-	testCube.setLinearVelocity(vector);
+	testCube.applyCentralImpulse(vector);
+	//clampMovementSpeed(testCube);
+}
+
+function clampMovementSpeed(objectToClamp) {
+	var currentVelocity = objectToClamp.getLinearVelocity();
+	var topSpeed = 200;
+	var currentVelocityMagnitude = Math.sqrt(Math.pow(currentVelocity.x, 2) + Math.pow(currentVelocity.y, 2) + Math.pow(currentVelocity.x, 2));
+	
+	while (currentVelocityMagnitude > topSpeed) {
+		var currentVelocity = new THREE.Vector3(0.95 * currentVelocity.x, 0.95 * currentVelocity.y, 0.95 * currentVelocity.z);
+		var currentVelocityMagnitude = Math.sqrt(Math.pow(currentVelocity.x, 2) + Math.pow(currentVelocity.y, 2) + Math.pow(currentVelocity.x, 2));
+	}
+	
+	testCube.setLinearVelocity(currentVelocity);
+}
+
+function jump() {
+	if (onGround) {
+		testCube.applyCentralImpulse(new THREE.Vector3(0, 600, 0));
+		onGround = false;
+	}
 }
 
 
