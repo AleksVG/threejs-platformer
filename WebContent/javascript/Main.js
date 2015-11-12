@@ -15,9 +15,13 @@ function main() {
     
 	loadModels();
 
-	setupTestCube();
-    //testCube = scene.getObjectByName("testCube");
-	
+	setTimeout(continueAfterLoading, 2000);
+}
+
+function continueAfterLoading() {
+	//setupTestCube();
+    testCube = scene.getObjectByName("testCube");
+    
 	camera = setupCamera(perspectiveView = true);
 	scene.add(camera);
 	
@@ -154,8 +158,8 @@ function moveLeftInRelationToView() {
 	
 	vector = new THREE.Vector3(newX, vector.y, newZ);
 	
-	testCube.applyCentralImpulse(vector);
-	//clampMovementSpeed(testCube);
+	if (!isOverTopSpeed(testCube))
+		testCube.applyCentralImpulse(vector);
 }
 
 function moveRightInRelationToView() {
@@ -170,8 +174,8 @@ function moveRightInRelationToView() {
 	
 	vector = new THREE.Vector3(newX, vector.y, newZ);
 	
-	testCube.applyCentralImpulse(vector);
-	//clampMovementSpeed(testCube);
+	if (!isOverTopSpeed(testCube))
+		testCube.applyCentralImpulse(vector);
 }
 
 function moveForwardInRelationToView() {
@@ -180,8 +184,8 @@ function moveForwardInRelationToView() {
 	vector.applyQuaternion(camera.quaternion);
 	vector = new THREE.Vector3(speed * vector.x, 0, speed * vector.z);
 
-	testCube.applyCentralImpulse(vector);
-	//clampMovementSpeed(testCube);
+	if (!isOverTopSpeed(testCube))
+		testCube.applyCentralImpulse(vector);
 }
 
 function moveBackwardInRelationToView() {
@@ -191,21 +195,19 @@ function moveBackwardInRelationToView() {
 	vector = new THREE.Vector3(speed * vector.x, 0, speed * vector.z);
 	vector = new THREE.Vector3(-vector.x, -vector.y, -vector.z);
 	
-	testCube.applyCentralImpulse(vector);
-	//clampMovementSpeed(testCube);
+	if (!isOverTopSpeed(testCube))
+		testCube.applyCentralImpulse(vector);
 }
 
-function clampMovementSpeed(objectToClamp) {
-	var currentVelocity = objectToClamp.getLinearVelocity();
-	var topSpeed = 200;
+function isOverTopSpeed(object) {
+	var currentVelocity = object.getLinearVelocity();
+	var topSpeed = 80;
 	var currentVelocityMagnitude = Math.sqrt(Math.pow(currentVelocity.x, 2) + Math.pow(currentVelocity.y, 2) + Math.pow(currentVelocity.x, 2));
 	
-	while (currentVelocityMagnitude > topSpeed) {
-		var currentVelocity = new THREE.Vector3(0.95 * currentVelocity.x, 0.95 * currentVelocity.y, 0.95 * currentVelocity.z);
-		var currentVelocityMagnitude = Math.sqrt(Math.pow(currentVelocity.x, 2) + Math.pow(currentVelocity.y, 2) + Math.pow(currentVelocity.x, 2));
-	}
-	
-	testCube.setLinearVelocity(currentVelocity);
+	if (currentVelocityMagnitude > topSpeed)
+		return true;
+	else
+		return false;
 }
 
 function jump() {
