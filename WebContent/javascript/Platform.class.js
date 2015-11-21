@@ -1,27 +1,24 @@
-function Platform() {
-	this.createBasicPlatformObject = createBasicPlatformObject;
-	this.createSlipperyPlatformObject = createSlipperyPlatformObject;
+function Platform(gameObject) {
+	this.gameObject = gameObject;
+	
+	var self = this;
+
+	this.createBasicPlatformObject = function(geometry, materials) {
+	    var mesh = new Physijs.ConvexMesh(geometry, new THREE.MeshFaceMaterial(materials), 0);
+	    
+	    mesh.type = "basic_platform";
+	    
+	    self.gameObject.correctFor3dsMaxRotation(mesh);
+	    self.gameObject.scene.add(mesh);
+	}
+
+	this.createSlipperyPlatformObject = function(geometry, materials) {
+	    var mesh = new Physijs.ConvexMesh(geometry, new THREE.MeshFaceMaterial(materials), 0);
+	    
+	    mesh.type = "slippery_platform";
+	    
+	    self.gameObject.correctFor3dsMaxRotation(mesh);
+	    self.gameObject.scene.add(mesh);
+	}
 }
 
-function correctFor3dsMaxRotation(mesh) {
-    var rotation = -90 * (Math.PI / 180);
-    mesh.rotation.x = rotation;
-}
-
-function createBasicPlatformObject(geometry, materials) {
-    var mesh = new Physijs.ConvexMesh(geometry, new THREE.MeshFaceMaterial(materials), 0);
-    
-    mesh.type = "basic_platform";
-    
-    correctFor3dsMaxRotation(mesh);
-    scene.add(mesh);
-}
-
-function createSlipperyPlatformObject(geometry, materials) {
-    var mesh = new Physijs.ConvexMesh(geometry, new THREE.MeshFaceMaterial(materials), 0);
-    
-    mesh.type = "slippery_platform";
-    
-    correctFor3dsMaxRotation(mesh);
-    scene.add(mesh);
-}
