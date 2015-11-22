@@ -58,16 +58,28 @@ function LevelOne(gameObject) {
 	}
 
 	this.setupLights = function() {
-		var ambientLight = new THREE.AmbientLight(0xffffff);
+		var ambientLight = new THREE.AmbientLight(0xfffff);
 		self.gameObject.scene.add(ambientLight);
 		
 		var directionalLight = new THREE.DirectionalLight(0xffffff);
 		directionalLight.position.set(0, 20, 10);
 		directionalLight.intensity = 1;
 		self.gameObject.scene.add(directionalLight);
+		
+//		var spotLight = new THREE.SpotLight(0xfffda0);
+//		spotLight.position.set(200, 4000, 200);
+//		spotLight.castShadow = true;
+//		var target = new THREE.Object3D();
+//		target.position.set(0, 0, 0);
+//		spotLight.target = target;
+//		spotLight.distance = 4800;
+//		spotLight.exponent = 0.0001;
+//		spotLight.intensity = 4;
+//		self.gameObject.scene.add(spotLight);
+		
 //		
-//	    var hemisphereLight = new THREE.HemisphereLight(0x3b8e30, 0x53cde1);
-//	    hemisphereLight.intensity = 1;
+//	    var hemisphereLight = new THREE.HemisphereLight(0xc08439, 0x7bcfe5);
+//	    hemisphereLight.intensity = 0.95;
 //	    self.gameObject.scene.add(hemisphereLight);
 	}
 }
