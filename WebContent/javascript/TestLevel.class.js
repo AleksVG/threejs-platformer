@@ -17,7 +17,7 @@ function TestLevel(gameObject) {
 		    self.activate(self.gameObject.playerAvatar);
 			setupCamera();
 			setupLights();
-		}, 500);
+		}, 1000);
 	}
 	
 	TestLevel.prototype.loadModels = function() {

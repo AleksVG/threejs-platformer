@@ -3,17 +3,18 @@ function LevelOne(gameObject) {
 	this.platform = new Platform(gameObject);
 	this.playerAvatar = new PlayerAvatar(gameObject, 0, 50, 0);
 	this.skybox = new Skybox(gameObject, 0, 0, 0);
+	this.enemyOne = new EnemyOne(gameObject, -705, -50, 0);
 	
 	var self = this;
 	
 	LevelOne.prototype.startLevel = function() {
+	    self.setupLights();
 		self.loadModels();
 		
 		// Wait for models to load
 		setTimeout(function() {
 			self.gameObject.playerAvatar = self.gameObject.scene.getObjectByName("playerAvatar");
 		    self.setupCamera();
-		    self.setupLights();
 		}, 1000);
 	}
 	
@@ -35,6 +36,7 @@ function LevelOne(gameObject) {
 	    jsonLoader.load("models/levels/level_one/level_1_tree_slide_side_1.js", self.platform.createBasicPlatformObject);
 	    jsonLoader.load("models/levels/level_one/level_1_tree_slide_side_2.js", self.platform.createBasicPlatformObject);
 	    jsonLoader.load("models/skyboxes/blue_sky/skybox_blue_sky.js", self.skybox.createBasicSkyboxObject);
+	    jsonLoader.load("models/enemy_1.js", self.enemyOne.createEnemyOne);
 	    
 	    self.playerAvatar.createAvatar();
 	}
@@ -63,9 +65,9 @@ function LevelOne(gameObject) {
 		directionalLight.position.set(0, 20, 10);
 		directionalLight.intensity = 1;
 		self.gameObject.scene.add(directionalLight);
-		
-	    var hemisphereLight = new THREE.HemisphereLight(0x3b8e30, 0x53cde1);
-	    hemisphereLight.intensity = 1;
-	    self.gameObject.scene.add(hemisphereLight);
+//		
+//	    var hemisphereLight = new THREE.HemisphereLight(0x3b8e30, 0x53cde1);
+//	    hemisphereLight.intensity = 1;
+//	    self.gameObject.scene.add(hemisphereLight);
 	}
 }

@@ -11,7 +11,7 @@ function main() {
 	// Wait for level to load
 	setTimeout(function() {
 		gameObject.render();
-	}, 1000);
+	}, 1200);
 }
 
 function setupRenderer() {

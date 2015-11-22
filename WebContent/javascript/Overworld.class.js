@@ -9,14 +9,14 @@ function Overworld(gameObject) {
 	var self = this;
 	
 	Overworld.prototype.startLevel = function() {
+	    self.setupLights();
 		self.loadModels();
 		
 		// Wait for models to load
 		setTimeout(function() {
 			self.gameObject.playerAvatar = self.gameObject.scene.getObjectByName("playerAvatar");
 		    self.setupCamera();
-		    self.setupLights();
-		}, 500);
+		}, 1000);
 	}
 	
 	Overworld.prototype.loadModels = function() {
