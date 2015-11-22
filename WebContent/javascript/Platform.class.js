@@ -21,4 +21,3 @@ function Platform(gameObject) {
 	    self.gameObject.scene.add(mesh);
 	}
 }
-

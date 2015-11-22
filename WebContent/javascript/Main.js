@@ -7,6 +7,11 @@ function main() {
 	var gameObject = new GameObject(renderer);
 	gameObject.setupInput();
 	gameObject.loadLevel(gameObject.Level.Overworld);
+	
+	// Wait for level to load
+	setTimeout(function() {
+		gameObject.render();
+	}, 1000);
 }
 
 function setupRenderer() {

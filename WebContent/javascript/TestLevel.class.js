@@ -3,7 +3,8 @@ function TestLevel(gameObject) {
 	this.platform = new Platform(gameObject);
 	this.playerAvatar = new PlayerAvatar(gameObject, 0, 30, 0);
 	this.enemyOne = new EnemyOne(gameObject, 30, 30, 0, "billy");
-	this.createObject = createObject;
+	this.skybox = new Skybox(gameObject, 0, 0, 0);
+	this.overworldTeleporter = new Teleporter(gameObject, gameObject.Level.Overworld, -50, -30, 0);
 	
 	var self = this;
 	
@@ -16,7 +17,6 @@ function TestLevel(gameObject) {
 		    self.activate(self.gameObject.playerAvatar);
 			setupCamera();
 			setupLights();
-			self.gameObject.render();
 		}, 500);
 	}
 	
@@ -30,19 +30,11 @@ function TestLevel(gameObject) {
 	    jsonLoader.load("models/test_level/testLevel_plat6.js", self.platform.createBasicPlatformObject);
 	    jsonLoader.load("models/test_level/testLevel_plat7.js", self.platform.createBasicPlatformObject);
 	    jsonLoader.load("models/test_level/testLevel_plat8.js", self.platform.createBasicPlatformObject);
+	    jsonLoader.load("models/levels/overworld/overworld_access_level_one.js", self.overworldTeleporter.createTeleporter);
 	    jsonLoader.load("models/enemy_1.js", self.enemyOne.createEnemyOne);
-	    jsonLoader.load("models/skyboxes/blue_sky/skybox_blue_sky.js", self.createObject);
+	    jsonLoader.load("models/skyboxes/blue_sky/skybox_blue_sky.js", self.skybox.createBasicSkyboxObject);
 	    
 	    self.playerAvatar.createAvatar();
-	}
-
-	this.createObject = function(geometry, materials) {
-	    var mesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial( materials ), 0);
-	    
-	    var rotation = -90 * (Math.PI / 180);
-	    mesh.rotation.x = rotation;
-	    
-	    self.gameObject.scene.add(mesh);
 	}
 
 	this.activate = function(playerAvatar) {

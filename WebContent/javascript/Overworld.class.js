@@ -2,6 +2,9 @@ function Overworld(gameObject) {
 	this.gameObject = gameObject;
 	this.platform = new Platform(gameObject);
 	this.playerAvatar = new PlayerAvatar(gameObject, 0, 50, 0);
+	this.skybox = new Skybox(gameObject, 0, 0, 0);
+	this.levelOneTeleporter = new Teleporter(gameObject, gameObject.Level.One, 0, 0, 70);
+	this.testLevelTeleporter = new Teleporter(gameObject, gameObject.Level.TestLevel, 0, 0, 0);
 	
 	var self = this;
 	
@@ -13,47 +16,20 @@ function Overworld(gameObject) {
 			self.gameObject.playerAvatar = self.gameObject.scene.getObjectByName("playerAvatar");
 		    self.setupCamera();
 		    self.setupLights();
-			self.gameObject.render();
 		}, 500);
 	}
 	
 	Overworld.prototype.loadModels = function() {
 		var jsonLoader = new THREE.JSONLoader();
-	    jsonLoader.load("models/levels/overworld/testingArea.js", this.platform.createBasicPlatformObject);
-	    jsonLoader.load("models/levels/overworld/overworld_access_level_one.js", this.createTeleporter);
-	    jsonLoader.load("models/skyboxes/blue_sky/skybox_blue_sky.js", this.createObject);
+	    jsonLoader.load("models/levels/overworld/testingArea.js", self.platform.createBasicPlatformObject);
+	    jsonLoader.load("models/levels/overworld/overworld_access_level_one.js", self.levelOneTeleporter.createTeleporter);
+	    jsonLoader.load("models/levels/overworld/overworld_access_level_one.js", self.testLevelTeleporter.createTeleporter);
+	    jsonLoader.load("models/skyboxes/blue_sky/skybox_blue_sky.js", self.skybox.createBasicSkyboxObject);
 	    
 	    self.playerAvatar.createAvatar();
 	}
 	
-	this.createObject = function(geometry, materials) {
-	    var mesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial( materials ), 0);
-	    
-	    var rotation = -90 * (Math.PI / 180);
-	    mesh.rotation.x = rotation;
-	    
-	    self.gameObject.scene.add(mesh);
-	}
-	
-	this.createTeleporter = function(geometry, materials) {
-	    var mesh = new Physijs.ConvexMesh(geometry, new THREE.MeshFaceMaterial(materials), 0);
-	    
-	    var rotation = -90 * (Math.PI / 180);
-	    mesh.rotation.x = rotation;
-	    
-	    mesh.addEventListener('collision', function(other_object, relative_velocity, relative_rotation, contact_normal) {
-			if (other_object.name == "playerAvatar") {
-				gameObject.loadLevel("One");
-			}
-	    });
-	    
-	    self.gameObject.scene.add(mesh);
-	}
-	
 	this.activate = function() {}
-	
-	
-	
 	
 	this.setupCamera = function() {
 	    var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 30000);

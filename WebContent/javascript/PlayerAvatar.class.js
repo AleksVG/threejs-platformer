@@ -243,7 +243,7 @@ function PlayerAvatar(gameObject, positionX, positionY, positionZ) {
 		
 		rotateTowardsMovingDirection(vector);
 		animate();
-		
+
 		if (!isOverTopSpeed() || !vectorWillIncreaseSpeed(vector))
 			self.playerAvatar.applyCentralImpulse(vector);
 	}

@@ -13,7 +13,7 @@ function GameObject(renderer) {
 	this.cameraRadius = 90;
 	this.cameraXZAngle = Math.PI / 2;
 	this.lastTime = 0;
-	this.Level = {Overworld: "Overworld", One: "One", Two: "Two", Three: "Three"}
+	this.Level = {Overworld: "Overworld", One: "One", Two: "Two", Three: "Three", TestLevel: "TestLevel"};
 	
 	var self = this;
 	
@@ -28,6 +28,12 @@ function GameObject(renderer) {
 			self.currentLevel = new Overworld(self);
 			break;
 		case self.Level.One:
+			self.currentLevel = new LevelOne(self);
+			break;
+		case self.Level.TestLevel:
+			self.currentLevel = new TestLevel(self);
+			break;
+		default:
 			self.currentLevel = new TestLevel(self);
 			break;
 		}

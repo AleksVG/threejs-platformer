@@ -13,14 +13,18 @@ def is_object_file(input_file):
 
 files = [ f for f in listdir(path) if is_object_file(join(path,f)) ]
 
-for f in files:
-	fileStart = sys.argv[0]
+fileStart = ""
 
-	if len(sys.argv) > 0 & f.startswith(fileStart):
+if len(sys.argv) > 1:
+	fileStart = sys.argv[1]
+
+for f in files:
+
+	if (fileStart != "") & f.startswith(fileStart):
 		input = path + f
 		output = f[:-3] + "js"
 		convert_ascii(input, "", "", output)
-	else:
+	elif fileStart == "":
 		input = path + f
 		output = f[:-3] + "js"
 		convert_ascii(input, "", "", output)
