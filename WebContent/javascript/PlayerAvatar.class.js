@@ -9,6 +9,8 @@ function PlayerAvatar(gameObject, positionX, positionY, positionZ) {
 	this.animationStep = 0;
 	this.animationStepSpeed = 0.12;
 	
+	this.cameraSmoothingFinished = true;
+	
 	var self = this;
 
 	this.createAvatar = function() {
@@ -170,10 +172,11 @@ function PlayerAvatar(gameObject, positionX, positionY, positionZ) {
 	}
 
 	function moveCameraSmoothly(playerAvatar) {
+		self.cameraSmoothingFinished = false;
 		var difference = Math.abs(self.playerAvatar.lastGroundY - self.playerAvatar.position.y);
 		var x = 0.5;
 		var elapsedSeconds = 0.25;
-		var decayFunction = 0.2 * (1/(4*elapsedSeconds));
+		var decayFunction = 0.15 * (1/(4*elapsedSeconds));
 		var startTime = new Date().getTime();
 		
 		smoother = setInterval(function() {
@@ -185,9 +188,10 @@ function PlayerAvatar(gameObject, positionX, positionY, positionZ) {
 			else
 				self.playerAvatar.lastGroundY -= decayFunction;
 			
-			if (Math.abs(self.playerAvatar.lastGroundY - self.playerAvatar.position.y) < 2) {
+			if (Math.abs(self.playerAvatar.lastGroundY - self.playerAvatar.position.y) < 1) {
 				self.playerAvatar.lastGroundY = self.playerAvatar.position.y;
 				clearInterval(smoother);
+				self.cameraSmoothingFinished = true;
 			}
 		}, 1);
 	}
@@ -338,7 +342,9 @@ function PlayerAvatar(gameObject, positionX, positionY, positionZ) {
 		var currentVelocityY = self.playerAvatar.getLinearVelocity().y;
 		
 		if (holdingSpace && self.playerAvatar.onGround) {
-			self.playerAvatar.lastGroundY = self.playerAvatar.position.y;
+			if (self.cameraSmoothingFinished)
+				self.playerAvatar.lastGroundY = self.playerAvatar.position.y;
+			
 			self.playerAvatar.onGround = false;
 			self.playerAvatar.setDamping(0, 1);
 			self.playerAvatar.applyCentralImpulse(new THREE.Vector3(0, 550, 0));
