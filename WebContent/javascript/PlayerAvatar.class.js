@@ -4,7 +4,8 @@ function PlayerAvatar(gameObject, positionX, positionY, positionZ) {
 	this.positionY = positionY;
 	this.positionZ = positionZ;
 	
-	this.movementSpeed = 30;
+	this.previousPositionY = positionY;
+	this.movementSpeed = 90;
 	this.animationStep = 0;
 	this.animationStepSpeed = 0.12;
 	
@@ -113,6 +114,19 @@ function PlayerAvatar(gameObject, positionX, positionY, positionZ) {
 		
 		attachMethods();
 		self.playerAvatar.lastGroundY = 0;
+		self.playerAvatar.lives = 1;
+		
+		
+//		setInterval(function() {
+//			if (Math.abs(self.previousPositionY - self.playerAvatar.position.y) > 1)
+//				self.cameraFollow();
+//			
+//			self.previousPositionY = self.playerAvatar.position.y;
+//		}, 1000);
+	}
+	
+	this.cameraFollow = function() {
+		
 	}
 
 	function attachMethods() {
@@ -124,11 +138,21 @@ function PlayerAvatar(gameObject, positionX, positionY, positionZ) {
 			    moveCameraSmoothly();
 			}
 			else if (other_object.type == "slippery_platform") {
-			    playerAvatar.setDamping(0.1, 1.0);
-				playerAvatar.onGround = true;
+				self.playerAvatar.setDamping(0.1, 1.0);
+				self.playerAvatar.onGround = true;
 			}
-			else if (other_object.type == "melee_enemy") {
+			else if (other_object.name == "enemy_one_hitbox") {
+				self.playerAvatar.applyCentralImpulse(new THREE.Vector3(0, 500, 0));
+				var enemy = self.gameObject.scene.getObjectByName(other_object.parentEnemy);
+				enemy.deActivate();
+				self.gameObject.scene.remove(enemy);
+				self.gameObject.scene.remove(other_object);
+			}
+			else if (other_object.type == "enemy_one") {
+				self.playerAvatar.lives -= 1;
 				
+				if (self.playerAvatar.lives <= 0)
+					self.die();
 			}
 		});
 		
@@ -137,6 +161,12 @@ function PlayerAvatar(gameObject, positionX, positionY, positionZ) {
 		self.playerAvatar.moveForwardInRelationToView = moveForwardInRelationToView;
 		self.playerAvatar.moveBackwardInRelationToView = moveBackwardInRelationToView;
 		self.playerAvatar.jump = jump;
+	}
+	
+	this.setOnGround = function(isOnGround) {
+		self.playerAvatar.onGround = isOnGround;
+		
+
 	}
 
 	function moveCameraSmoothly(playerAvatar) {
@@ -156,12 +186,21 @@ function PlayerAvatar(gameObject, positionX, positionY, positionZ) {
 				self.playerAvatar.lastGroundY -= decayFunction;
 			
 			if (Math.abs(self.playerAvatar.lastGroundY - self.playerAvatar.position.y) < 2) {
-				self.playerAvatar.lastGround = self.playerAvatar.position.y;
+				self.playerAvatar.lastGroundY = self.playerAvatar.position.y;
 				clearInterval(smoother);
 			}
 		}, 1);
 	}
-
+	
+	this.die = function() {
+		self.playerAvatar.setDamping(0, 0);
+		self.playerAvatar.setAngularFactor(new THREE.Vector3(1, 1, 1));
+		self.playerAvatar.setAngularVelocity(new THREE.Vector3(100, 100, 100));
+		
+		setTimeout(function() {
+			self.gameObject.loadLevel(self.gameObject.Level.Overworld);
+		}, 2000);
+	}
 
 
 	function rotateTowardsMovingDirection(vector) {
@@ -183,11 +222,16 @@ function PlayerAvatar(gameObject, positionX, positionY, positionZ) {
 		self.legRight.rotation.set(-self.animationStep, 0, 0);
 	}
 
-	function moveLeftInRelationToView() {
+	function moveLeftInRelationToView(elapsed) {
 		// http://stackoverflow.com/questions/14813902/three-js-get-the-direction-in-which-the-camera-is-looking
 		var vector = new THREE.Vector3(0, 0, -1);
-		vector.applyQuaternion(self.gameObject.camera.quaternion);
-		vector = new THREE.Vector3(self.movementSpeed * vector.x, 0, self.movementSpeed * vector.z);
+		vector.applyQuaternion(self.gameObject.camera.camera.quaternion);
+		
+		var vec = vec3.fromValues(vector.x, 0, vector.z);
+		vec3.normalize(vec, vec);
+		vector = new THREE.Vector3(vec[0], vec[1], vec[2]);
+		
+		vector = new THREE.Vector3(elapsed * self.movementSpeed * vector.x, 0, elapsed * self.movementSpeed * vector.z);
 		
 		// http://stackoverflow.com/questions/14607640/rotating-a-vector-in-3d-space
 		var newX = (vector.x * Math.cos(Math.PI/2)) + (vector.z * Math.sin(Math.PI/2));
@@ -199,14 +243,19 @@ function PlayerAvatar(gameObject, positionX, positionY, positionZ) {
 		animate();
 		
 		if (!isOverTopSpeed() || !vectorWillIncreaseSpeed(vector))
-			self.playerAvatar.applyCentralImpulse(vector);
+			self.playerAvatar.applyCentralForce(vector);
 	}
 
-	function moveRightInRelationToView() {
+	function moveRightInRelationToView(elapsed) {
 		// http://stackoverflow.com/questions/14813902/three-js-get-the-direction-in-which-the-camera-is-looking
 		var vector = new THREE.Vector3(0, 0, -1);
-		vector.applyQuaternion(self.gameObject.camera.quaternion);
-		vector = new THREE.Vector3(self.movementSpeed * vector.x, 0, self.movementSpeed * vector.z);
+		vector.applyQuaternion(self.gameObject.camera.camera.quaternion);
+		
+		var vec = vec3.fromValues(vector.x, 0, vector.z);
+		vec3.normalize(vec, vec);
+		vector = new THREE.Vector3(vec[0], vec[1], vec[2]);
+		
+		vector = new THREE.Vector3(elapsed * self.movementSpeed * vector.x, 0, elapsed * self.movementSpeed * vector.z);
 		
 		// http://stackoverflow.com/questions/14607640/rotating-a-vector-in-3d-space
 		var newX = (vector.x * Math.cos(-Math.PI/2)) + (vector.z * Math.sin(-Math.PI/2));
@@ -218,39 +267,49 @@ function PlayerAvatar(gameObject, positionX, positionY, positionZ) {
 		animate();
 		
 		if (!isOverTopSpeed() || !vectorWillIncreaseSpeed(vector))
-			self.playerAvatar.applyCentralImpulse(vector);
+			self.playerAvatar.applyCentralForce(vector);
 	}
 
-	function moveForwardInRelationToView() {
+	function moveForwardInRelationToView(elapsed) {
 		// http://stackoverflow.com/questions/14813902/three-js-get-the-direction-in-which-the-camera-is-looking
 		var vector = new THREE.Vector3(0, 0, -1);
-		vector.applyQuaternion(self.gameObject.camera.quaternion);
-		vector = new THREE.Vector3(self.movementSpeed * vector.x, 0, self.movementSpeed * vector.z);
+		vector.applyQuaternion(self.gameObject.camera.camera.quaternion);
+		
+		var vec = vec3.fromValues(vector.x, 0, vector.z);
+		vec3.normalize(vec, vec);
+		vector = new THREE.Vector3(vec[0], vec[1], vec[2]);
+		
+		vector = new THREE.Vector3(elapsed * self.movementSpeed * vector.x, 0, elapsed * self.movementSpeed * vector.z);
 		
 		rotateTowardsMovingDirection(vector);
 		animate();
 		
 		if (!isOverTopSpeed() || !vectorWillIncreaseSpeed(vector))
-			self.playerAvatar.applyCentralImpulse(vector);
+			self.playerAvatar.applyCentralForce(vector);
 	}
 
-	function moveBackwardInRelationToView() {
+	function moveBackwardInRelationToView(elapsed) {
 		// http://stackoverflow.com/questions/14813902/three-js-get-the-direction-in-which-the-camera-is-looking
 		var vector = new THREE.Vector3(0, 0, -1);
-		vector.applyQuaternion(self.gameObject.camera.quaternion);
-		vector = new THREE.Vector3(self.movementSpeed * vector.x, 0, self.movementSpeed * vector.z);
+		vector.applyQuaternion(self.gameObject.camera.camera.quaternion);
+		
+		var vec = vec3.fromValues(vector.x, 0, vector.z);
+		vec3.normalize(vec, vec);
+		vector = new THREE.Vector3(vec[0], vec[1], vec[2]);
+		
+		vector = new THREE.Vector3(elapsed * self.movementSpeed * vector.x, 0, elapsed * self.movementSpeed * vector.z);
 		vector = new THREE.Vector3(-vector.x, -vector.y, -vector.z);
 		
 		rotateTowardsMovingDirection(vector);
 		animate();
 
 		if (!isOverTopSpeed() || !vectorWillIncreaseSpeed(vector))
-			self.playerAvatar.applyCentralImpulse(vector);
+			self.playerAvatar.applyCentralForce(vector);
 	}
 
 	function isOverTopSpeed() {
 		var currentVelocity = self.playerAvatar.getLinearVelocity();
-		var topSpeed = 35;
+		var topSpeed = 30;
 		var currentVelocityMagnitude = Math.sqrt(Math.pow(currentVelocity.x, 2) + Math.pow(currentVelocity.z, 2));
 		
 		if (currentVelocityMagnitude > topSpeed)
@@ -288,7 +347,7 @@ function PlayerAvatar(gameObject, positionX, positionY, positionZ) {
 			self.playerAvatar.applyCentralImpulse(new THREE.Vector3(0, -40, 0));
 		}
 		
-		if (currentVelocityY < -1 && self.playerAvatar.onGround) {
+		if (currentVelocityY < -5 && self.playerAvatar.onGround) {
 			self.playerAvatar.setDamping(0, 1);
 			self.playerAvatar.onGround = false;
 		}

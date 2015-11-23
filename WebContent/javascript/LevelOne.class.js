@@ -36,25 +36,15 @@ function LevelOne(gameObject) {
 	    jsonLoader.load("models/levels/level_one/level_1_tree_slide_side_1.js", self.platform.createBasicPlatformObject);
 	    jsonLoader.load("models/levels/level_one/level_1_tree_slide_side_2.js", self.platform.createBasicPlatformObject);
 	    jsonLoader.load("models/skyboxes/blue_sky/skybox_blue_sky.js", self.skybox.createBasicSkyboxObject);
-	    jsonLoader.load("models/enemy_1.js", self.enemyOne.createEnemyOne);
 	    
+	    self.enemyOne.createEnemyOne();
 	    self.playerAvatar.createAvatar();
 	}
 	
 	this.activate = function() {}
 	
 	this.setupCamera = function() {
-	    var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 30000);
-
-	    self.gameObject.scene.add(camera);
-	    
-	    camera.position.x = -100;
-	    camera.position.y = 45;
-	    camera.position.z = 30;
-	    
-	    camera.lookAt(self.gameObject.playerAvatar.position);
-	    
-	    self.gameObject.camera = camera;
+		self.gameObject.camera.initialize();
 	}
 
 	this.setupLights = function() {

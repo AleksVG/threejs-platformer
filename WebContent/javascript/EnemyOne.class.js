@@ -4,17 +4,48 @@ function EnemyOne(gameObject, positionX, positionY, positionZ, name) {
 	this.positionY = positionY;
 	this.positionZ = positionZ;
 	this.name = name;
-	this.createEnemyOne = createEnemyOne;
+	
 	this.attackRadius = 70;
-	this.movementSpeed = 500;
-	this.activate = activate;
+	this.movementSpeed = 50;
+	
 	var self = this;
 
-	function createEnemyOne(geometry, materials) {
-	    self.enemy = new Physijs.ConvexMesh(geometry, new THREE.MeshFaceMaterial(materials), 25);
-	    
+	this.createEnemyOne = function() {
+		var jsonLoader = new THREE.JSONLoader();
+		jsonLoader.load("models/enemies/enemy_one/enemy_1.js", self.loadBody);
+		jsonLoader.load("models/enemies/enemy_one/enemy_1_spikes.js", self.loadSpikes);
+//		jsonLoader.load("models/enemies/enemy_one/enemy_1_hitbox.js", self.loadHitbox);
+		
+		setTimeout(self.attachPartsTogether, 100);
+	}
+	
+	this.loadBody = function(geometry, materials) {
+		self.enemy = new Physijs.ConvexMesh(geometry, new THREE.MeshFaceMaterial(materials), 25);
 	    self.enemy.name = self.name;
-	    self.enemy.type = "melee_enemy";
+		
+		self.gameObject.scene.add(self.enemy);
+	}
+	
+	this.loadSpikes = function(geometry, materials) {
+		self.spikes = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial( materials ), 0);
+		
+		self.gameObject.scene.add(self.spikes);
+	}
+	
+	this.loadHitbox = function(geometry, materials) {
+		self.hitbox = new Physijs.ConvexMesh(geometry, new THREE.MeshFaceMaterial(materials), 0);
+		self.hitbox.name = "enemy_one_hitbox";
+		self.hitbox.parentEnemy = self.name;
+
+	    self.gameObject.correctFor3dsMaxRotation(self.hitbox);
+		self.gameObject.scene.add(self.hitbox);
+	}
+	
+	this.attachPartsTogether = function() {
+		self.enemy.add(self.spikes);
+//		self.enemy.add(self.hitbox);
+		
+	    self.enemy.type = "enemy_one";
 	    self.enemy.position.x = self.positionX;
 	    self.enemy.position.y = self.positionY;
 	    self.enemy.position.z = self.positionZ;
@@ -24,21 +55,28 @@ function EnemyOne(gameObject, positionX, positionY, positionZ, name) {
 	    
 		self.enemy.setAngularFactor(new THREE.Vector3(0, 1, 0));
 		self.enemy.setDamping(0.9, 1);
-		attachEnemyOneMethods();
+		
+		self.enemy.deActivate = self.deActivate;
 	}
-
-	function attachEnemyOneMethods() {
-		self.enemy.moveTowards = moveTowards;
+	
+	this.activate = function() {
+		setInterval(self.activateInterval, 20);
 	}
-
-	function activate(playerAvatar) {
-		// Use setInterval to execute 5 times per second instead of every frame
-		setInterval(function() {
-			if (isWithinRange(playerAvatar))
-				attack(playerAvatar);
-			else
-				idle();
-		}, 200);
+	
+	this.activateInterval = function() {
+		if (isWithinRange(self.gameObject.playerAvatar))
+			attack(self.gameObject.playerAvatar);
+		else
+			idle();
+		
+//		self.hitbox.__dirtyPosition = true;
+//		self.hitbox.position.x = self.enemy.position.x;
+//		self.hitbox.position.y = self.enemy.position.y + 0.4;
+//		self.hitbox.position.z = self.enemy.position.z;
+	}
+	
+	this.deActivate = function() {
+		clearInterval(self.activateInterval);
 	}
 
 	function isWithinRange(objectToAttack) {
@@ -53,11 +91,12 @@ function EnemyOne(gameObject, positionX, positionY, positionZ, name) {
 	}
 
 	function attack(objectToAttack) {
-		//enemy.lookAt(objectToAttack.position);
-		self.enemy.moveTowards(objectToAttack);
+//		self.enemy.__dirtyRotation = true;
+//		self.enemy.lookAt(objectToAttack.position);
+		self.moveTowards(objectToAttack);
 	}
 
-	function moveTowards(object) {
+	this.moveTowards = function(object) {
 		var normalizedSpeedVector = vec3.fromValues(self.enemy.position.x - object.position.x,
 													self.enemy.position.y - object.position.y,
 													self.enemy.position.z - object.position.z);

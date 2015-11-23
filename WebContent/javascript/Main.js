@@ -5,7 +5,9 @@ function main() {
 	Physijs.scripts.ammo = 'ammo.js';
 	
 	var gameObject = new GameObject(renderer);
-	gameObject.setupInput();
+	gameObject.camera = new Camera(gameObject);
+	gameObject.camera.setupInput();
+
 	gameObject.loadLevel(gameObject.Level.Overworld);
 	
 	// Wait for level to load
