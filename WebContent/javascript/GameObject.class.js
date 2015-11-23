@@ -40,13 +40,16 @@ function GameObject(renderer) {
 	    var elapsed = self.calculateElapsed(currentTime);
 	    	
 	    self.camera.update();
-	    self.menu.update(elapsed);
+	    self.menu.update();
 	    self.handleKeys(elapsed);
 
 	    self.scene.simulate();
 	    self.renderer.render(self.scene, self.camera.camera);
 	    self.renderer.autoClear = false;
-	    self.renderer.render(self.sceneMenu, self.menu.camera);   
+	    self.renderer.render(self.sceneMenu, self.menu.camera);
+	    //console.log(self.menu.camera);
+	    
+
 	}
 
 	this.calculateElapsed = function(currentTime) {

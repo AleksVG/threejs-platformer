@@ -1,6 +1,9 @@
 function main() {
 	var renderer = setupRenderer();
 	
+	//var myAudio = document.getElementById("backgroundmusic");
+	//myAudio.play();
+	
 	Physijs.scripts.worker = 'libraries/physijs_worker.js';
 	Physijs.scripts.ammo = 'ammo.js';
 	
