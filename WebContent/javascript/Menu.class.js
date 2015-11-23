@@ -12,6 +12,9 @@ function Menu(gameObject) {
 		console.log("testtestestset");
 	}
 	
+	
+	var imageNo=0;
+	var interval=0;
 	var p_size = 50;
 	var p_transparent = true;
 	var p_opacity = 0.6;
@@ -47,13 +50,13 @@ function Menu(gameObject) {
 		self.gameObject.sceneMenu.add(sprite);
 	}
 	
-	this.update = function update() {
-//		interval+=elapsed;
-//		if (interval>=.2) {
-//			p_sprite+=1;
-//			p_sprite=p_sprite%5;
-//			interval=0;
-//		}
+	this.update = function update(elapsed) {
+		interval+=elapsed;
+		if (interval>=.2) {
+			p_sprite+=1;
+			p_sprite=p_sprite%5;
+			interval=0;
+		}
 
 		self.gameObject.sceneMenu.children.forEach(function (e) {
 	        if (e instanceof THREE.Sprite) {
