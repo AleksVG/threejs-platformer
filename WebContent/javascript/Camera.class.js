@@ -66,8 +66,8 @@ function Camera(gameObject) {
 	}
 	
 	this.positionCamera = function() {
-	    self.camera.position.set(self.gameObject.playerAvatar.position.x - self.cameraX, self.gameObject.playerAvatar.lastGroundY + self.cameraY, self.gameObject.playerAvatar.position.z + self.cameraZ);
-		self.camera.lookAt(new THREE.Vector3(self.gameObject.playerAvatar.position.x, self.gameObject.playerAvatar.lastGroundY, self.gameObject.playerAvatar.position.z));
+	    self.camera.position.set(self.gameObject.playerAvatar.position.x - self.cameraX, self.gameObject.playerAvatar.position.y + self.cameraY, self.gameObject.playerAvatar.position.z + self.cameraZ);
+		self.camera.lookAt(new THREE.Vector3(self.gameObject.playerAvatar.position.x, self.gameObject.playerAvatar.position.y, self.gameObject.playerAvatar.position.z));
 	}
 	
 	this.onKeyDown = function(event) {
