@@ -33,6 +33,7 @@ function Overworld(gameObject) {
 	
 	this.setupCamera = function() {
 		self.gameObject.camera.initialize();
+		self.gameObject.menu.initialize();
 	}
 
 	this.setupLights = function() {

@@ -10,9 +10,12 @@ function GameObject(renderer) {
 	
 	this.loadLevel = function(level) {
 		var scene = new Physijs.Scene;
+		var sceneMenu = new THREE.Scene();
+		
 	    scene.setGravity(new THREE.Vector3(0, -125, 0));
 	    
 	    self.scene = scene;
+	    self.sceneMenu = sceneMenu;
 		
 		switch (level) {
 		case self.Level.Overworld:
@@ -37,10 +40,16 @@ function GameObject(renderer) {
 	    var elapsed = self.calculateElapsed(currentTime);
 	    	
 	    self.camera.update();
+	    self.menu.update();
 	    self.handleKeys(elapsed);
 
 	    self.scene.simulate();
 	    self.renderer.render(self.scene, self.camera.camera);
+	    self.renderer.autoClear = false;
+	    self.renderer.render(self.sceneMenu, self.menu.camera);
+	    //console.log(self.menu.camera);
+	    
+
 	}
 
 	this.calculateElapsed = function(currentTime) {
