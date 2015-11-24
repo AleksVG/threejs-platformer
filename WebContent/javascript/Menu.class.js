@@ -8,30 +8,37 @@ function Menu(gameObject) {
 		self.camera = new THREE.OrthographicCamera( 0, window.innerWidth, window.innerHeight, 0, -10, 10 );
 		//self.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 30000);
 		self.gameObject.sceneMenu.add(self.camera);
-		createSprite1(p_size, p_transparent, p_opacity, p_color, p_sprite); 
+		
+		texture = "models/menu_background.png";
+		createSprite(0.6, p_transparent, p_opacity, p_color, p_sprite, texture); 
+		
+		texture = "models/menu_btn_newgame.png";
+		createSprite(1.0, p_transparent, p_opacity, p_color, p_sprite, texture); 
+		
+		texture = "models/menu_btn_newgame_selected.png";
+		createSprite(1.0, transparent, p_opacity, p_color, p_sprite, texture); 
 	}
 	
 	
 	var imageNo=0;
 	var interval=0;
-	var p_size = 50;
 	var p_transparent = true;
 	var p_opacity = 0.6;
 	var p_color = 0xffffff;
 	var p_sprite = 0;
 	
 	
-	function getTexture() {
-		  var texture = new THREE.ImageUtils.loadTexture("models/menu_background.png");
+	function getTexture(texture) {
+		  var texture = new THREE.ImageUtils.loadTexture(texture);
 		  return texture;
 		}
 	
-	function createSprite1(size, transparent, opacity, color, spriteNumber) {
+	function createSprite(opacity, transparent, opacity, color, spriteNumber, texture) {
 		var spriteMaterial = new THREE.SpriteMaterial({
 			opacity : opacity,
 			color : color,
 			transparent : transparent,
-			map : getTexture()
+			map : getTexture(texture)
 		});
 
 		// we have 1 row, with five sprites
@@ -44,6 +51,7 @@ function Menu(gameObject) {
 
 		var sprite = new THREE.Sprite(spriteMaterial);
 		sprite.scale.set(586, 285, 1.0);
+		
 		
 		// Y = height
 		sprite.position.set(window.innerWidth / 2, window.innerHeight / 2, -10);

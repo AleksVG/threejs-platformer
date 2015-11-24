@@ -9,6 +9,7 @@ function main() {
 	
 	var gameObject = new GameObject(renderer);
 	gameObject.camera = new Camera(gameObject);
+	
 	gameObject.menu = new Menu(gameObject);
 	gameObject.camera.setupInput();
 

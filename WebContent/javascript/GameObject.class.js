@@ -44,12 +44,10 @@ function GameObject(renderer) {
 	    self.handleKeys(elapsed);
 
 	    self.scene.simulate();
+	    // Comment out for just rendering menu
 	    self.renderer.render(self.scene, self.camera.camera);
 	    self.renderer.autoClear = false;
 	    self.renderer.render(self.sceneMenu, self.menu.camera);
-	    //console.log(self.menu.camera);
-	    
-
 	}
 
 	this.calculateElapsed = function(currentTime) {
