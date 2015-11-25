@@ -1,7 +1,7 @@
 function LevelOne(gameObject) {
 	this.gameObject = gameObject;
 	this.platform = new Platform(gameObject);
-	this.playerAvatar = new PlayerAvatar(gameObject, 0, 50, 0);
+	this.playerAvatar = new PlayerAvatar(gameObject, 0, 20, 0);
 	this.skybox = new Skybox(gameObject, 0, 0, 0);
 	this.enemyOne = new EnemyOne(gameObject, -705, -50, 0);
 	

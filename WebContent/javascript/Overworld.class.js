@@ -1,7 +1,7 @@
 function Overworld(gameObject) {
 	this.gameObject = gameObject;
 	this.platform = new Platform(gameObject);
-	this.playerAvatar = new PlayerAvatar(gameObject, 0, 50, 0);
+	this.playerAvatar = new PlayerAvatar(gameObject, 0, 30, 0);
 	this.skybox = new Skybox(gameObject, 0, 0, 0);
 	this.levelOneTeleporter = new Teleporter(gameObject, gameObject.Level.One, 0, 0, 70);
 	this.testLevelTeleporter = new Teleporter(gameObject, gameObject.Level.TestLevel, 0, 0, 0);

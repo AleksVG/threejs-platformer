@@ -22,69 +22,70 @@ function PlayerAvatar(gameObject, positionX, positionY, positionZ) {
 		jsonLoader.load("models/player_avatar/player_leg_left.js", loadLegLeft);
 		jsonLoader.load("models/player_avatar/player_leg_right.js", loadLegRight);
 		jsonLoader.load("models/player_avatar/player_base_box.js", loadBaseBox);
+		jsonLoader.load("models/player_avatar/player_bottom_collision.js", loadBottomCollision);
 		
-		setTimeout(attachPartsTogether, 100);
+		setTimeout(attachPartsTogether, 300);
 	}
 
 	function loadHead(geometry, materials) {
-	    head = new Physijs.ConvexMesh(geometry, new THREE.MeshFaceMaterial(materials), 10);
-	    head.name = "playerHead";
+		self.head = new Physijs.ConvexMesh(geometry, new THREE.MeshFaceMaterial(materials), 10);
+	    self.head.name = "playerHead";
 	    
-	    self.gameObject.scene.add(head);
+	    self.gameObject.scene.add(self.head);
 	}
 
 	function loadBody(geometry, materials) {
-	    body = new Physijs.ConvexMesh(geometry, new THREE.MeshFaceMaterial(materials), 8);
-	    body.name = "playerBody";
+		self.body = new Physijs.ConvexMesh(geometry, new THREE.MeshFaceMaterial(materials), 8);
+	    self.body.name = "playerBody";
 	    
-	    self.gameObject.scene.add(body);
+	    self.gameObject.scene.add(self.body);
 	}
 
 	function loadArmLeft(geometry, materials) {
-	    armLeft = new Physijs.ConvexMesh(geometry, new THREE.MeshFaceMaterial(materials), 2);
-	    armLeft.name = "playerArmLeft";
+		self.armLeft = new Physijs.ConvexMesh(geometry, new THREE.MeshFaceMaterial(materials), 2);
+	    self.armLeft.name = "playerArmLeft";
 
-	    self.gameObject.scene.add(armLeft);
+	    self.gameObject.scene.add(self.armLeft);
 	}
 
 	function loadArmRight(geometry, materials) {
-	    armRight = new Physijs.ConvexMesh(geometry, new THREE.MeshFaceMaterial(materials), 2);
-	    armRight.name = "playerArmRight";
+		self.armRight = new Physijs.ConvexMesh(geometry, new THREE.MeshFaceMaterial(materials), 2);
+		self.armRight.name = "playerArmRight";
 	    
-	    self.gameObject.scene.add(armRight);
+	    self.gameObject.scene.add(self.armRight);
 	}
 
 	function loadLegLeft(geometry, materials) {
-	    legLeft = new Physijs.ConvexMesh(geometry, new THREE.MeshFaceMaterial(materials), 2);
-	    legLeft.name = "playerLegLeft";
+		self.legLeft = new Physijs.ConvexMesh(geometry, new THREE.MeshFaceMaterial(materials), 2);
+		self.legLeft.name = "playerLegLeft";
 	    
-	    self.gameObject.scene.add(legLeft);
+	    self.gameObject.scene.add(self.legLeft);
 	}
 
 	function loadLegRight(geometry, materials) {
-	    legRight = new Physijs.ConvexMesh(geometry, new THREE.MeshFaceMaterial(materials), 2);
-	    legRight.name = "playerLegRight";
+		self.legRight = new Physijs.ConvexMesh(geometry, new THREE.MeshFaceMaterial(materials), 2);
+	    self.legRight.name = "playerLegRight";
 	    
-	    self.gameObject.scene.add(legRight);
+	    self.gameObject.scene.add(self.legRight);
 	}
 
 	function loadBaseBox(geometry, materials) {
-	    baseBox = new Physijs.ConvexMesh(geometry, new THREE.MeshFaceMaterial(materials), 2);
-	    baseBox.name = "playerBaseBox";
+		self.baseBox = new Physijs.ConvexMesh(geometry, new THREE.MeshFaceMaterial(materials), 2);
+	    self.baseBox.name = "playerBaseBox";
 	    
-	    self.gameObject.scene.add(baseBox);
-		baseBox.visible = false;
+	    self.gameObject.scene.add(self.baseBox);
+	    self.baseBox.visible = false;
+	}
+	
+	function loadBottomCollision(geometry, materials) {
+	    self.bottomCollision = new Physijs.ConvexMesh(geometry, new THREE.MeshFaceMaterial(materials), 2);
+	    self.bottomCollision.name = "playerBottomCollision";
+	    
+	    self.gameObject.scene.add(self.bottomCollision);
+	    self.bottomCollision.visible = false;
 	}
 
-	function attachPartsTogether() {
-		self.head = self.gameObject.scene.getObjectByName("playerHead");
-		self.body = self.gameObject.scene.getObjectByName("playerBody");
-		self.armLeft = self.gameObject.scene.getObjectByName("playerArmLeft");
-		self.armRight = self.gameObject.scene.getObjectByName("playerArmRight");
-		self.legLeft = self.gameObject.scene.getObjectByName("playerLegLeft");
-		self.legRight = self.gameObject.scene.getObjectByName("playerLegRight");
-		self.baseBox = self.gameObject.scene.getObjectByName("playerBaseBox");
-		
+	function attachPartsTogether() {		
 		var pivotArmLeft = new THREE.Object3D();
 		var pivotArmRight = new THREE.Object3D();
 		var pivotLegLeft = new THREE.Object3D();
@@ -102,6 +103,7 @@ function PlayerAvatar(gameObject, positionX, positionY, positionZ) {
 		self.playerAvatar.add(pivotLegLeft);
 		self.playerAvatar.add(pivotLegRight);
 		self.playerAvatar.add(self.baseBox);
+		self.playerAvatar.add(self.bottomCollision);
 		
 		pivotArmLeft.position.set(1.8, -4, 0);
 		pivotArmRight.position.set(-1.8, -4, 0);
@@ -117,14 +119,6 @@ function PlayerAvatar(gameObject, positionX, positionY, positionZ) {
 		attachMethods();
 		self.playerAvatar.lastGroundY = 0;
 		self.playerAvatar.lives = 1;
-		
-		
-//		setInterval(function() {
-//			if (Math.abs(self.previousPositionY - self.playerAvatar.position.y) > 1)
-//				self.cameraFollow();
-//			
-//			self.previousPositionY = self.playerAvatar.position.y;
-//		}, 1000);
 	}
 	
 	this.cameraFollow = function() {
