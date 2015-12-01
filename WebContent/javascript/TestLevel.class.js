@@ -2,7 +2,7 @@ function TestLevel(gameObject) {
 	this.gameObject = gameObject;
 	this.platform = new Platform(gameObject);
 	this.playerAvatar = new PlayerAvatar(gameObject, 0, 30, 0);
-	this.enemyOne = new EnemyOne(gameObject, 30, 30, 0, "billy");
+	this.enemyOne = new EnemyOne(gameObject, 30, 30, 0, "billy", 0, 50);
 	this.skybox = new Skybox(gameObject, 0, 0, 0);
 	this.overworldTeleporter = new Teleporter(gameObject, gameObject.Level.Overworld, -50, -30, 0);
 	
@@ -13,7 +13,6 @@ function TestLevel(gameObject) {
 		
 		// Wait for models to load
 		setTimeout(function() {
-		    self.gameObject.playerAvatar = self.gameObject.scene.getObjectByName("playerAvatar");
 		    self.activate();
 			setupCamera();
 			setupLights();

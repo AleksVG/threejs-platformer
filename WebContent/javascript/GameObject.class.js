@@ -5,10 +5,13 @@ function GameObject(renderer) {
 	this.Key = {A: 65, S: 83, D: 68, W: 87, SPACEBAR: 32};
 	this.Level = {Overworld: "Overworld", One: "One", Two: "Two", Three: "Three", TestLevel: "TestLevel"};
 	this.lastTime = 0;
+	this.playerInputEnabled = false;
 	
 	var self = this;
 	
 	this.loadLevel = function(level) {
+		self.playerInputEnabled = false;
+		
 		var scene = new Physijs.Scene;
 		var sceneMenu = new THREE.Scene();
 		
@@ -62,28 +65,29 @@ function GameObject(renderer) {
 	}
 
 	this.handleKeys = function(elapsed) {
-		
-		if (self.currentlyPressedKeys[self.Key.A]) {
-			self.playerAvatar.moveLeftInRelationToView(elapsed);
-		}
-		
-		if (self.currentlyPressedKeys[self.Key.D]) {
-			self.playerAvatar.moveRightInRelationToView(elapsed);
-		}
-		
-		if (self.currentlyPressedKeys[self.Key.S]) {
-			self.playerAvatar.moveBackwardInRelationToView(elapsed);
-		}
-		
-		if (self.currentlyPressedKeys[self.Key.W]) {
-			self.playerAvatar.moveForwardInRelationToView(elapsed);
-		}
-		
-		if (self.currentlyPressedKeys[self.Key.SPACEBAR]) {
-			self.playerAvatar.jump(holdingSpace = true);
-		}
-		else if (!self.currentlyPressedKeys[self.Key.SPACEBAR]) {
-			self.playerAvatar.jump(holdingSpace = false);
+		if (self.playerInputEnabled) {
+			if (self.currentlyPressedKeys[self.Key.A]) {
+				self.playerAvatar.moveLeftInRelationToView(elapsed);
+			}
+			
+			if (self.currentlyPressedKeys[self.Key.D]) {
+				self.playerAvatar.moveRightInRelationToView(elapsed);
+			}
+			
+			if (self.currentlyPressedKeys[self.Key.S]) {
+				self.playerAvatar.moveBackwardInRelationToView(elapsed);
+			}
+			
+			if (self.currentlyPressedKeys[self.Key.W]) {
+				self.playerAvatar.moveForwardInRelationToView(elapsed);
+			}
+			
+			if (self.currentlyPressedKeys[self.Key.SPACEBAR]) {
+				self.playerAvatar.jump(holdingSpace = true);
+			}
+			else if (!self.currentlyPressedKeys[self.Key.SPACEBAR]) {
+				self.playerAvatar.jump(holdingSpace = false);
+			}
 		}
 	}
 	

@@ -22,7 +22,6 @@ function PlayerAvatar(gameObject, positionX, positionY, positionZ) {
 		jsonLoader.load("models/player_avatar/player_leg_left.js", loadLegLeft);
 		jsonLoader.load("models/player_avatar/player_leg_right.js", loadLegRight);
 		jsonLoader.load("models/player_avatar/player_base_box.js", loadBaseBox);
-		jsonLoader.load("models/player_avatar/player_bottom_collision.js", loadBottomCollision);
 		
 		setTimeout(attachPartsTogether, 300);
 	}
@@ -76,14 +75,6 @@ function PlayerAvatar(gameObject, positionX, positionY, positionZ) {
 	    self.gameObject.scene.add(self.baseBox);
 	    self.baseBox.visible = false;
 	}
-	
-	function loadBottomCollision(geometry, materials) {
-	    self.bottomCollision = new Physijs.ConvexMesh(geometry, new THREE.MeshFaceMaterial(materials), 2);
-	    self.bottomCollision.name = "playerBottomCollision";
-	    
-	    self.gameObject.scene.add(self.bottomCollision);
-	    self.bottomCollision.visible = false;
-	}
 
 	function attachPartsTogether() {		
 		var pivotArmLeft = new THREE.Object3D();
@@ -103,7 +94,6 @@ function PlayerAvatar(gameObject, positionX, positionY, positionZ) {
 		self.playerAvatar.add(pivotLegLeft);
 		self.playerAvatar.add(pivotLegRight);
 		self.playerAvatar.add(self.baseBox);
-		self.playerAvatar.add(self.bottomCollision);
 		
 		pivotArmLeft.position.set(1.8, -4, 0);
 		pivotArmRight.position.set(-1.8, -4, 0);
@@ -114,6 +104,7 @@ function PlayerAvatar(gameObject, positionX, positionY, positionZ) {
 		self.playerAvatar.name = "playerAvatar";
 		
 		self.gameObject.scene.add(self.playerAvatar);
+		self.gameObject.playerAvatar = self.playerAvatar;
 		self.playerAvatar.setAngularFactor(new THREE.Vector3(0, 1, 0));
 		
 		attachMethods();
@@ -124,32 +115,14 @@ function PlayerAvatar(gameObject, positionX, positionY, positionZ) {
 	this.cameraFollow = function() {
 		
 	}
+	
+	this.getBottomCollisionPointY = function() {
+		return self.playerAvatar.position.y - 8.5;
+	}
 
 	function attachMethods() {
 		self.playerAvatar.addEventListener('collision', function(other_object, relative_velocity, relative_rotation, contact_normal) {
-			if (other_object.type == "basic_platform" && !self.playerAvatar.onGround) {
-				linearDamping = 0.98;
-				self.playerAvatar.onGround = true;
-				self.playerAvatar.setDamping(linearDamping, 1.0);
-			    moveCameraSmoothly();
-			}
-			else if (other_object.type == "slippery_platform") {
-				self.playerAvatar.setDamping(0.1, 1.0);
-				self.playerAvatar.onGround = true;
-			}
-			else if (other_object.name == "enemy_one_hitbox") {
-				self.playerAvatar.applyCentralImpulse(new THREE.Vector3(0, 500, 0));
-				var enemy = self.gameObject.scene.getObjectByName(other_object.parentEnemy);
-				enemy.deActivate();
-				self.gameObject.scene.remove(enemy);
-				self.gameObject.scene.remove(other_object);
-			}
-			else if (other_object.type == "enemy_one") {
-				self.playerAvatar.lives -= 1;
-				
-				if (self.playerAvatar.lives <= 0)
-					self.die();
-			}
+
 		});
 		
 		self.playerAvatar.moveLeftInRelationToView = moveLeftInRelationToView;
@@ -157,12 +130,14 @@ function PlayerAvatar(gameObject, positionX, positionY, positionZ) {
 		self.playerAvatar.moveForwardInRelationToView = moveForwardInRelationToView;
 		self.playerAvatar.moveBackwardInRelationToView = moveBackwardInRelationToView;
 		self.playerAvatar.jump = jump;
+		self.playerAvatar.die = self.die;
+		self.playerAvatar.getBottomCollisionPointY = self.getBottomCollisionPointY;
+		
+		self.gameObject.playerInputEnabled = true;
 	}
 	
 	this.setOnGround = function(isOnGround) {
 		self.playerAvatar.onGround = isOnGround;
-		
-
 	}
 
 	function moveCameraSmoothly(playerAvatar) {

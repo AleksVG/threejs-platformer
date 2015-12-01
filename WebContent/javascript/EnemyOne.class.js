@@ -1,11 +1,12 @@
-function EnemyOne(gameObject, positionX, positionY, positionZ, name) {
+function EnemyOne(gameObject, positionX, positionY, positionZ, name, rotationY, attackRadius) {
 	this.gameObject = gameObject;
 	this.positionX = positionX;
 	this.positionY = positionY;
 	this.positionZ = positionZ;
+	this.rotationY = rotationY;
 	this.name = name;
 	
-	this.attackRadius = 70;
+	this.attackRadius = attackRadius;
 	this.movementSpeed = 50;
 	
 	var self = this;
@@ -14,9 +15,8 @@ function EnemyOne(gameObject, positionX, positionY, positionZ, name) {
 		var jsonLoader = new THREE.JSONLoader();
 		jsonLoader.load("models/enemies/enemy_one/enemy_1.js", self.loadBody);
 		jsonLoader.load("models/enemies/enemy_one/enemy_1_spikes.js", self.loadSpikes);
-//		jsonLoader.load("models/enemies/enemy_one/enemy_1_hitbox.js", self.loadHitbox);
 		
-		setTimeout(self.attachPartsTogether, 100);
+		setTimeout(self.attachPartsTogether, 500);
 	}
 	
 	this.loadBody = function(geometry, materials) {
@@ -32,31 +32,41 @@ function EnemyOne(gameObject, positionX, positionY, positionZ, name) {
 		self.gameObject.scene.add(self.spikes);
 	}
 	
-	this.loadHitbox = function(geometry, materials) {
-		self.hitbox = new Physijs.ConvexMesh(geometry, new THREE.MeshFaceMaterial(materials), 0);
-		self.hitbox.name = "enemy_one_hitbox";
-		self.hitbox.parentEnemy = self.name;
-
-	    self.gameObject.correctFor3dsMaxRotation(self.hitbox);
-		self.gameObject.scene.add(self.hitbox);
-	}
-	
 	this.attachPartsTogether = function() {
 		self.enemy.add(self.spikes);
-//		self.enemy.add(self.hitbox);
 		
 	    self.enemy.type = "enemy_one";
 	    self.enemy.position.x = self.positionX;
 	    self.enemy.position.y = self.positionY;
 	    self.enemy.position.z = self.positionZ;
+		self.enemy.rotateZ(self.rotationY); // Z is Y axis...
 	    
 	    self.gameObject.correctFor3dsMaxRotation(self.enemy);
 	    self.gameObject.scene.add(self.enemy);
 	    
-		self.enemy.setAngularFactor(new THREE.Vector3(0, 1, 0));
 		self.enemy.setDamping(0.9, 1);
+		self.enemy.setAngularFactor(new THREE.Vector3(0, 1, 0));
 		
 		self.enemy.deActivate = self.deActivate;
+		self.addEventListeners();
+	}
+	
+	this.addEventListeners = function() {
+		self.enemy.addEventListener('collision', function(other_object, relative_velocity, relative_rotation, contact_normal) {
+			if (other_object.name == "playerAvatar" && !self.gameObject.playerAvatar.onGround) {
+				if (self.gameObject.playerAvatar.getBottomCollisionPointY() > (self.enemy.position.y + 8)) {
+					self.gameObject.playerAvatar.applyCentralImpulse(new THREE.Vector3(0, 500, 0));
+					self.enemy.deActivate();
+					self.gameObject.scene.remove(self.enemy);
+				}
+			}
+			else if (other_object.name == "playerAvatar") {
+				self.gameObject.playerAvatar.lives -= 1;
+				
+				if (self.gameObject.playerAvatar.lives <= 0)
+					self.gameObject.playerAvatar.die();
+			}
+		});
 	}
 	
 	this.activate = function() {
@@ -68,11 +78,6 @@ function EnemyOne(gameObject, positionX, positionY, positionZ, name) {
 			attack(self.gameObject.playerAvatar);
 		else
 			idle();
-		
-//		self.hitbox.__dirtyPosition = true;
-//		self.hitbox.position.x = self.enemy.position.x;
-//		self.hitbox.position.y = self.enemy.position.y + 0.4;
-//		self.hitbox.position.z = self.enemy.position.z;
 	}
 	
 	this.deActivate = function() {
@@ -111,6 +116,9 @@ function EnemyOne(gameObject, positionX, positionY, positionZ, name) {
 
 	function idle() {
 		// What does the enemy do when not attacking? Rolling aimlessly around...
+		// Temporary: just rotate
+		self.enemy.__dirtyRotation = true;
+		self.enemy.rotation.z += 0.01;
 	}
 }
 

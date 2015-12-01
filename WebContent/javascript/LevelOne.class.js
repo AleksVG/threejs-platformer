@@ -1,9 +1,11 @@
 function LevelOne(gameObject) {
 	this.gameObject = gameObject;
 	this.platform = new Platform(gameObject);
-	this.playerAvatar = new PlayerAvatar(gameObject, 0, 20, 0);
+	this.playerAvatar = new PlayerAvatar(gameObject, 0, 60, 0);
 	this.skybox = new Skybox(gameObject, 0, 0, 0);
-	this.enemyOne = new EnemyOne(gameObject, -705, -50, 0);
+	this.enemyOne = new EnemyOne(gameObject, -570, 100, 205, "enemy_1", 90, 0);
+	
+	this.enemies = [this.enemyOne];
 	
 	var self = this;
 	
@@ -13,7 +15,7 @@ function LevelOne(gameObject) {
 		
 		// Wait for models to load
 		setTimeout(function() {
-			self.gameObject.playerAvatar = self.gameObject.scene.getObjectByName("playerAvatar");
+			self.activate();
 		    self.setupCamera();
 		}, 1000);
 	}
@@ -25,6 +27,10 @@ function LevelOne(gameObject) {
 	    jsonLoader.load("models/levels/level_one/level_1_fence_2.js", self.platform.createBasicPlatformObject);
 	    jsonLoader.load("models/levels/level_one/level_1_plat_1_part_2.js", self.platform.createBasicPlatformObject);
 	    jsonLoader.load("models/levels/level_one/level_1_plat_2.js", self.platform.createBasicPlatformObject);
+	    jsonLoader.load("models/levels/level_one/level_1_plat_3.js", self.platform.createBasicPlatformObject);
+	    jsonLoader.load("models/levels/level_one/level_1_plat_4.js", self.platform.createBasicPlatformObject);
+	    jsonLoader.load("models/levels/level_one/level_1_plat_5.js", self.platform.createBasicPlatformObject);
+	    jsonLoader.load("models/levels/level_one/level_1_plat_6.js", self.platform.createBasicPlatformObject);
 	    jsonLoader.load("models/levels/level_one/level_1_obstacle_1.js", self.platform.createBasicPlatformObject);
 	    jsonLoader.load("models/levels/level_one/level_1_obstacle_2.js", self.platform.createBasicPlatformObject);
 	    jsonLoader.load("models/levels/level_one/level_1_stairs_1.js", self.platform.createBasicPlatformObject);
@@ -41,7 +47,10 @@ function LevelOne(gameObject) {
 	    self.playerAvatar.createAvatar();
 	}
 	
-	this.activate = function() {}
+	this.activate = function() {
+		for (i = 0; i < self.enemies.length; i++)
+			self.enemies[i].activate();
+	}
 	
 	this.setupCamera = function() {
 		self.gameObject.camera.initialize();
