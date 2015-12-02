@@ -15,6 +15,9 @@ function main() {
 
 	gameObject.loadLevel(gameObject.Level.Overworld);
 	
+	// Uncomment for debug mode (use OrbitControls to traverse levels)
+	//useDebugMode(gameObject, renderer);
+	
 	// Wait for level to load
 	setTimeout(function() {
 		gameObject.render();
@@ -31,4 +34,13 @@ function setupRenderer() {
     document.getElementById("WebGL-output").appendChild(renderer.domElement);
     
     return renderer;
+}
+
+function useDebugMode(gameObject, renderer) {
+	var controls = new THREE.OrbitControls(gameObject.camera, renderer.domElement );
+	controls.enableDamping = true;
+	controls.dampingFactor = 0.25;
+	
+	gameObject.usingDebugMode = true;
+	gameObject.debugControls = controls;
 }

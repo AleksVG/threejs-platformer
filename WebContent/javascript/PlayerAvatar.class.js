@@ -311,6 +311,8 @@ function PlayerAvatar(gameObject, positionX, positionY, positionZ) {
 		var currentVelocityY = self.playerAvatar.getLinearVelocity().y;
 		
 		if (holdingSpace && self.playerAvatar.onGround) {
+			self.playerAvatar.onMovingPlatform = false;
+			
 			if (self.cameraSmoothingFinished)
 				self.playerAvatar.lastGroundY = self.playerAvatar.position.y;
 			

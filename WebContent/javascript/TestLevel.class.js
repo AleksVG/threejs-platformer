@@ -1,7 +1,7 @@
 function TestLevel(gameObject) {
 	this.gameObject = gameObject;
 	this.platform = new Platform(gameObject);
-	this.playerAvatar = new PlayerAvatar(gameObject, 0, 30, 0);
+	this.playerAvatar = new PlayerAvatar(gameObject, -50, 30, 0);
 	this.enemyOne = new EnemyOne(gameObject, 30, 30, 0, "billy", 0, 50);
 	this.enemyTwo = new EnemyTwo(gameObject, 30, 40, 20, "bill", 0, 180);
 	this.skybox = new Skybox(gameObject, 0, 0, 0);
@@ -23,13 +23,13 @@ function TestLevel(gameObject) {
 	TestLevel.prototype.loadModels = function() {
 		var jsonLoader = new THREE.JSONLoader();
 	    jsonLoader.load("models/test_level/testLevel_plat1.js", self.platform.createBasicPlatformObject);
-	    jsonLoader.load("models/test_level/testLevel_plat2.js", self.platform.createBasicPlatformObject);
+	    jsonLoader.load("models/test_level/testLevel_plat2.js", self.platform.createFallingPlatformObject);
 	    jsonLoader.load("models/test_level/testLevel_plat3.js", self.platform.createBasicPlatformObject);
 	    jsonLoader.load("models/test_level/testLevel_plat4.js", self.platform.createBasicPlatformObject);
 	    jsonLoader.load("models/test_level/testLevel_plat5.js", self.platform.createBasicPlatformObject);
-	    jsonLoader.load("models/test_level/testLevel_plat6.js", self.platform.createBasicPlatformObject);
-	    jsonLoader.load("models/test_level/testLevel_plat7.js", self.platform.createBasicPlatformObject);
-	    jsonLoader.load("models/test_level/testLevel_plat8.js", self.platform.createBasicPlatformObject);
+	    jsonLoader.load("models/test_level/testLevel_plat6.js", self.platform.createFallingPlatformObject);
+	    jsonLoader.load("models/test_level/testLevel_plat7.js", self.platform.createFallingPlatformObject);
+	    jsonLoader.load("models/test_level/testLevel_plat8.js", self.platform.createFallingPlatformObject);
 	    jsonLoader.load("models/levels/overworld/overworld_access_level_one.js", self.overworldTeleporter.createTeleporter);
 	    jsonLoader.load("models/skyboxes/blue_sky/skybox_blue_sky.js", self.skybox.createBasicSkyboxObject);
 	    

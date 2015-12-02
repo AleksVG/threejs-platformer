@@ -44,8 +44,8 @@ function Projectile(gameObject, parentEnemy) {
 	this.getNormalizedDirectionVector = function() {
 		var lookAtPosition = self.parentEnemy.getLookAtPosition();
 		var directionVector = new THREE.Vector3(lookAtPosition.x - self.parentEnemy.enemy.position.x,
-				lookAtPosition.y - self.parentEnemy.enemy.position.y,
-				lookAtPosition.z - self.parentEnemy.enemy.position.z);
+												lookAtPosition.y - self.parentEnemy.enemy.position.y,
+												lookAtPosition.z - self.parentEnemy.enemy.position.z);
 		
 		var directionMagnitude = Math.sqrt(Math.pow(directionVector.x, 2) + Math.pow(directionVector.y, 2) + Math.pow(directionVector.z, 2));
 		var normalizationFactor = 1 / directionMagnitude;

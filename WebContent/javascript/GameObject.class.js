@@ -48,7 +48,11 @@ function GameObject(renderer) {
 	    	
 	    self.camera.update();
 	    self.menu.update();
-	    self.handleKeys(elapsed);
+	    
+	    if (self.usingDebugMode)
+	    	self.debugControls.update();
+	    else
+	    	self.handleKeys(elapsed);
 
 	    self.scene.simulate();
 	    // Comment out for just rendering menu
