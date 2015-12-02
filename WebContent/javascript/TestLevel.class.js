@@ -3,7 +3,7 @@ function TestLevel(gameObject) {
 	this.platform = new Platform(gameObject);
 	this.playerAvatar = new PlayerAvatar(gameObject, 0, 30, 0);
 	this.enemyOne = new EnemyOne(gameObject, 30, 30, 0, "billy", 0, 50);
-	this.enemyTwo = new EnemyTwo(gameObject, 30, 40, 20, "bill", 0);
+	this.enemyTwo = new EnemyTwo(gameObject, 30, 40, 20, "bill", 0, 180);
 	this.skybox = new Skybox(gameObject, 0, 0, 0);
 	this.overworldTeleporter = new Teleporter(gameObject, gameObject.Level.Overworld, -50, -30, 0);
 	
