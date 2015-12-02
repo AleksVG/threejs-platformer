@@ -3,6 +3,7 @@ function TestLevel(gameObject) {
 	this.platform = new Platform(gameObject);
 	this.playerAvatar = new PlayerAvatar(gameObject, 0, 30, 0);
 	this.enemyOne = new EnemyOne(gameObject, 30, 30, 0, "billy", 0, 50);
+	this.enemyTwo = new EnemyTwo(gameObject, 30, 40, 20, "bill", 0);
 	this.skybox = new Skybox(gameObject, 0, 0, 0);
 	this.overworldTeleporter = new Teleporter(gameObject, gameObject.Level.Overworld, -50, -30, 0);
 	
@@ -33,11 +34,18 @@ function TestLevel(gameObject) {
 	    jsonLoader.load("models/skyboxes/blue_sky/skybox_blue_sky.js", self.skybox.createBasicSkyboxObject);
 	    
 	    self.enemyOne.createEnemyOne();
+	    self.enemyTwo.createEnemyTwo();
 	    self.playerAvatar.createAvatar();
 	}
 
-	this.activate = function(playerAvatar) {
-		self.enemyOne.activate(playerAvatar);
+	this.activate = function() {
+		self.enemyOne.activate();
+		self.enemyTwo.activate();
+	}
+	
+	this.deactivate = function() {
+		self.enemyOne.deactivate();
+		self.enemyTwo.deactivate();
 	}
 	
 	function setupCamera() {

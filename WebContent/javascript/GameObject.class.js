@@ -6,10 +6,14 @@ function GameObject(renderer) {
 	this.Level = {Overworld: "Overworld", One: "One", Two: "Two", Three: "Three", TestLevel: "TestLevel"};
 	this.lastTime = 0;
 	this.playerInputEnabled = false;
+	this.currentLevel = "notStarted";
 	
 	var self = this;
 	
 	this.loadLevel = function(level) {
+		if (self.currentLevel != "notStarted")
+			self.currentLevel.deactivate();
+		
 		self.playerInputEnabled = false;
 		
 		var scene = new Physijs.Scene;

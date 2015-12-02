@@ -47,7 +47,7 @@ function EnemyOne(gameObject, positionX, positionY, positionZ, name, rotationY, 
 		self.enemy.setDamping(0.9, 1);
 		self.enemy.setAngularFactor(new THREE.Vector3(0, 1, 0));
 		
-		self.enemy.deActivate = self.deActivate;
+		self.enemy.deactivate = self.deactivate;
 		self.addEventListeners();
 	}
 	
@@ -56,7 +56,7 @@ function EnemyOne(gameObject, positionX, positionY, positionZ, name, rotationY, 
 			if (other_object.name == "playerAvatar" && !self.gameObject.playerAvatar.onGround) {
 				if (self.gameObject.playerAvatar.getBottomCollisionPointY() > (self.enemy.position.y + 8)) {
 					self.gameObject.playerAvatar.applyCentralImpulse(new THREE.Vector3(0, 500, 0));
-					self.enemy.deActivate();
+					self.enemy.deactivate();
 					self.gameObject.scene.remove(self.enemy);
 				}
 			}
@@ -70,17 +70,15 @@ function EnemyOne(gameObject, positionX, positionY, positionZ, name, rotationY, 
 	}
 	
 	this.activate = function() {
-		setInterval(self.activateInterval, 20);
+		self.activateInterval = setInterval(function() {
+			if (isWithinRange(self.gameObject.playerAvatar))
+				attack(self.gameObject.playerAvatar);
+			else
+				idle();
+		}, 20);
 	}
 	
-	this.activateInterval = function() {
-		if (isWithinRange(self.gameObject.playerAvatar))
-			attack(self.gameObject.playerAvatar);
-		else
-			idle();
-	}
-	
-	this.deActivate = function() {
+	this.deactivate = function() {
 		clearInterval(self.activateInterval);
 	}
 

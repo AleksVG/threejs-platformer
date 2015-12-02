@@ -30,6 +30,8 @@ function Overworld(gameObject) {
 	
 	this.activate = function() {}
 	
+	this.deactivate = function() {}
+	
 	this.setupCamera = function() {
 		self.gameObject.camera.initialize();
 		self.gameObject.menu.initialize();

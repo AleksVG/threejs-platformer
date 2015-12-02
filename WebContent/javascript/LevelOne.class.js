@@ -52,6 +52,11 @@ function LevelOne(gameObject) {
 			self.enemies[i].activate();
 	}
 	
+	this.deactivate = function() {
+		for (i = 0; i < self.enemies.length; i++)
+			self.enemies[i].deactivate();
+	}
+	
 	this.setupCamera = function() {
 		self.gameObject.camera.initialize();
 	}

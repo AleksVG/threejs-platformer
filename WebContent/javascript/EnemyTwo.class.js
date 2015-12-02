@@ -1,4 +1,4 @@
-function EnemyOne(gameObject, positionX, positionY, positionZ, name, rotationY, attackRadius) {
+function EnemyTwo(gameObject, positionX, positionY, positionZ, name, rotationY) {
 	this.gameObject = gameObject;
 	this.positionX = positionX;
 	this.positionY = positionY;
@@ -8,23 +8,24 @@ function EnemyOne(gameObject, positionX, positionY, positionZ, name, rotationY, 
 	
 	var self = this;
 
-	this.createEnemyOne = function() {
+	this.createEnemyTwo = function() {
 		var jsonLoader = new THREE.JSONLoader();
-		jsonLoader.load("models/enemies/enemy_one/enemy_2.js", self.loadBody);
-		jsonLoader.load("models/enemies/enemy_one/enemy_2_base.js", self.loadBase);
+		jsonLoader.load("models/enemies/enemy_two/enemy_2.js", self.loadBody);
+		jsonLoader.load("models/enemies/enemy_two/enemy_2_base.js", self.loadBase);
 		
 		setTimeout(self.attachPartsTogether, 500);
 	}
 	
 	this.loadBody = function(geometry, materials) {
-		self.enemy = new Physijs.ConvexMesh(geometry, new THREE.MeshFaceMaterial(materials), 25);
+		self.enemy = new Physijs.ConvexMesh(geometry, new THREE.MeshFaceMaterial(materials), 250);
 	    self.enemy.name = self.name;
+	    self.enemy.boundingBox = new THREE.Box3().setFromObject(self.enemy);
 		
 		self.gameObject.scene.add(self.enemy);
 	}
 	
 	this.loadBase = function(geometry, materials) {
-		self.base = new Physijs.ConvexMesh(geometry, new THREE.MeshFaceMaterial(materials), 25);
+		self.base = new Physijs.ConvexMesh(geometry, new THREE.MeshFaceMaterial(materials), 250);
 		
 		self.gameObject.scene.add(self.enemy);
 	}
@@ -38,11 +39,12 @@ function EnemyOne(gameObject, positionX, positionY, positionZ, name, rotationY, 
 	    self.enemy.position.z = self.positionZ;
 		self.enemy.rotateZ(self.rotationY); // Z is Y axis...
 	    
-	    self.gameObject.correctFor3dsMaxRotation(self.enemy);
+//	    self.gameObject.correctFor3dsMaxRotation(self.enemy);
 	    self.gameObject.scene.add(self.enemy);
 		self.enemy.setAngularFactor(new THREE.Vector3(0, 1, 0));
+		self.enemy.setDamping(0.98, 1);
 		
-		self.enemy.deActivate = self.deActivate;
+		self.enemy.deactivate = self.deactivate;
 		self.addEventListeners();
 	}
 	
@@ -52,7 +54,27 @@ function EnemyOne(gameObject, positionX, positionY, positionZ, name, rotationY, 
 		});
 	}
 	
+	this.getLookAtPosition = function() {
+		return new THREE.Vector3(self.gameObject.playerAvatar.position.x, self.enemy.position.y, self.gameObject.playerAvatar.position.z);
+	}
+	
+	this.deactivate = function() {
+		clearInterval(self.rotationInterval);
+		clearInterval(self.shootInterval);
+	}
+	
 	this.activate = function() {
+		self.rotationInterval = setInterval(function() {
+			self.enemy.__dirtyRotation = true;
+			var lookAtPosition = self.getLookAtPosition();
+			self.enemy.lookAt(lookAtPosition);
+			}, 50);
+		
+		self.shootInterval = setInterval(function() {
+			new Projectile(self.gameObject, self).fire();
+		}, 2000);
+		
+		
 		// Shoot fireballs at certain premade intervals (or random?).
 		// Should be able to choose between different firing sequences.
 		
