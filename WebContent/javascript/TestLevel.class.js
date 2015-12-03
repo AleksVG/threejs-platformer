@@ -43,6 +43,7 @@ function TestLevel(gameObject) {
 	this.activate = function() {
 		self.enemyOne.activate();
 		self.enemyTwo.activate();
+		self.enemyTwo.setAttackType(self.enemyTwo.AttackType.TripleShot);
 		self.key.activate();
 	}
 	

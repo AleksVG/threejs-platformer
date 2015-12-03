@@ -53,19 +53,22 @@ function EnemyOne(gameObject, positionX, positionY, positionZ, name, rotationY, 
 	
 	this.addEventListeners = function() {
 		self.enemy.addEventListener('collision', function(other_object, relative_velocity, relative_rotation, contact_normal) {
-			if (other_object.name == "playerAvatar" && !self.gameObject.playerAvatar.onGround) {
-				if (self.gameObject.playerAvatar.getBottomCollisionPointY() > (self.enemy.position.y + 8)) {
+			if (other_object.name == "playerAvatar") {
+				if ((self.gameObject.playerAvatar.getBottomCollisionPointY() > (self.enemy.position.y + 8)) && 
+					!self.gameObject.playerAvatar.onGround) {
+					
 					self.gameObject.playerAvatar.applyCentralImpulse(new THREE.Vector3(0, 500, 0));
 					self.enemy.deactivate();
 					self.gameObject.scene.remove(self.enemy);
 				}
+				else {
+					self.gameObject.playerAvatar.lives -= 1;
+					
+					if (self.gameObject.playerAvatar.lives <= 0)
+						self.gameObject.playerAvatar.die();
+				}
 			}
-			else if (other_object.name == "playerAvatar") {
-				self.gameObject.playerAvatar.lives -= 1;
-				
-				if (self.gameObject.playerAvatar.lives <= 0)
-					self.gameObject.playerAvatar.die();
-			}
+
 		});
 	}
 	

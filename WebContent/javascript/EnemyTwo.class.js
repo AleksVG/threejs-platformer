@@ -8,6 +8,11 @@ function EnemyTwo(gameObject, positionX, positionY, positionZ, name, rotationY, 
 	this.attackRadius = attackRadius;
 	this.isAttacking = false;
 	
+	this.AttackType = {ConstantInterval: "ConstantInterval", TripleShot: "TripleShot", DoubleShot: "DoubleShot", Custom: "Custom"};
+	this.constantIntervalWait = 2000; // Default interval in milliseconds
+	this.customAttackInterval = -1; // 
+	this.currentAttackType = this.AttackType.ConstantInterval;
+	
 	var self = this;
 
 	this.createEnemyTwo = function() {
@@ -41,7 +46,6 @@ function EnemyTwo(gameObject, positionX, positionY, positionZ, name, rotationY, 
 	    self.enemy.position.z = self.positionZ;
 		self.enemy.rotateZ(self.rotationY); // Z is Y axis...
 	    
-//	    self.gameObject.correctFor3dsMaxRotation(self.enemy);
 	    self.gameObject.scene.add(self.enemy);
 		self.enemy.setAngularFactor(new THREE.Vector3(0, 1, 0));
 		self.enemy.setDamping(0.98, 1);
@@ -52,7 +56,16 @@ function EnemyTwo(gameObject, positionX, positionY, positionZ, name, rotationY, 
 	
 	this.addEventListeners = function() {
 		self.enemy.addEventListener('collision', function(other_object, relative_velocity, relative_rotation, contact_normal) {
-			
+			if (other_object.name == "playerAvatar") {
+				console.log("player y: " + self.gameObject.playerAvatar.getBottomCollisionPointY() + ", enemy y: " + (self.enemy.position.y + 6));
+				if ((self.gameObject.playerAvatar.getBottomCollisionPointY() > (self.enemy.position.y + 6)) && 
+					!self.gameObject.playerAvatar.onGround) {
+					
+					self.gameObject.playerAvatar.applyCentralImpulse(new THREE.Vector3(0, 500, 0));
+					self.enemy.deactivate();
+					self.gameObject.scene.remove(self.enemy);
+				}
+			}
 		});
 	}
 	
@@ -107,9 +120,45 @@ function EnemyTwo(gameObject, positionX, positionY, positionZ, name, rotationY, 
 			self.enemy.lookAt(lookAtPosition);
 			}, 50);
 		
-		self.shootInterval = setInterval(function() {
-			new Projectile(self.gameObject, self).fire();
-		}, 2000);
+		switch(self.currentAttackType) {
+		case self.AttackType.ConstantInterval:
+			self.shootInterval = setInterval(function() {
+				new Projectile(self.gameObject, self).fire();
+			}, self.constantIntervalWait);
+			break;
+			
+		case self.AttackType.TripleShot:
+			self.shootInterval = setInterval(function() {
+				new Projectile(self.gameObject, self).fire();
+				
+				setTimeout(function() {
+					new Projectile(self.gameObject, self).fire();
+					
+					setTimeout(function() {
+						new Projectile(self.gameObject, self).fire();
+					}, 500);
+				}, 500);
+			}, 3000);
+			break;
+			
+		case self.AttackType.DoubleShot:
+			self.shootInterval = setInterval(function() {
+				new Projectile(self.gameObject, self).fire();
+				
+				setTimeout(function() {
+					new Projectile(self.gameObject, self).fire();
+				}, 500);
+			}, 2000);
+			break;
+			
+		default:
+			self.shootInterval = setInterval(function() {
+				new Projectile(self.gameObject, self).fire();
+			}, self.constantIntervalWait);
+			break;
+		}
+		
+
 	}
 	
 	this.idle = function() {
@@ -117,6 +166,11 @@ function EnemyTwo(gameObject, positionX, positionY, positionZ, name, rotationY, 
 
 		clearInterval(self.rotationInterval);
 		clearInterval(self.shootInterval);
+	}
+	
+	this.setAttackType = function(attackType) {
+		self.currentAttackType = attackType;
+		self.idle();
 	}
 }
 
