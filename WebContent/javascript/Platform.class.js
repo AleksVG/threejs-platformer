@@ -14,7 +14,7 @@ function Platform(gameObject) {
 
 	    mesh.addEventListener('collision', function(other_object, relative_velocity, relative_rotation, contact_normal) {
 			if (other_object.name == "playerAvatar" && !self.gameObject.playerAvatar.onGround) {
-				if (self.gameObject.playerAvatar.getBottomCollisionPointY() > (mesh.boundingBox.max.y - 2)) {
+				if (self.gameObject.playerAvatar.getBottomCollisionPointY() > (mesh.boundingBox.max.y - 2.5)) {
 					self.gameObject.playerAvatar.onGround = true;
 					self.gameObject.playerAvatar.setDamping(0.98, 1.0);
 					
@@ -37,7 +37,7 @@ function Platform(gameObject) {
 
 	    mesh.addEventListener('collision', function(other_object, relative_velocity, relative_rotation, contact_normal) {
 			if (other_object.name == "playerAvatar" && !self.gameObject.playerAvatar.onGround) {
-				if (self.gameObject.playerAvatar.getBottomCollisionPointY() > (mesh.boundingBox.max.y - 1.5)) {
+				if (self.gameObject.playerAvatar.getBottomCollisionPointY() > (mesh.boundingBox.max.y - 2.5)) {
 					self.gameObject.playerAvatar.onGround = true;
 					self.gameObject.playerAvatar.setDamping(0.1, 1.0);
 				}
@@ -84,6 +84,6 @@ function Platform(gameObject) {
 			setTimeout(function() {
 				self.gameObject.scene.remove(mesh);
 			}, 3000);
-		}, 1500);
+		}, 800);
 	}
 }

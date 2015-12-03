@@ -2,8 +2,8 @@ function TestLevel(gameObject) {
 	this.gameObject = gameObject;
 	this.platform = new Platform(gameObject);
 	this.playerAvatar = new PlayerAvatar(gameObject, -50, 30, 0);
-	this.enemyOne = new EnemyOne(gameObject, 30, 30, 0, "billy", 0, 50);
-	this.enemyTwo = new EnemyTwo(gameObject, 30, 40, 20, "bill", 0, 180);
+	this.enemyOne = new EnemyOne(gameObject, -10, 30, 0, "billy", 0, 50, 50);
+	this.enemyTwo = new EnemyTwo(gameObject, 40, 40, 20, "bill", 0, 180);
 	this.key = new Key(gameObject, -150, -10, -40, "test_key");
 	this.skybox = new Skybox(gameObject, 0, 0, 0);
 	this.overworldTeleporter = new Teleporter(gameObject, gameObject.Level.Overworld, -50, -30, 0);

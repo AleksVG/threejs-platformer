@@ -166,6 +166,9 @@ function EnemyTwo(gameObject, positionX, positionY, positionZ, name, rotationY, 
 
 		clearInterval(self.rotationInterval);
 		clearInterval(self.shootInterval);
+		
+		self.enemy.__dirtyRotation = true;
+		self.enemy.rotateY(0.01);
 	}
 	
 	this.setAttackType = function(attackType) {

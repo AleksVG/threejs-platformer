@@ -1,4 +1,4 @@
-function EnemyOne(gameObject, positionX, positionY, positionZ, name, rotationY, attackRadius) {
+function EnemyOne(gameObject, positionX, positionY, positionZ, name, rotationY, attackRadius, movementSpeed) {
 	this.gameObject = gameObject;
 	this.positionX = positionX;
 	this.positionY = positionY;
@@ -7,7 +7,7 @@ function EnemyOne(gameObject, positionX, positionY, positionZ, name, rotationY, 
 	this.name = name;
 	
 	this.attackRadius = attackRadius;
-	this.movementSpeed = 50;
+	this.movementSpeed = movementSpeed;
 	
 	var self = this;
 
@@ -39,9 +39,8 @@ function EnemyOne(gameObject, positionX, positionY, positionZ, name, rotationY, 
 	    self.enemy.position.x = self.positionX;
 	    self.enemy.position.y = self.positionY;
 	    self.enemy.position.z = self.positionZ;
-		self.enemy.rotateZ(self.rotationY); // Z is Y axis...
+		self.enemy.rotateY(self.rotationY);
 	    
-	    self.gameObject.correctFor3dsMaxRotation(self.enemy);
 	    self.gameObject.scene.add(self.enemy);
 	    
 		self.enemy.setDamping(0.9, 1);
@@ -54,7 +53,8 @@ function EnemyOne(gameObject, positionX, positionY, positionZ, name, rotationY, 
 	this.addEventListeners = function() {
 		self.enemy.addEventListener('collision', function(other_object, relative_velocity, relative_rotation, contact_normal) {
 			if (other_object.name == "playerAvatar") {
-				if ((self.gameObject.playerAvatar.getBottomCollisionPointY() > (self.enemy.position.y + 8)) && 
+				console.log("player y: " + self.gameObject.playerAvatar.getBottomCollisionPointY() + ", enemy y: " + (self.enemy.position.y + 3));
+				if ((self.gameObject.playerAvatar.getBottomCollisionPointY() > (self.enemy.position.y + 3)) && 
 					!self.gameObject.playerAvatar.onGround) {
 					
 					self.gameObject.playerAvatar.applyCentralImpulse(new THREE.Vector3(0, 500, 0));
@@ -97,8 +97,9 @@ function EnemyOne(gameObject, positionX, positionY, positionZ, name, rotationY, 
 	}
 
 	function attack(objectToAttack) {
-//		self.enemy.__dirtyRotation = true;
-//		self.enemy.lookAt(objectToAttack.position);
+		self.enemy.__dirtyRotation = true;
+		var lookAtPosition = new THREE.Vector3(objectToAttack.position.x, self.enemy.position.y, objectToAttack.position.z);
+		self.enemy.lookAt(lookAtPosition);
 		self.moveTowards(objectToAttack);
 	}
 
@@ -119,7 +120,7 @@ function EnemyOne(gameObject, positionX, positionY, positionZ, name, rotationY, 
 		// What does the enemy do when not attacking? Rolling aimlessly around...
 		// Temporary: just rotate
 		self.enemy.__dirtyRotation = true;
-		self.enemy.rotation.z += 0.01;
+		self.enemy.rotateY(0.01);
 	}
 }
 
