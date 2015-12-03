@@ -7,6 +7,7 @@ function GameObject(renderer) {
 	this.lastTime = 0;
 	this.playerInputEnabled = false;
 	this.currentLevel = "notStarted";
+	this.levelKeys = [];
 	
 	var self = this;
 	

@@ -4,6 +4,7 @@ function TestLevel(gameObject) {
 	this.playerAvatar = new PlayerAvatar(gameObject, -50, 30, 0);
 	this.enemyOne = new EnemyOne(gameObject, 30, 30, 0, "billy", 0, 50);
 	this.enemyTwo = new EnemyTwo(gameObject, 30, 40, 20, "bill", 0, 180);
+	this.key = new Key(gameObject, -150, -10, -40, "test_key");
 	this.skybox = new Skybox(gameObject, 0, 0, 0);
 	this.overworldTeleporter = new Teleporter(gameObject, gameObject.Level.Overworld, -50, -30, 0);
 	
@@ -36,16 +37,19 @@ function TestLevel(gameObject) {
 	    self.enemyOne.createEnemyOne();
 	    self.enemyTwo.createEnemyTwo();
 	    self.playerAvatar.createAvatar();
+	    self.key.createKey();
 	}
 
 	this.activate = function() {
 		self.enemyOne.activate();
 		self.enemyTwo.activate();
+		self.key.activate();
 	}
 	
 	this.deactivate = function() {
 		self.enemyOne.deactivate();
 		self.enemyTwo.deactivate();
+		self.key.activate();
 	}
 	
 	function setupCamera() {
