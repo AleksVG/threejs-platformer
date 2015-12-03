@@ -23,24 +23,41 @@ function LevelOne(gameObject) {
 	LevelOne.prototype.loadModels = function() {
 		var jsonLoader = new THREE.JSONLoader();
 	    jsonLoader.load("models/levels/level_one/level_1_plat_1_part_1.js", self.platform.createBasicPlatformObject);
+	    jsonLoader.load("models/levels/level_one/level_1_plat_1_part_2.js", self.platform.createBasicPlatformObject);
+	    
 	    jsonLoader.load("models/levels/level_one/level_1_fence_1.js", self.platform.createBasicPlatformObject);
 	    jsonLoader.load("models/levels/level_one/level_1_fence_2.js", self.platform.createBasicPlatformObject);
-	    jsonLoader.load("models/levels/level_one/level_1_plat_1_part_2.js", self.platform.createBasicPlatformObject);
+	    jsonLoader.load("models/levels/level_one/level_1_fence_3.js", self.platform.createBasicPlatformObject);
+	    jsonLoader.load("models/levels/level_one/level_1_fence_4.js", self.platform.createBasicPlatformObject);
+	    
 	    jsonLoader.load("models/levels/level_one/level_1_plat_2.js", self.platform.createBasicPlatformObject);
 	    jsonLoader.load("models/levels/level_one/level_1_plat_3.js", self.platform.createBasicPlatformObject);
 	    jsonLoader.load("models/levels/level_one/level_1_plat_4.js", self.platform.createBasicPlatformObject);
 	    jsonLoader.load("models/levels/level_one/level_1_plat_5.js", self.platform.createBasicPlatformObject);
 	    jsonLoader.load("models/levels/level_one/level_1_plat_6.js", self.platform.createBasicPlatformObject);
+	    jsonLoader.load("models/levels/level_one/level_1_plat_7.js", self.platform.createBasicPlatformObject);
+
+	    jsonLoader.load("models/levels/level_one/level_1_falling_plat_1.js", self.platform.createFallingPlatformObject);
+	    jsonLoader.load("models/levels/level_one/level_1_falling_plat_2.js", self.platform.createFallingPlatformObject);
+	    jsonLoader.load("models/levels/level_one/level_1_falling_plat_3.js", self.platform.createFallingPlatformObject);
+	    
 	    jsonLoader.load("models/levels/level_one/level_1_obstacle_1.js", self.platform.createBasicPlatformObject);
 	    jsonLoader.load("models/levels/level_one/level_1_obstacle_2.js", self.platform.createBasicPlatformObject);
+	    
 	    jsonLoader.load("models/levels/level_one/level_1_stairs_1.js", self.platform.createBasicPlatformObject);
 	    jsonLoader.load("models/levels/level_one/level_1_stairs_2.js", self.platform.createBasicPlatformObject);
 	    jsonLoader.load("models/levels/level_one/level_1_stairs_3.js", self.platform.createBasicPlatformObject);
 	    jsonLoader.load("models/levels/level_one/level_1_stairs_4.js", self.platform.createBasicPlatformObject);
 	    jsonLoader.load("models/levels/level_one/level_1_stairs_5.js", self.platform.createBasicPlatformObject);
+	    
+	    jsonLoader.load("models/levels/level_one/level_1_stairs_2_1.js", self.platform.createBasicPlatformObject);
+	    jsonLoader.load("models/levels/level_one/level_1_stairs_2_2.js", self.platform.createBasicPlatformObject);
+	    jsonLoader.load("models/levels/level_one/level_1_stairs_2_3.js", self.platform.createBasicPlatformObject);
+	    
 	    jsonLoader.load("models/levels/level_one/level_1_tree_slide.js", self.platform.createBasicPlatformObject);
 	    jsonLoader.load("models/levels/level_one/level_1_tree_slide_side_1.js", self.platform.createBasicPlatformObject);
 	    jsonLoader.load("models/levels/level_one/level_1_tree_slide_side_2.js", self.platform.createBasicPlatformObject);
+	    
 	    jsonLoader.load("models/skyboxes/blue_sky/skybox_blue_sky.js", self.skybox.createBasicSkyboxObject);
 	    
 	    self.enemyOne.createEnemyOne();

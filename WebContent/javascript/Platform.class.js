@@ -6,7 +6,7 @@ function Platform(gameObject) {
 	this.createBasicPlatformObject = function(geometry, materials) {
 	    var mesh = new Physijs.ConvexMesh(geometry, new THREE.MeshFaceMaterial(materials), 0);
 	    
-	    mesh.type = "basic_platform";
+	    mesh.type = "platform";
 	    
 	    self.gameObject.correctFor3dsMaxRotation(mesh);
 	    
@@ -29,7 +29,7 @@ function Platform(gameObject) {
 	this.createSlipperyPlatformObject = function(geometry, materials) {
 	    var mesh = new Physijs.ConvexMesh(geometry, new THREE.MeshFaceMaterial(materials), 0);
 	    
-	    mesh.type = "slippery_platform";
+	    mesh.type = "platform";
 	    
 	    self.gameObject.correctFor3dsMaxRotation(mesh);
 	    
@@ -50,7 +50,7 @@ function Platform(gameObject) {
 	this.createFallingPlatformObject = function(geometry, materials) {
 	    var mesh = new Physijs.ConvexMesh(geometry, new THREE.MeshFaceMaterial(materials), 1000000);
 	    
-	    mesh.type = "falling_platform";
+	    mesh.type = "platform";
 	    
 	    self.gameObject.correctFor3dsMaxRotation(mesh);
 	    
@@ -66,6 +66,9 @@ function Platform(gameObject) {
 					console.log("on falling");
 				}
 			}
+			else if (other_object.type == "platform") {
+				self.gameObject.scene.remove(mesh);
+			}
 		});
 	    
 	    self.gameObject.scene.add(mesh);
@@ -77,6 +80,10 @@ function Platform(gameObject) {
 			console.log("now falling");
 			mesh.setDamping(0.1, 1);
 			mesh.applyCentralImpulse(new THREE.Vector3(0, -10, 0));
+			
+			setTimeout(function() {
+				self.gameObject.scene.remove(mesh);
+			}, 3000);
 		}, 1500);
 	}
 }
