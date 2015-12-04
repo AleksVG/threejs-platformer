@@ -1,8 +1,8 @@
 function GameObject(renderer) {
 	this.renderer = renderer;
-	
+		
 	this.currentlyPressedKeys = {};
-	this.Key = {A: 65, S: 83, D: 68, W: 87, SPACEBAR: 32};
+	this.Key = {A: 65, S: 83, D: 68, W: 87, SPACEBAR: 32, ESCAPE: 27, LEFT_ARROW: 37, RIGHT_ARROW: 38, UP_ARROW: 38, DOWN_ARROW: 40 };
 	this.Level = {Overworld: "Overworld", One: "One", Two: "Two", Three: "Three", TestLevel: "TestLevel"};
 	this.lastTime = 0;
 	this.playerInputEnabled = false;
@@ -16,6 +16,9 @@ function GameObject(renderer) {
 			self.currentLevel.deactivate();
 		
 		self.playerInputEnabled = false;
+		
+		
+		self.showMenu = false;
 		
 		var scene = new Physijs.Scene;
 		var sceneMenu = new THREE.Scene();
@@ -60,9 +63,12 @@ function GameObject(renderer) {
 
 	    self.scene.simulate();
 	    // Comment out for just rendering menu
-	    self.renderer.render(self.scene, self.camera.camera);
+	    if (self.showMenu == false)
+	    	self.renderer.render(self.scene, self.camera.camera);
 	    self.renderer.autoClear = false;
-	    self.renderer.render(self.sceneMenu, self.menu.camera);
+	    
+	    if (self.showMenu == true)
+	    	self.renderer.render(self.sceneMenu, self.menu.camera);
 	}
 
 	this.calculateElapsed = function(currentTime) {

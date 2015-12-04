@@ -72,6 +72,12 @@ function Camera(gameObject) {
 	
 	this.onKeyDown = function(event) {
 		self.gameObject.currentlyPressedKeys[event.keyCode] = true;
+		
+		
+		
+		if (event.keyCode == 27)
+			self.gameObject.showMenu = !self.gameObject.showMenu;
+
 	}
 
 	this.onKeyUp = function(event) {

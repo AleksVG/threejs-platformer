@@ -6,8 +6,6 @@ function Menu(gameObject) {
 	this.initialize = function() {	
 		//TODO: Defining ORTHOCAMERA
 		self.camera = new THREE.OrthographicCamera( 0, window.innerWidth, window.innerHeight, 0, -10, 10 );
-		//self.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 30000);
-		//self.gameObject.sceneMenu.add(self.camera);
 		
 		//texture = "models/menu_background.png";
 		//createSprite(586, 485, 1.0, false, 1.0, 0xffffff, texture, 0); 
