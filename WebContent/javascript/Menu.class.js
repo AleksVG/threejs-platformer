@@ -7,25 +7,26 @@ function Menu(gameObject) {
 		//TODO: Defining ORTHOCAMERA
 		self.camera = new THREE.OrthographicCamera( 0, window.innerWidth, window.innerHeight, 0, -10, 10 );
 		//self.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 30000);
-		self.gameObject.sceneMenu.add(self.camera);
+		//self.gameObject.sceneMenu.add(self.camera);
 		
-		texture = "models/menu_background.png";
-		createSprite(0.6, p_transparent, p_opacity, p_color, p_sprite, texture); 
+		//texture = "models/menu_background.png";
+		//createSprite(586, 485, 1.0, false, 1.0, 0xffffff, texture, 0); 
 		
 		texture = "models/menu_btn_newgame.png";
-		createSprite(1.0, p_transparent, p_opacity, p_color, p_sprite, texture); 
+		createSprite(476, 90, 1.0, false, 1.0, 0xffffff, texture, 0); 
 		
-		texture = "models/menu_btn_newgame_selected.png";
-		createSprite(1.0, transparent, p_opacity, p_color, p_sprite, texture); 
+		texture = "models/menu_btn_newgame.png";
+		createSprite(476, 90, 1.0, false, 1.0, 0xffffff, texture, 100); 
+		
+		texture = "models/menu_btn_newgame.png";
+		createSprite(476, 90, 1.0, false, 1.0, 0xffffff, texture, 200); 
+		
+		texture = "models/menu_btn_newgame.png";
+		createSprite(476, 90, 1.0, false, 1.0, 0xffffff, texture, 300); 
 	}
 	
 	
-	var imageNo=0;
-	var interval=0;
-	var p_transparent = true;
-	var p_opacity = 0.6;
-	var p_color = 0xffffff;
-	var p_sprite = 0;
+
 	
 	
 	function getTexture(texture) {
@@ -33,29 +34,24 @@ function Menu(gameObject) {
 		  return texture;
 		}
 	
-	function createSprite(opacity, transparent, opacity, color, spriteNumber, texture) {
+	function createSprite(scalex, scaley, scalez, transparent, opacity, color, texture, position) {
 		var spriteMaterial = new THREE.SpriteMaterial({
+			transparent : transparent,
 			opacity : opacity,
 			color : color,
-			transparent : transparent,
 			map : getTexture(texture)
 		});
 
-		// we have 1 row, with five sprites
-//		spriteMaterial.map.offset = new THREE.Vector2(0, 0);
-//		spriteMaterial.map.offset = new THREE.Vector2(0.2 * spriteNumber, 0);
-//		spriteMaterial.map.repeat = new THREE.Vector2(1 / 5, 1);
 		spriteMaterial.depthTest = false;
 
-		spriteMaterial.blending = THREE.AdditiveBlending;
+		if (transparent)
+			spriteMaterial.blending = THREE.AdditiveBlending;
 
 		var sprite = new THREE.Sprite(spriteMaterial);
-		sprite.scale.set(586, 285, 1.0);
-		
+		sprite.scale.set(scalex, scaley, scalez);		
 		
 		// Y = height
-		sprite.position.set(window.innerWidth / 2, window.innerHeight / 2, -10);
-		sprite.velocityX = 5;
+		sprite.position.set(window.innerWidth / 2, window.innerHeight / 2 + position, -10);
 
 		self.gameObject.sceneMenu.add(sprite);
 	}
