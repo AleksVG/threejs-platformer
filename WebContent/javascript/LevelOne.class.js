@@ -22,7 +22,7 @@ function LevelOne(gameObject) {
 		setTimeout(function() {
 			self.activate();
 		    self.setupCamera();
-		}, 1000);
+		}, 1500);
 	}
 	
 	LevelOne.prototype.loadModels = function() {

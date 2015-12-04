@@ -4,6 +4,7 @@ function Overworld(gameObject) {
 	this.playerAvatar = new PlayerAvatar(gameObject, 0, 50, 0);
 	this.skybox = new Skybox(gameObject, 0, 0, 0);
 	this.levelOneTeleporter = new Teleporter(gameObject, gameObject.Level.One, 0, 0, 70);
+	this.levelTwoTeleporter = new Teleporter(gameObject, gameObject.Level.Two, 0, 0, 110);
 	this.testLevelTeleporter = new Teleporter(gameObject, gameObject.Level.TestLevel, 0, 0, 0);
 	
 	var self = this;
@@ -22,6 +23,7 @@ function Overworld(gameObject) {
 		var jsonLoader = new THREE.JSONLoader();
 	    jsonLoader.load("models/levels/overworld/testingArea.js", self.platform.createBasicPlatformObject);
 	    jsonLoader.load("models/levels/overworld/overworld_access_level_one.js", self.levelOneTeleporter.createTeleporter);
+	    jsonLoader.load("models/levels/overworld/overworld_access_level_one.js", self.levelTwoTeleporter.createTeleporter);
 	    jsonLoader.load("models/levels/overworld/overworld_access_level_one.js", self.testLevelTeleporter.createTeleporter);
 	    jsonLoader.load("models/skyboxes/blue_sky/skybox_blue_sky.js", self.skybox.createBasicSkyboxObject);
 	    

@@ -32,6 +32,9 @@ function GameObject(renderer) {
 		case self.Level.One:
 			self.currentLevel = new LevelOne(self);
 			break;
+		case self.Level.Two:
+			self.currentLevel = new LevelTwo(self);
+			break;
 		case self.Level.TestLevel:
 			self.currentLevel = new TestLevel(self);
 			break;
