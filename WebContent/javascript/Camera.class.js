@@ -75,8 +75,16 @@ function Camera(gameObject) {
 		
 		
 		
-		if (event.keyCode == 27)
+		if (event.keyCode == self.gameObject.Key.ESCAPE)
 			self.gameObject.showMenu = !self.gameObject.showMenu;
+		
+		if (event.keyCode == self.gameObject.Key.UP_ARROW && self.gameObject.showMenu)
+			alert("up");
+
+		if (event.keyCode == self.gameObject.Key.DOWN_ARROW && self.gameObject.showMenu) {
+			alert("down");
+			self.gameObject.menu.test();
+		}		
 
 	}
 
