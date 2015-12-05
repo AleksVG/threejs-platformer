@@ -82,7 +82,6 @@ function Camera(gameObject) {
 			alert("up");
 
 		if (event.keyCode == self.gameObject.Key.DOWN_ARROW && self.gameObject.showMenu) {
-			alert("down");
 			self.gameObject.menu.test();
 		}		
 
