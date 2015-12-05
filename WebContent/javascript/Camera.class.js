@@ -74,14 +74,15 @@ function Camera(gameObject) {
 		self.gameObject.currentlyPressedKeys[event.keyCode] = true;
 		
 		
+		if (self.gameObject.showMenu) {
+			self.gameObject.menu.test(event.keyCode);
+		}
 		
 		if (event.keyCode == self.gameObject.Key.ESCAPE)
 			self.gameObject.showMenu = !self.gameObject.showMenu;
 		
 
-		if (self.gameObject.showMenu) {
-			self.gameObject.menu.test(event.keyCode);
-		}		
+		
 
 	}
 

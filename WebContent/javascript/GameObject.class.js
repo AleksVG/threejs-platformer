@@ -54,7 +54,7 @@ function GameObject(renderer) {
 	    var elapsed = self.calculateElapsed(currentTime);
 	    	
 	    self.camera.update();
-	    self.menu.update();
+	    //self.menu.update();
 	    
 	    if (self.usingDebugMode)
 	    	self.debugControls.update();

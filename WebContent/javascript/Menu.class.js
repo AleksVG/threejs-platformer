@@ -16,21 +16,28 @@ function Menu(gameObject) {
 	
 		// Setting default selected menuitem
 		self.selectedMenuItem = 1;
-		
-		for (i = 1; i <= this.MenuListSize; i++) { 
-			var sprite = this.MenuList[i];
-			var texture = (sprite.name == this.MenuList[self.selectedMenuItem].name) ? sprite.btnselected : sprite.btn;
+
+		for (i = 1; i <= self.MenuListSize; i++) { 
+			var sprite = self.MenuList[i];
+
+			if (sprite.name == self.MenuList[self.selectedMenuItem].name) {
+				var texture = sprite.btnselected;
+			} else {
+				var texture = sprite.btn;
+			}
+			
 			createSprite(sprite.name, 476, 90, 1.0, false, 1.0, 0xffffff, texture, -1 * i * 100); 
 		 }
 	}
 	
 	
 	this.test = function (keyCode) {	
-		var oldSelectedItemName = this.MenuList[self.selectedMenuItem].name;
+		var oldSelectedItemNumber = self.selectedMenuItem;
+		var oldSelectedItemName = self.MenuList[self.selectedMenuItem].name;
 		
-		if ( (this.MenuList[self.selectedMenuItem].value == 1) && (keyCode == self.gameObject.Key.UP_ARROW) ) {
+		if ( (self.MenuList[self.selectedMenuItem].value == 1) && (keyCode == self.gameObject.Key.UP_ARROW) ) {
 			self.selectedMenuItem = 4;
-		} else if ( (this.MenuList[self.selectedMenuItem].value == 4) && (keyCode == self.gameObject.Key.DOWN_ARROW) ) {
+		} else if ( (self.MenuList[self.selectedMenuItem].value == 4) && (keyCode == self.gameObject.Key.DOWN_ARROW) ) {
 			self.selectedMenuItem = 1;
 		} else if (keyCode == self.gameObject.Key.UP_ARROW) {
 			self.selectedMenuItem = self.selectedMenuItem - 1; 
@@ -38,18 +45,18 @@ function Menu(gameObject) {
 			self.selectedMenuItem = self.selectedMenuItem + 1; 
 		}
 		
-		var newSelectedItemName = this.MenuList[self.selectedMenuItem].name;
-		self.gameObject.sceneMenu.traverse( function( node ) {
-		    if ( (node instanceof THREE.Sprite) && (node.name == newSelectedItemName) )  {
-				texture = "models/menu_btn_newgame_selected.png";
-		        node.material = createSpriteMaterial(node.name, false, 1.0, 0xffffff, texture);
-		    }
-		    
+		var newSelectedItemNumber = self.selectedMenuItem;
+		var newSelectedItemName = self.MenuList[self.selectedMenuItem].name;
+		self.gameObject.sceneMenu.traverse( function( node ) {		    
 		    if ( (node instanceof THREE.Sprite) && (node.name == oldSelectedItemName) )  {
-				texture = "models/menu_btn_newgame.png";
+		    	texture = self.MenuList[newSelectedItemNumber].btn;
 		        node.material = createSpriteMaterial(node.name, false, 1.0, 0xffffff, texture);
 		    }
 
+		    if ( (node instanceof THREE.Sprite) && (node.name == newSelectedItemName) )  {
+				texture = self.MenuList[newSelectedItemNumber].btnselected;
+		        node.material = createSpriteMaterial(node.name, false, 1.0, 0xffffff, texture);
+		    }
 		} );
 	}
 	
@@ -80,29 +87,5 @@ function Menu(gameObject) {
 		sprite.position.set(window.innerWidth / 2, window.innerHeight / 2 + position, -10);
 
 		self.gameObject.sceneMenu.add(sprite);
-	}
-	
-	this.update = function update(elapsed) {
-//		interval+=elapsed;
-//		if (interval>=.2) {
-//			p_sprite+=1;
-//			p_sprite=p_sprite%5;
-//			interval=0;
-//		}
-
-		self.gameObject.sceneMenu.children.forEach(function (e) {
-	        if (e instanceof THREE.Sprite) {
-	            // move the sprite along the bottom
-	            //e.position.x = e.position.x + e.velocityX;
-	            //e.material.map.offset = new THREE.Vector2(0.2 * p_sprite, 0);
-//	            if (e.position.x > window.innerWidth) {
-//	                e.velocityX = -5;
-//	                //e.material.map.offset = new THREE.Vector2(0.2 * p_sprite, 0); //.set(1 / 5 * (p_sprite % 4), 0);
-//	            }
-//	            if (e.position.x < 0) {
-//	                e.velocityX = 5;
-//	            }
-	        }
-	    });
 	}
 }
