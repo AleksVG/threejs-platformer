@@ -5,59 +5,56 @@ function Menu(gameObject) {
 	
 	this.MenuListSize = 4;
 	this.MenuList = {
-			1:	{name: "newgame", value: 1}, 
-			2:	{name: "savegame", value: 2}, 
-			3:	{name: "loadgame", value: 3}, 
-			4:	{name: "exitgame", value: 4}
+			1:	{name: "newgame", value: 1, btn: "models/menu_btn_newgame.png", btnselected: "models/menu_btn_newgame_selected.png"}, 
+			2:	{name: "savegame", value: 2, btn: "models/menu_btn_newgame.png", btnselected: "models/menu_btn_newgame_selected.png"}, 
+			3:	{name: "loadgame", value: 3, btn: "models/menu_btn_newgame.png", btnselected: "models/menu_btn_newgame_selected.png"}, 
+			4:	{name: "exitgame", value: 4, btn: "models/menu_btn_newgame.png", btnselected: "models/menu_btn_newgame_selected.png"}
 	};
 	
 	this.initialize = function() {	
 		self.camera = new THREE.OrthographicCamera( 0, window.innerWidth, window.innerHeight, 0, -10, 10 );
-			
+	
+		// Setting default selected menuitem
 		self.selectedMenuItem = 1;
 		
-		texture = "models/menu_btn_newgame.png";
-		createSprite("newgame", 476, 90, 1.0, false, 1.0, 0xffffff, texture, 0); 
-		
-		texture = "models/menu_btn_newgame.png";
-		createSprite("savegame", 476, 90, 1.0, false, 1.0, 0xffffff, texture, -100); 
-		
-		texture = "models/menu_btn_newgame.png";
-		createSprite("loadgame", 476, 90, 1.0, false, 1.0, 0xffffff, texture, -200); 
-		
-		texture = "models/menu_btn_newgame.png";
-		createSprite("exitgame", 476, 90, 1.0, false, 1.0, 0xffffff, texture, -300); 
+		for (i = 1; i <= this.MenuListSize; i++) { 
+			var sprite = this.MenuList[i];
+			var texture = (sprite.name == this.MenuList[self.selectedMenuItem].name) ? sprite.btnselected : sprite.btn;
+			createSprite(sprite.name, 476, 90, 1.0, false, 1.0, 0xffffff, texture, -1 * i * 100); 
+		 }
 	}
 	
 	
-	this.test = function () {	
+	this.test = function (keyCode) {	
 		var oldSelectedItemName = this.MenuList[self.selectedMenuItem].name;
 		
-		if (this.MenuList[self.selectedMenuItem].value == 4) {
+		if ( (this.MenuList[self.selectedMenuItem].value == 1) && (keyCode == self.gameObject.Key.UP_ARROW) ) {
+			self.selectedMenuItem = 4;
+		} else if ( (this.MenuList[self.selectedMenuItem].value == 4) && (keyCode == self.gameObject.Key.DOWN_ARROW) ) {
 			self.selectedMenuItem = 1;
-		} else {
+		} else if (keyCode == self.gameObject.Key.UP_ARROW) {
+			self.selectedMenuItem = self.selectedMenuItem - 1; 
+		} else if (keyCode == self.gameObject.Key.DOWN_ARROW) {
 			self.selectedMenuItem = self.selectedMenuItem + 1; 
 		}
 		
-//		alert(self.selectedMenuItem + " " + this.MenuList[self.selectedMenuItem].name);
-//		alert("nisse" );
 		var newSelectedItemName = this.MenuList[self.selectedMenuItem].name;
 		self.gameObject.sceneMenu.traverse( function( node ) {
 		    if ( (node instanceof THREE.Sprite) && (node.name == newSelectedItemName) )  {
 				texture = "models/menu_btn_newgame_selected.png";
-		        node.material = createSpriteMaterial(false, 1.0, 0xffffff, texture);
+		        node.material = createSpriteMaterial(node.name, false, 1.0, 0xffffff, texture);
 		    }
 		    
 		    if ( (node instanceof THREE.Sprite) && (node.name == oldSelectedItemName) )  {
 				texture = "models/menu_btn_newgame.png";
-		        node.material = createSpriteMaterial(false, 1.0, 0xffffff, texture);
+		        node.material = createSpriteMaterial(node.name, false, 1.0, 0xffffff, texture);
 		    }
 
 		} );
 	}
 	
 		
-	function createSpriteMaterial(transparent, opacity, color, texture) {
+	function createSpriteMaterial(name, transparent, opacity, color, texture) {
 		var spriteMaterial = new THREE.SpriteMaterial({
 			transparent : transparent,
 			opacity : opacity,
@@ -73,7 +70,7 @@ function Menu(gameObject) {
 	}
 	
 	function createSprite(name, scalex, scaley, scalez, transparent, opacity, color, texture, position) {
-		var spriteMaterial = createSpriteMaterial(false, 1.0, 0xffffff, texture);
+		var spriteMaterial = createSpriteMaterial(name, false, 1.0, 0xffffff, texture);
 		var sprite = new THREE.Sprite(spriteMaterial);
 		
 		sprite.scale.set(scalex, scaley, scalez);		
