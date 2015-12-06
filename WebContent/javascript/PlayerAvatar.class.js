@@ -328,7 +328,6 @@ function PlayerAvatar(gameObject, positionX, positionY, positionZ) {
 			self.playerAvatar.setDamping(0, 1);
 			self.playerAvatar.onGround = false;
 		}
-
 	}
 }
 

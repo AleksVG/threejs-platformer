@@ -28,28 +28,11 @@ function Menu(gameObject) {
 			
 			createSprite(sprite.name, 476, 90, 1.0, false, 1.0, 0xffffff, texture, -1 * i * 100); 
 		 }
+		
+		var sound2 = new Sound('multimedia/theme.mp3');
+		sound2.play();
 	}
 	
-	
-	function Sound(filePath)
-	{
-		this.filePath = filePath;
-	}
-	{
-		Sound.prototype.play = function()
-		{
-			var htmlElementForSound = document.createElement("audio");
-			htmlElementForSound.autoplay = true;
-
-			var htmlElementForSoundSource = document.createElement("source");
-			htmlElementForSoundSource.src = this.filePath;
-			
-			var htmlElementForSoundSource = document.createElement("source");
-			htmlElementForSoundSource.src = this.filePath;
-
-			htmlElementForSound.appendChild(htmlElementForSoundSource);
-		}
-	}
 	
 	this.test = function (keyCode) {	
 		var oldSelectedItemNumber = self.selectedMenuItem;
@@ -82,8 +65,6 @@ function Menu(gameObject) {
 		var sound1 = new Sound('sounds/menu_select.wav');
 		sound1.play();
 		
-		var sound2 = new Sound('sounds/chomp.wav');
-		sound2.play();
 	}
 	
 		
