@@ -28,9 +28,8 @@ function Menu(gameObject) {
 			
 			createSprite(sprite.name, 476, 90, 1.0, false, 1.0, 0xffffff, texture, -1 * i * 100); 
 		 }
-		
-		var sound2 = new Sound('multimedia/theme.mp3');
-		sound2.play();
+
+		//audiobackgroundmusic.play();
 	}
 	
 	
@@ -48,23 +47,27 @@ function Menu(gameObject) {
 			self.selectedMenuItem = self.selectedMenuItem + 1; 
 		}
 		
+
 		var newSelectedItemNumber = self.selectedMenuItem;
 		var newSelectedItemName = self.MenuList[self.selectedMenuItem].name;
-		self.gameObject.sceneMenu.traverse( function( node ) {		    
-		    if ( (node instanceof THREE.Sprite) && (node.name == oldSelectedItemName) )  {
-		    	texture = self.MenuList[newSelectedItemNumber].btn;
-		        node.material = createSpriteMaterial(node.name, false, 1.0, 0xffffff, texture);
-		    }
+		
+		if (oldSelectedItemNumber != newSelectedItemNumber){
+			self.gameObject.sceneMenu.traverse( function( node ) {		    
+			    if ( (node instanceof THREE.Sprite) && (node.name == oldSelectedItemName) )  {
+			    	texture = self.MenuList[newSelectedItemNumber].btn;
+			        node.material = createSpriteMaterial(node.name, false, 1.0, 0xffffff, texture);
+			    }
+	
+			    if ( (node instanceof THREE.Sprite) && (node.name == newSelectedItemName) )  {
+					texture = self.MenuList[newSelectedItemNumber].btnselected;
+			        node.material = createSpriteMaterial(node.name, false, 1.0, 0xffffff, texture);
+			    }
+			} );
+			
 
-		    if ( (node instanceof THREE.Sprite) && (node.name == newSelectedItemName) )  {
-				texture = self.MenuList[newSelectedItemNumber].btnselected;
-		        node.material = createSpriteMaterial(node.name, false, 1.0, 0xffffff, texture);
-		    }
-		} );
-		
-		var sound1 = new Sound('sounds/menu_select.wav');
-		sound1.play();
-		
+			//audiosoundeffectmenuselect.play();
+			audio_sfx_stepgrass.play();
+		}
 	}
 	
 		

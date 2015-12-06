@@ -148,10 +148,11 @@ function PlayerAvatar(gameObject, positionX, positionY, positionZ) {
 		var decayFunction = 0.15 * (1/(4*elapsedSeconds));
 		var startTime = new Date().getTime();
 		
+
 		smoother = setInterval(function() {
 			elapsedSeconds = ((new Date().getTime() - startTime) / 1000) + 0.25;
 			
-			
+
 			if (self.playerAvatar.lastGroundY < self.playerAvatar.position.y)
 				self.playerAvatar.lastGroundY += decayFunction;
 			else
@@ -166,6 +167,7 @@ function PlayerAvatar(gameObject, positionX, positionY, positionZ) {
 	}
 	
 	this.die = function() {
+		audio_sfx_player_die.play();
 		self.playerAvatar.setDamping(0, 0);
 		self.playerAvatar.setAngularFactor(new THREE.Vector3(1, 1, 1));
 		self.playerAvatar.setAngularVelocity(new THREE.Vector3(100, 100, 100));
@@ -322,6 +324,7 @@ function PlayerAvatar(gameObject, positionX, positionY, positionZ) {
 		}
 		else if (!holdingSpace && !self.playerAvatar.onGround && currentVelocityY > 20) {
 			self.playerAvatar.applyCentralImpulse(new THREE.Vector3(0, -40, 0));
+			audio_sfx_jump.play();
 		}
 		
 		if (currentVelocityY < -5 && self.playerAvatar.onGround) {

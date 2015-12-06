@@ -64,6 +64,7 @@ function EnemyTwo(gameObject, positionX, positionY, positionZ, name, rotationY, 
 					self.gameObject.playerAvatar.applyCentralImpulse(new THREE.Vector3(0, 500, 0));
 					self.enemy.deactivate();
 					self.gameObject.scene.remove(self.enemy);
+					audio_sfx_enemy_die.play();
 				}
 			}
 		});
