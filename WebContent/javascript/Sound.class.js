@@ -3,25 +3,30 @@ function Sound(name, filePath, loop)
 	this.name = name;
 	this.filePath = filePath;
 	this.loop = loop;
+	
+	var elementSound = document.createElement("audio");
+	elementSound.autoplay = true
+	
+	this.element = elementSound;
+	
+	elementSound.name = this.name;
+	elementSound.loop = "";
+
+	var elementSoundSource = document.createElement("source");
+	elementSoundSource.src = this.filePath;
+
+	elementSound.appendChild(elementSoundSource);
+	
+	elementSound.pause();
 }
 {
 	Sound.prototype.play = function()
 	{
-		var elementSound = document.createElement("audio");
-		elementSound.autoplay = true;
-		
-		elementSound.name = this.name;
-		elementSound.loop = "";
-
-		var elementSoundSource = document.createElement("source");
-		elementSoundSource.src = this.filePath;
-		
-
-		elementSound.appendChild(elementSoundSource);
+		this.element.play();
 	}
 	
-	Sound.prototype.stop = function()
+	Sound.prototype.pause = function()
 	{
-		document.getElementById(this.name).remove();
+		this.element.pause();
 	}
 }

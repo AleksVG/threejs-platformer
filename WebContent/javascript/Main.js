@@ -3,6 +3,7 @@ function main() {
 
 	//audiobackgroundmusic = new Sound("backgroundmusic", 'multimedia/theme.mp3', false);
 	audiosoundeffectmenuselect = new Sound("menuselect", 'sounds/menu_select.wav', false);
+	audio_music_theme_menu = new Sound("audio_music_theme_menu", 'multimedia/theme_menu.mp3', false);
 	audio_sfx_stepgrass = new Sound("audio_sfx_stepgrass", 'sounds/step_grass.wav', false);
 	audio_sfx_jump = new Sound("audio_sfx_jump", 'sounds/jump.wav', false);
 	audio_sfx_cannon = new Sound("audio_sfx_cannon", 'sounds/cannon.wav', false);

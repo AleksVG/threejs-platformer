@@ -78,9 +78,14 @@ function Camera(gameObject) {
 			self.gameObject.menu.test(event.keyCode);
 		}
 		
-		if (event.keyCode == self.gameObject.Key.ESCAPE)
+		if (event.keyCode == self.gameObject.Key.ESCAPE) {
+			if (self.gameObject.showMenu) {
+				audio_music_theme_menu.pause();
+			} else {
+				audio_music_theme_menu.play();
+			}
 			self.gameObject.showMenu = !self.gameObject.showMenu;
-		
+		}
 
 		
 
