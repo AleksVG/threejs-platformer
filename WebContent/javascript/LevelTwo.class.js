@@ -58,6 +58,8 @@ function LevelTwo(gameObject) {
 	    jsonLoader.load("models/levels/level_two/level_2_falling_plat_8.js", self.platform.createFallingPlatformObject);
 	    jsonLoader.load("models/levels/level_two/level_2_falling_plat_9.js", self.platform.createFallingPlatformObject);
 	    jsonLoader.load("models/levels/level_two/level_2_falling_plat_10.js", self.platform.createFallingPlatformObject);
+
+	    jsonLoader.load("models/levels/level_two/level_2_falling_plat_1.js", self.platform.createFallingPlatformObject);
 		
 		self.playerAvatar.createAvatar();
 	}

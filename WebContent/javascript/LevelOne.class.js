@@ -34,6 +34,17 @@ function LevelOne(gameObject) {
 	    jsonLoader.load("models/levels/level_one/level_1_fence_2.js", self.platform.createBasicPlatformObject);
 	    jsonLoader.load("models/levels/level_one/level_1_fence_3.js", self.platform.createBasicPlatformObject);
 	    jsonLoader.load("models/levels/level_one/level_1_fence_4.js", self.platform.createBasicPlatformObject);
+	    jsonLoader.load("models/levels/level_one/level_1_fence_5.js", self.platform.createBasicPlatformObject);
+	    
+	    jsonLoader.load("models/levels/level_one/level_1_tree_1.js", self.platform.createBasicPlatformObject);
+	    jsonLoader.load("models/levels/level_one/level_1_tree_2.js", self.platform.createBasicPlatformObject);
+	    jsonLoader.load("models/levels/level_one/level_1_tree_3.js", self.platform.createBasicPlatformObject);
+	    jsonLoader.load("models/levels/level_one/level_1_tree_4.js", self.platform.createBasicPlatformObject);
+	    jsonLoader.load("models/levels/level_one/level_1_tree_5.js", self.platform.createBasicPlatformObject);
+	    jsonLoader.load("models/levels/level_one/level_1_tree_6.js", self.platform.createBasicPlatformObject);
+	    jsonLoader.load("models/levels/level_one/level_1_tree_7.js", self.platform.createBasicPlatformObject);
+	    jsonLoader.load("models/levels/level_one/level_1_tree_8.js", self.platform.createBasicPlatformObject);
+	    jsonLoader.load("models/levels/level_one/level_1_tree_9.js", self.platform.createBasicPlatformObject);
 	    
 	    jsonLoader.load("models/levels/level_one/level_1_plat_2.js", self.platform.createBasicPlatformObject);
 	    jsonLoader.load("models/levels/level_one/level_1_plat_3.js", self.platform.createBasicPlatformObject);
@@ -64,8 +75,12 @@ function LevelOne(gameObject) {
 	    jsonLoader.load("models/levels/level_one/level_1_tree_slide_side_2.js", self.platform.createBasicPlatformObject);
 
 	    jsonLoader.load("models/levels/level_one/level_1_finish_teleporter.js", self.levelOneFinishTeleporter.createTeleporter);
+	    jsonLoader.load("models/levels/level_one/level_1_finish_podium.js", self.platform.createBasicPlatformObject);
+	    jsonLoader.load("models/levels/level_one/level_1_finish_pole_1.js", self.platform.createBasicPlatformObject);
+	    jsonLoader.load("models/levels/level_one/level_1_finish_pole_2.js", self.platform.createBasicPlatformObject);
+	    jsonLoader.load("models/levels/level_one/level_1_finish_flag.js", self.platform.createBasicPlatformObject);
 	    
-	    jsonLoader.load("models/skyboxes/blue_sky/skybox_blue_sky.js", self.skybox.createBasicSkyboxObject);
+	    self.skybox.createBasicSkyboxObject();
 	    
 	    self.enemyOne_1.createEnemyOne();
 	    self.enemyOne_2.createEnemyOne();
@@ -100,13 +115,24 @@ function LevelOne(gameObject) {
 	}
 
 	this.setupLights = function() {
-		var ambientLight = new THREE.AmbientLight(0xfffff);
+		var ambientLight = new THREE.AmbientLight(0x999999);
 		self.gameObject.scene.add(ambientLight);
 		
-		var directionalLight = new THREE.DirectionalLight(0xffffff);
-		directionalLight.position.set(0, 20, 10);
-		directionalLight.intensity = 1;
+		var directionalLight = new THREE.DirectionalLight(0xffec8b);
+		directionalLight.position.set(40, 20, 10);
+		directionalLight.intensity = 2;
+		directionalLight.castShadow = true;
 		self.gameObject.scene.add(directionalLight);
+		
+		var fog = new THREE.Fog(0x0049ea, 0, 2300);
+		self.gameObject.scene.fog = fog;
+		
+//	    var spotLight = new THREE.SpotLight(0xffffff, 1.5);
+//	    spotLight.position.set(0, 100, 100);
+//	    spotLight.angle = 20 * (Math.PI / 180);
+//	    spotLight.expontent = 1;
+//	    spotLight.target.position.set(0, 0, 0);
+//	    self.gameObject.scene.add(spotLight);
 		
 //		var spotLight = new THREE.SpotLight(0xfffda0);
 //		spotLight.position.set(200, 4000, 200);

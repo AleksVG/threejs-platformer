@@ -11,6 +11,9 @@ function Platform(gameObject) {
 	    self.gameObject.correctFor3dsMaxRotation(mesh);
 	    
 	    mesh.boundingBox = new THREE.Box3().setFromObject(mesh);
+	    
+	    mesh.receiveShadow = true;
+	    mesh.castShadow = true;
 
 	    mesh.addEventListener('collision', function(other_object, relative_velocity, relative_rotation, contact_normal) {
 			if (other_object.name == "playerAvatar" && !self.gameObject.playerAvatar.onGround) {
@@ -34,6 +37,8 @@ function Platform(gameObject) {
 	    self.gameObject.correctFor3dsMaxRotation(mesh);
 	    
 	    mesh.boundingBox = new THREE.Box3().setFromObject(mesh);
+	    mesh.receiveShadow = true;
+	    mesh.castShadow = true;
 
 	    mesh.addEventListener('collision', function(other_object, relative_velocity, relative_rotation, contact_normal) {
 			if (other_object.name == "playerAvatar" && !self.gameObject.playerAvatar.onGround) {
@@ -55,15 +60,16 @@ function Platform(gameObject) {
 	    self.gameObject.correctFor3dsMaxRotation(mesh);
 	    
 	    mesh.boundingBox = new THREE.Box3().setFromObject(mesh);
+	    mesh.receiveShadow = true;
+	    mesh.castShadow = true;
 
 	    mesh.addEventListener('collision', function(other_object, relative_velocity, relative_rotation, contact_normal) {
 			if (other_object.name == "playerAvatar" && !self.gameObject.playerAvatar.onGround) {
 				if (self.gameObject.playerAvatar.getBottomCollisionPointY() > (mesh.boundingBox.max.y - 3)) {
 					self.platformFall(mesh);
-					
+					console.log("onGround");
 					self.gameObject.playerAvatar.onGround = true;
 					self.gameObject.playerAvatar.setDamping(0.98, 1.0);
-					console.log("on falling");
 				}
 			}
 			else if (other_object.type == "platform") {
@@ -77,7 +83,6 @@ function Platform(gameObject) {
 	
 	self.platformFall = function(mesh) {
 		setTimeout(function() {
-			console.log("now falling");
 			mesh.setDamping(0.1, 1);
 			mesh.applyCentralImpulse(new THREE.Vector3(0, -10, 0));
 			
