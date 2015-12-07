@@ -8,6 +8,7 @@ function EnemyOne(gameObject, positionX, positionY, positionZ, name, rotationY, 
 	
 	this.attackRadius = attackRadius;
 	this.movementSpeed = movementSpeed;
+	this.isAttacking = false;
 	
 	var self = this;
 
@@ -41,7 +42,12 @@ function EnemyOne(gameObject, positionX, positionY, positionZ, name, rotationY, 
 	    self.enemy.position.z = self.positionZ;
 		self.enemy.rotateY(self.rotationY);
 		
-//		var rotationSound = new THREE.Audio(self.gameObject.)
+		self.rotationSound = new THREE.Audio(self.gameObject.audioListener);
+		self.rotationSound.load("sounds/rotating_robot.wav");
+		self.rotationSound.setRefDistance(20);
+		self.rotationSound.setLoop(true);
+		self.rotationSound.setRolloffFactor(2);
+		self.enemy.add(self.rotationSound);
 	    
 	    self.gameObject.scene.add(self.enemy);
 	    
@@ -62,6 +68,7 @@ function EnemyOne(gameObject, positionX, positionY, positionZ, name, rotationY, 
 					self.gameObject.playerAvatar.applyCentralImpulse(new THREE.Vector3(0, 500, 0));
 					self.enemy.deactivate();
 					self.gameObject.scene.remove(self.enemy);
+					self.rotationSound.source.stop();
 					audio_sfx_enemy_die.play();
 				}
 				else {
@@ -100,6 +107,16 @@ function EnemyOne(gameObject, positionX, positionY, positionZ, name, rotationY, 
 	}
 
 	function attack(objectToAttack) {
+		if (!self.isAttacking) {
+			var attackSound = new THREE.Audio(self.gameObject.audioListener);
+			attackSound.load("sounds/enemy_1_attack.wav");
+			attackSound.setRefDistance(60);
+			attackSound.setLoop(false);
+			attackSound.setRolloffFactor(2);
+			
+			self.isAttacking = true;
+		}
+		
 		self.enemy.__dirtyRotation = true;
 		var lookAtPosition = new THREE.Vector3(objectToAttack.position.x, self.enemy.position.y, objectToAttack.position.z);
 		self.enemy.lookAt(lookAtPosition);
@@ -124,6 +141,7 @@ function EnemyOne(gameObject, positionX, positionY, positionZ, name, rotationY, 
 		// Temporary: just rotate
 		self.enemy.__dirtyRotation = true;
 		self.enemy.rotateY(0.01);
+		self.isAttacking = false;
 	}
 }
 
