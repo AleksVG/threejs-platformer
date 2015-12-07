@@ -30,12 +30,21 @@ function GameObject(renderer) {
 		
 		switch (level) {
 		case self.Level.Overworld:
+			audio_music_theme_level1.pause();
+			audio_music_theme_level2.pause();
+			audio_music_theme_overworld.play();
 			self.currentLevel = new Overworld(self);
 			break;
 		case self.Level.One:
+			audio_music_theme_overworld.pause();
+			audio_music_theme_level2.pause();
+			audio_music_theme_level1.play();
 			self.currentLevel = new LevelOne(self);
 			break;
 		case self.Level.Two:
+			audio_music_theme_overworld.pause();
+			audio_music_theme_level1.pause();
+			audio_music_theme_level2.play();
 			self.currentLevel = new LevelTwo(self);
 			break;
 		case self.Level.TestLevel:

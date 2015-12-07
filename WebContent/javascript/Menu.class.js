@@ -28,8 +28,6 @@ function Menu(gameObject) {
 			
 			createSprite(sprite.name, 476, 90, 1.0, false, 1.0, 0xffffff, texture, -1 * i * 100); 
 		 }
-
-		//audiobackgroundmusic.play();
 	}
 	
 	
@@ -64,9 +62,7 @@ function Menu(gameObject) {
 			    }
 			} );
 			
-
-			//audiosoundeffectmenuselect.play();
-			audio_sfx_stepgrass.play();
+			audio_sfx_menu_select.play();
 		}
 	}
 	

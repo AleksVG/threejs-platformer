@@ -91,10 +91,10 @@ function EnemyOne(gameObject, positionX, positionY, positionZ, name, rotationY, 
 														Math.pow(self.enemy.position.y - objectToAttack.position.y, 2) + 
 														Math.pow(self.enemy.position.z - objectToAttack.position.z, 2)));
 		
-		if (distanceBetweenObjects < self.attackRadius)
+		if (distanceBetweenObjects < self.attackRadius) {
+			audio_sfx_enemy_attack.play();
 			return true;
-		else
-			return false;
+		} else return false;
 	}
 
 	function attack(objectToAttack) {

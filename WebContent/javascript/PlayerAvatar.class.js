@@ -157,6 +157,7 @@ function PlayerAvatar(gameObject, positionX, positionY, positionZ) {
 				self.playerAvatar.lastGroundY += decayFunction;
 			else
 				self.playerAvatar.lastGroundY -= decayFunction;
+		
 			
 			if (Math.abs(self.playerAvatar.lastGroundY - self.playerAvatar.position.y) < 1) {
 				self.playerAvatar.lastGroundY = self.playerAvatar.position.y;
@@ -185,7 +186,7 @@ function PlayerAvatar(gameObject, positionX, positionY, positionZ) {
 		self.playerAvatar.__dirtyRotation = true;
 	}
 
-	function animate() {
+	function animate() {		
 		self.animationStep += self.animationStepSpeed;
 		
 		if (self.animationStep > 0.8 || self.animationStep < -0.8)

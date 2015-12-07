@@ -2,12 +2,16 @@ function main() {
 	var renderer = setupRenderer();
 
 	//audiobackgroundmusic = new Sound("backgroundmusic", 'multimedia/theme.mp3', false);
-	audiosoundeffectmenuselect = new Sound("menuselect", 'sounds/menu_select.wav', false);
+	audio_sfx_menu_select = new Sound("menuselect", 'sounds/menu_select.wav', false);
 	audio_music_theme_menu = new Sound("audio_music_theme_menu", 'multimedia/theme_menu.mp3', false);
+	audio_music_theme_overworld = new Sound("audio_music_theme_overworld", 'multimedia/theme_overworld.mp3', false);
+	audio_music_theme_level1 = new Sound("audio_music_theme_level1", 'multimedia/theme_level1.mp3', false);
+	audio_music_theme_level2 = new Sound("audio_music_theme_level2", 'multimedia/theme_level2.mp3', false);
 	audio_sfx_stepgrass = new Sound("audio_sfx_stepgrass", 'sounds/step_grass.wav', false);
 	audio_sfx_jump = new Sound("audio_sfx_jump", 'sounds/jump.wav', false);
 	audio_sfx_cannon = new Sound("audio_sfx_cannon", 'sounds/cannon.wav', false);
 	audio_sfx_player_die = new Sound("audio_sfx_player_die", 'sounds/player_die.wav', false);
+	audio_sfx_enemy_attack = new Sound("audio_sfx_enemy_attack", 'sounds/enemy_attack.wav', false);
 	audio_sfx_enemy_die = new Sound("audio_sfx_enemy_die", 'sounds/enemy_die.wav', false);
 	audio_sfx_key_take = new Sound("audio_sfx_key_take", 'sounds/key_take.wav', false);
 
