@@ -40,6 +40,8 @@ function EnemyOne(gameObject, positionX, positionY, positionZ, name, rotationY, 
 	    self.enemy.position.y = self.positionY;
 	    self.enemy.position.z = self.positionZ;
 		self.enemy.rotateY(self.rotationY);
+		
+//		var rotationSound = new THREE.Audio(self.gameObject.)
 	    
 	    self.gameObject.scene.add(self.enemy);
 	    

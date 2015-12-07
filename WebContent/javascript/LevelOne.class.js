@@ -3,6 +3,7 @@ function LevelOne(gameObject) {
 	this.platform = new Platform(gameObject);
 	this.playerAvatar = new PlayerAvatar(gameObject, 0, 60, 0);
 	this.skybox = new Skybox(gameObject, 0, 0, 0);
+	this.tree = new Tree(gameObject);
 	this.enemyOne_1 = new EnemyOne(gameObject, -570, 50, 205, "enemyOne_1", 90, 0, 50);
 	this.enemyOne_2 = new EnemyOne(gameObject, -570, 50, 655, "enemyOne_2", 90, 85, 35);
 	this.enemyTwo_1 = new EnemyTwo(gameObject, -570, 50, 850, "enemyTwo_1", 0, 160);
@@ -15,13 +16,13 @@ function LevelOne(gameObject) {
 	var self = this;
 	
 	LevelOne.prototype.startLevel = function() {
+	    self.setupCamera();
 	    self.setupLights();
 		self.loadModels();
 		
 		// Wait for models to load
 		setTimeout(function() {
 			self.activate();
-		    self.setupCamera();
 		}, 1500);
 	}
 	
@@ -36,15 +37,15 @@ function LevelOne(gameObject) {
 	    jsonLoader.load("models/levels/level_one/level_1_fence_4.js", self.platform.createBasicPlatformObject);
 	    jsonLoader.load("models/levels/level_one/level_1_fence_5.js", self.platform.createBasicPlatformObject);
 	    
-	    jsonLoader.load("models/levels/level_one/level_1_tree_1.js", self.platform.createBasicPlatformObject);
-	    jsonLoader.load("models/levels/level_one/level_1_tree_2.js", self.platform.createBasicPlatformObject);
-	    jsonLoader.load("models/levels/level_one/level_1_tree_3.js", self.platform.createBasicPlatformObject);
-	    jsonLoader.load("models/levels/level_one/level_1_tree_4.js", self.platform.createBasicPlatformObject);
-	    jsonLoader.load("models/levels/level_one/level_1_tree_5.js", self.platform.createBasicPlatformObject);
-	    jsonLoader.load("models/levels/level_one/level_1_tree_6.js", self.platform.createBasicPlatformObject);
-	    jsonLoader.load("models/levels/level_one/level_1_tree_7.js", self.platform.createBasicPlatformObject);
-	    jsonLoader.load("models/levels/level_one/level_1_tree_8.js", self.platform.createBasicPlatformObject);
-	    jsonLoader.load("models/levels/level_one/level_1_tree_9.js", self.platform.createBasicPlatformObject);
+	    jsonLoader.load("models/levels/level_one/level_1_tree_1.js", self.tree.createTree);
+	    jsonLoader.load("models/levels/level_one/level_1_tree_2.js", self.tree.createTree);
+	    jsonLoader.load("models/levels/level_one/level_1_tree_3.js", self.tree.createTree);
+	    jsonLoader.load("models/levels/level_one/level_1_tree_4.js", self.tree.createTree);
+	    jsonLoader.load("models/levels/level_one/level_1_tree_5.js", self.tree.createTree);
+	    jsonLoader.load("models/levels/level_one/level_1_tree_6.js", self.tree.createTree);
+	    jsonLoader.load("models/levels/level_one/level_1_tree_7.js", self.tree.createTree);
+	    jsonLoader.load("models/levels/level_one/level_1_tree_8.js", self.tree.createTree);
+	    jsonLoader.load("models/levels/level_one/level_1_tree_9.js", self.tree.createTree);
 	    
 	    jsonLoader.load("models/levels/level_one/level_1_plat_2.js", self.platform.createBasicPlatformObject);
 	    jsonLoader.load("models/levels/level_one/level_1_plat_3.js", self.platform.createBasicPlatformObject);
