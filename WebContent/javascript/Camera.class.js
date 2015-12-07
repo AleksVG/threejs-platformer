@@ -83,8 +83,10 @@ function Camera(gameObject) {
 		
 		if (event.keyCode == self.gameObject.Key.ESCAPE) {
 			if (self.gameObject.showMenu) {
+				self.gameObject.background_music.play();
 				audio_music_theme_menu.pause();
 			} else {
+				self.gameObject.background_music.pause();
 				audio_music_theme_menu.play();
 			}
 			self.gameObject.showMenu = !self.gameObject.showMenu;

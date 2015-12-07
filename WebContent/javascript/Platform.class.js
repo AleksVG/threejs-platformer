@@ -85,6 +85,7 @@ function Platform(gameObject) {
 		setTimeout(function() {
 			mesh.setDamping(0.1, 1);
 			mesh.applyCentralImpulse(new THREE.Vector3(0, -10, 0));
+			audio_sfx_platform_falling.play();
 			
 			setTimeout(function() {
 				self.gameObject.scene.remove(mesh);

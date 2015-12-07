@@ -2,7 +2,7 @@ function GameObject(renderer) {
 	this.renderer = renderer;
 		
 	this.currentlyPressedKeys = {};
-	this.Key = {A: 65, S: 83, D: 68, W: 87, SPACEBAR: 32, ESCAPE: 27, LEFT_ARROW: 37, RIGHT_ARROW: 38, UP_ARROW: 38, DOWN_ARROW: 40 };
+	this.Key = {A: 65, S: 83, D: 68, W: 87, SPACEBAR: 32, ESCAPE: 27, ENTER: 13, LEFT_ARROW: 37, RIGHT_ARROW: 38, UP_ARROW: 38, DOWN_ARROW: 40 };
 	this.Level = {Overworld: "Overworld", One: "One", Two: "Two", Three: "Three", TestLevel: "TestLevel"};
 	this.lastTime = 0;
 	this.playerInputEnabled = false;
@@ -10,6 +10,8 @@ function GameObject(renderer) {
 	this.levelKeys = [];
 	
 	var self = this;
+	
+	self.background_music = audio_music_theme_overworld;
 	
 	this.loadLevel = function(level) {
 		if (self.currentLevel != "notStarted")
@@ -30,21 +32,21 @@ function GameObject(renderer) {
 		
 		switch (level) {
 		case self.Level.Overworld:
-			audio_music_theme_level1.pause();
-			audio_music_theme_level2.pause();
-			audio_music_theme_overworld.play();
+			self.background_music.pause();
+			self.background_music = audio_music_theme_overworld;
+			self.background_music.play();
 			self.currentLevel = new Overworld(self);
 			break;
 		case self.Level.One:
-			audio_music_theme_overworld.pause();
-			audio_music_theme_level2.pause();
-			audio_music_theme_level1.play();
+			self.background_music.pause();
+			self.background_music = audio_music_theme_level1;
+			self.background_music.play();
 			self.currentLevel = new LevelOne(self);
 			break;
 		case self.Level.Two:
-			audio_music_theme_overworld.pause();
-			audio_music_theme_level1.pause();
-			audio_music_theme_level2.play();
+			self.background_music.pause();
+			self.background_music = audio_music_theme_level2;
+			self.background_music.play();
 			self.currentLevel = new LevelTwo(self);
 			break;
 		case self.Level.TestLevel:
@@ -70,9 +72,8 @@ function GameObject(renderer) {
 	    	self.handleKeys(elapsed);
 
 	    self.scene.simulate();
-	    // Comment out for just rendering menu
-	    if (self.showMenu == false)
-	    	self.renderer.render(self.scene, self.camera.camera);
+
+	    self.renderer.render(self.scene, self.camera.camera);
 	    self.renderer.autoClear = false;
 	    
 	    if (self.showMenu == true)
