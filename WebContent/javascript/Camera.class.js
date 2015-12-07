@@ -17,6 +17,9 @@ function Camera(gameObject) {
 	this.initialize = function() {
 		self.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 30000);
 		
+		self.gameObject.audioListener = new THREE.AudioListener();
+		self.camera.add(self.gameObject.audioListener);
+		
 		self.camera.lookAt(self.gameObject.playerAvatar.position);
 		self.gameObject.scene.add(self.camera);
 	}

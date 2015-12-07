@@ -23,7 +23,7 @@ function PlayerAvatar(gameObject, positionX, positionY, positionZ) {
 		jsonLoader.load("models/player_avatar/player_leg_right.js", loadLegRight);
 		jsonLoader.load("models/player_avatar/player_base_box.js", loadBaseBox);
 		
-		setTimeout(attachPartsTogether, 300);
+		setTimeout(attachPartsTogether, 600);
 	}
 
 	function loadHead(geometry, materials) {
