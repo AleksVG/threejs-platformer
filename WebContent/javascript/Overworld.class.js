@@ -25,8 +25,8 @@ function Overworld(gameObject) {
 	    jsonLoader.load("models/levels/overworld/overworld_access_level_one.js", self.levelOneTeleporter.createTeleporter);
 	    jsonLoader.load("models/levels/overworld/overworld_access_level_one.js", self.levelTwoTeleporter.createTeleporter);
 	    jsonLoader.load("models/levels/overworld/overworld_access_level_one.js", self.testLevelTeleporter.createTeleporter);
-	    jsonLoader.load("models/skyboxes/blue_sky/skybox_blue_sky.js", self.skybox.createBasicSkyboxObject);
 	    
+	    self.skybox.createBasicSkyboxObject();
 	    self.playerAvatar.createAvatar();
 	}
 	

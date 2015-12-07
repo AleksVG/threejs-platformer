@@ -103,7 +103,15 @@ function PlayerAvatar(gameObject, positionX, positionY, positionZ) {
 		self.playerAvatar.position.set(self.positionX, self.positionY, self.positionZ);
 		self.playerAvatar.name = "playerAvatar";
 		
+		self.playerAvatar.traverse(function(object) {
+			if (object instanceof THREE.Mesh) {
+				object.castShadow = true;
+				object.receiveShadow = true;
+			}
+		});
+		
 		self.gameObject.scene.add(self.playerAvatar);
+		
 		self.gameObject.playerAvatar = self.playerAvatar;
 		self.playerAvatar.setAngularFactor(new THREE.Vector3(0, 1, 0));
 		
