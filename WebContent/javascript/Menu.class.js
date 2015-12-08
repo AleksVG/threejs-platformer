@@ -28,7 +28,7 @@ function Menu(gameObject) {
 			createSprite(sprite.name, 476, 90, 1.0, false, 1.0, 0xffffff, texture, 200 +  (-1 * i * 100)); 
 		 }
 		
-		texture = "controls_explanation.png"
+		texture = "models/controls_explanation.png"
 		createSprite("window_controls", 586, 374, 1.0, false, 1.0, 0xffffff, texture, 0);
 		setSpriteVisibility("window_controls", false);
 		

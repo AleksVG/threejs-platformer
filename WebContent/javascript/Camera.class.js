@@ -11,6 +11,7 @@ function Camera(gameObject) {
 	this.cameraRadius = 90;
 	this.cameraXZAngle = Math.PI / 2;
 	this.State = {Follow: "Follow", SmoothFollow: "SmoothFollow", FollowExceptY: "FollowExceptY"};
+	this.rotationSpeed = 1;
 	
 	var self = this;
 	
@@ -22,6 +23,23 @@ function Camera(gameObject) {
 		
 		self.camera.lookAt(self.gameObject.playerAvatar.position);
 		self.gameObject.scene.add(self.camera);
+		
+		self.adjustForBrowserType();
+	}
+	
+	this.adjustForBrowserType = function() {
+		console.log(navigator.userAgent);
+		
+		if (navigator.userAgent.indexOf("Chrome") !== -1) {
+			console.log("using chrome!");
+			self.rotationSpeed = 4;
+		}
+		else if (navigator.userAgent.indexOf("Firefox") !== -1) {
+			console.log("using firefox!");
+			self.rotationSpeed = 1;
+		}
+		else {
+		}
 	}
 	
 	this.setupInput = function() {
@@ -124,12 +142,12 @@ function Camera(gameObject) {
 	        self.rotateEnd.set(event.clientX, event.clientY);
 	        self.rotateDelta.subVectors(self.rotateEnd, self.rotateStart);
 	        
-	        self.cameraXZAngle += self.rotateDelta.x / 1200;
+	        self.cameraXZAngle += (self.rotateDelta.x / 1200) * self.rotationSpeed;
 	        
 	        self.cameraX = Math.sin(self.cameraXZAngle) * self.cameraRadius;
 	        self.cameraZ = Math.cos(self.cameraXZAngle) * self.cameraRadius;
 	        
-	        self.cameraY += self.rotateDelta.y / 50;
+	        self.cameraY += (self.rotateDelta.y / 50) * self.rotationSpeed;
 
 	        self.rotateStart.copy(self.rotateEnd);
 	    }
