@@ -8,6 +8,7 @@ function GameObject(renderer) {
 	this.playerInputEnabled = false;
 	this.currentLevel = "notStarted";
 	this.levelKeys = [];
+	this.showMenu = true;
 	
 	var self = this;
 	
@@ -20,23 +21,21 @@ function GameObject(renderer) {
 		self.playerInputEnabled = false;
 		
 		
-		self.showMenu = true;
-		
 		var scene = new Physijs.Scene;
 		var sceneMenu = new THREE.Scene();
+	    self.sceneMenu = sceneMenu;
+		
 		
 	    scene.setGravity(new THREE.Vector3(0, -125, 0));
 	    
 	    self.scene = scene;
-	    self.sceneMenu = sceneMenu;
-		
+	
 		switch (level) {
 		case self.Level.Overworld:
 			self.background_music.pause();
 			self.background_music = audio_music_theme_overworld;
-
 			self.background_music.play();
-			self.background_music.volume = 0.2;
+			self.background_music.element.volume = 0.05;
 			self.currentLevel = new Overworld(self);
 			break;
 		case self.Level.One:
@@ -50,6 +49,7 @@ function GameObject(renderer) {
 		case self.Level.Two:
 			self.background_music.pause();
 			self.background_music = audio_music_theme_level2;
+			self.background_music.element.volume = 0.05;
 			self.background_music.play();
 			self.currentLevel = new LevelTwo(self);
 			break;
