@@ -3,11 +3,12 @@ function Menu(gameObject) {
 	
 	var self = this;
 	
-	this.MenuListSize = 3;
+	this.MenuListSize = 4;
 	this.MenuList = {
-			1:	{name: "btn_newgame", value: 1, btn: "models/menu_btn_newgame.png", btnselected: "models/menu_btn_newgame_selected.png"}, 
-			2:	{name: "btn_controls", value: 2, btn: "models/menu_btn_newgame.png", btnselected: "models/menu_btn_newgame_selected.png"}, 
-			3:	{name: "btn_about", value: 3, btn: "models/menu_btn_newgame.png", btnselected: "models/menu_btn_newgame_selected.png"}
+			1:	{name: "btn_newgame", value: 1, btn: "models/menu_btn_newgame.png", btnselected: "models/menu_btn_newgame_selected.png"},
+			2:	{name: "btn_settings", value: 2, btn: "models/menu_btn_newgame.png", btnselected: "models/menu_btn_newgame_selected.png"},
+			3:	{name: "btn_controls", value: 3, btn: "models/menu_btn_newgame.png", btnselected: "models/menu_btn_newgame_selected.png"}, 
+			4:	{name: "btn_about", value: 4, btn: "models/menu_btn_newgame.png", btnselected: "models/menu_btn_newgame_selected.png"}
 	};
 	
 	this.initialize = function() {	
@@ -24,16 +25,22 @@ function Menu(gameObject) {
 			} else {
 				var texture = sprite.btn;
 			}
-			
+		
 			createSprite(sprite.name, 476, 90, 1.0, false, 1.0, 0xffffff, texture, 200 +  (-1 * i * 100)); 
 		 }
 		
+		self.menu_window = false;
+		
+		texture = "models/menu_background.png"
+		createSprite("window_settings", 586, 374, 1.0, false, 1.0, 0xffffff, texture, 0);
+		setSpriteVisibility("window_settings", false);
+		
 		texture = "controls_explanation.png"
-		createSprite("window_controls", 586, 374, 1.0, false, 1.0, 0xffffff, texture, 0);
+		createSprite("window_controls", 600, 413, 1.0, false, 1.0, 0xffffff, texture, 0);
 		setSpriteVisibility("window_controls", false);
 		
 		texture = "models/menu_background.png"
-		createSprite("window_about", 600, 413, 1.0, false, 1.0, 0xffffff, texture, 0);
+		createSprite("window_about", 586, 374, 1.0, false, 1.0, 0xffffff, texture, 0);
 		setSpriteVisibility("window_about", false);
 	}
 	
@@ -46,27 +53,34 @@ function Menu(gameObject) {
 
 			if (self.selectedMenuItem != null) {
 				setSpriteVisibility("btn_newgame", false);
+				setSpriteVisibility("btn_settings", false);
 				setSpriteVisibility("btn_controls", false);
 				setSpriteVisibility("btn_about", false);
 				switch (self.selectedMenuItem) {
 					case 1: 
 						audio_music_theme_menu.pause();
-						self.gameObject.loadLevel(self.gameObject.Level.Overworld);
+						self.gameObject.loadLevel(self.gameObject.Level.LevelOne);
 						break;
 					case 2: 
-						self.selectedMenuItem = null;
-						setSpriteVisibility("window_controls", true);
+						self.menu_window = true;
+						setSpriteVisibility("window_settings", true);
 						break;
 					case 3: 
-						self.selectedMenuItem = null;
+						self.menu_window = true;
+						setSpriteVisibility("window_controls", true);
+						break;
+					case 4: 
+						self.menu_window = true;
 						setSpriteVisibility("window_about", true);
 						break;
 				}
 			} else {
-				self.selectedMenuItem = 1;
+				self.menu_window = false;
 				setSpriteVisibility("btn_newgame", true);
+				setSpriteVisibility("btn_settings", true);
 				setSpriteVisibility("btn_controls", true);
 				setSpriteVisibility("btn_about", true);
+				setSpriteVisibility("window_settings", false);
 				setSpriteVisibility("window_controls", false);
 				setSpriteVisibility("window_about", false);
 			}
@@ -75,7 +89,7 @@ function Menu(gameObject) {
 		} 
 				
 		
-		if ( self.selectedMenuItem != null ) {
+		if ( self.menu_window == false ) {
 			
 			var oldSelectedItemNumber = self.selectedMenuItem;
 			var oldSelectedItemName = self.MenuList[self.selectedMenuItem].name;
@@ -95,6 +109,8 @@ function Menu(gameObject) {
 			var newSelectedItemName = self.MenuList[self.selectedMenuItem].name;
 			
 			if (oldSelectedItemNumber != newSelectedItemNumber){
+				audio_sfx_menu_select.play();
+				
 				self.gameObject.sceneMenu.traverse( function( node ) {		    
 				    if ( (node instanceof THREE.Sprite) && (node.name == oldSelectedItemName) )  {
 				    	texture = self.MenuList[newSelectedItemNumber].btn;
@@ -108,8 +124,6 @@ function Menu(gameObject) {
 				        setSpriteVisibility(node.name, true);
 				    }
 				} );
-				
-				audio_sfx_menu_select.play();
 			}
 		}
 	}

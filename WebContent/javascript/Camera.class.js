@@ -74,11 +74,10 @@ function Camera(gameObject) {
 	}
 	
 	this.onKeyDown = function(event) {
-
-		
-		
-		if ( (self.gameObject.showMenu) && ( (event.keyCode == self.gameObject.Key.UP_ARROW) || (event.keyCode == self.gameObject.Key.DOWN_ARROW) || (event.keyCode == self.gameObject.Key.ENTER) ) ) {
-			self.gameObject.menu.test(event.keyCode);
+		if ( self.gameObject.showMenu ) {
+			if ( (event.keyCode == self.gameObject.Key.UP_ARROW) || (event.keyCode == self.gameObject.Key.DOWN_ARROW) || (event.keyCode == self.gameObject.Key.ENTER) ) {
+				self.gameObject.menu.test(event.keyCode);
+			}
 		} else {
 			self.gameObject.currentlyPressedKeys[event.keyCode] = true;
 			
