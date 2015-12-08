@@ -93,7 +93,7 @@ function Camera(gameObject) {
 		}
 
 		
-
+		audio_sfx_player_stepgrass.play();
 	}
 
 	this.onKeyUp = function(event) {

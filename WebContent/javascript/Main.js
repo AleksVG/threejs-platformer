@@ -16,6 +16,7 @@ function main() {
 	audio_sfx_enemy_die = new Sound("audio_sfx_enemy_die", 'sounds/enemy_die.wav', false);
 	audio_sfx_key_take = new Sound("audio_sfx_key_take", 'sounds/key_take.wav', false);
 	audio_sfx_platform_falling = new Sound("audio_sfx_platform_falling", 'sounds/platform_falling.wav', false);
+	audio_sfx_player_stepgrass = new Sound("audio_sfx_player_stepgrass", 'sounds/player_stepgrass.wav', false);
 
 	
 	Physijs.scripts.worker = 'libraries/physijs_worker.js';

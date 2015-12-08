@@ -41,14 +41,7 @@ function Menu(gameObject) {
 		if ( keyCode == self.gameObject.Key.ENTER ) {
 			audio_sfx_menu_enter.play();
 			
-			for( var i = self.gameObject.scene.children.length - 1; i >= 0; i--) {
-				obj = self.gameObject.scene.children[i];
-				if (obj instanceof THREE.Sprite) {
-					alert(obj.name);
-					self.gameObject.scene.remove(obj);
-				}
-				
-			}
+
 			
 			switch (oldSelectedItemNumber) {
 				case 1: 
@@ -106,6 +99,14 @@ function Menu(gameObject) {
 				audio_sfx_menu_select.play();
 			}
 		}
+	}
+	
+	function setSpriteVisibility(name, visibility) {
+		self.gameObject.sceneMenu.traverse( function( node ) {		    
+		    if ( (node instanceof THREE.Sprite) && (node.name == name) )  {
+		    	node.visible = visibility;
+		    }
+		} );
 	}
 	
 		
