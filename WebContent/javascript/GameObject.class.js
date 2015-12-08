@@ -20,7 +20,7 @@ function GameObject(renderer) {
 		self.playerInputEnabled = false;
 		
 		
-		self.showMenu = false;
+		self.showMenu = true;
 		
 		var scene = new Physijs.Scene;
 		var sceneMenu = new THREE.Scene();

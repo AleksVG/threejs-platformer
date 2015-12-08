@@ -74,11 +74,17 @@ function Camera(gameObject) {
 	}
 	
 	this.onKeyDown = function(event) {
-		self.gameObject.currentlyPressedKeys[event.keyCode] = true;
+
 		
 		
-		if (self.gameObject.showMenu) {
+		if ( (self.gameObject.showMenu) && ( (event.keyCode == self.gameObject.Key.UP_ARROW) || (event.keyCode == self.gameObject.Key.DOWN_ARROW) || (event.keyCode == self.gameObject.Key.ENTER) ) ) {
 			self.gameObject.menu.test(event.keyCode);
+		} else {
+			self.gameObject.currentlyPressedKeys[event.keyCode] = true;
+			
+			if ( (event.keyCode == self.gameObject.Key.A) || (event.keyCode == self.gameObject.Key.W) || (event.keyCode == self.gameObject.Key.D) || (event.keyCode == self.gameObject.Key.S)) {
+				audio_sfx_player_stepgrass.play();
+			}
 		}
 		
 		if (event.keyCode == self.gameObject.Key.ESCAPE) {
@@ -93,7 +99,7 @@ function Camera(gameObject) {
 		}
 
 		
-		audio_sfx_player_stepgrass.play();
+
 	}
 
 	this.onKeyUp = function(event) {
