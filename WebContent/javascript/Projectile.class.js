@@ -9,7 +9,13 @@ function Projectile(gameObject, parentEnemy) {
 		
 		var ball = new Physijs.SphereMesh(new THREE.SphereGeometry(2.5, 60, 60), ballMaterial, 0);
 		
-		audio_sfx_cannon.play();
+//		audio_sfx_cannon.play();
+		var cannonSound = new THREE.Audio(self.gameObject.audioListener);
+		cannonSound.load("sounds/cannon_amplified.wav");
+		cannonSound.setRefDistance(80);
+		cannonSound.setRolloffFactor(2);
+		cannonSound.setLoop(false);
+		ball.add(cannonSound);
 		
 		var directionVector = self.getNormalizedDirectionVector();
 		self.setBallStartPosition(ball, directionVector);

@@ -7,7 +7,7 @@ function Skybox(gameObject, positionX, positionY, positionZ) {
 	
 	var self = this;
 	
-	this.createBasicSkyboxObject = function(geometry, materials) {
+	this.createBasicSkyboxObject = function() {
 		self.createBottom();
 		self.createTop();
 		self.createWallOne();
@@ -27,7 +27,7 @@ function Skybox(gameObject, positionX, positionY, positionZ) {
 		var mesh = new THREE.Mesh(geometry, material);
 		self.gameObject.scene.add(mesh);
 		
-		mesh.position.set(0, -2500, 0);
+		mesh.position.set(0, -2500 + self.positionY, 0);
 	}
 	
 	self.createTop = function() {
@@ -41,7 +41,7 @@ function Skybox(gameObject, positionX, positionY, positionZ) {
 		var mesh = new THREE.Mesh(geometry, material);
 		self.gameObject.scene.add(mesh);
 		
-		mesh.position.set(0, 2500, 0);
+		mesh.position.set(0, 2500 + self.positionY, 0);
 	}
 
 	self.createWallOne = function() {
@@ -55,7 +55,7 @@ function Skybox(gameObject, positionX, positionY, positionZ) {
 		var mesh = new THREE.Mesh(geometry, material);
 		self.gameObject.scene.add(mesh);
 		
-		mesh.position.set(0, 0, 2500);
+		mesh.position.set(0, 0 + self.positionY, 2500);
 	}
 	
 	self.createWallTwo = function() {
@@ -69,7 +69,7 @@ function Skybox(gameObject, positionX, positionY, positionZ) {
 		var mesh = new THREE.Mesh(geometry, material);
 		self.gameObject.scene.add(mesh);
 		
-		mesh.position.set(2500, 0, 0);
+		mesh.position.set(2500, 0 + self.positionY, 0);
 	}
 	
 	self.createWallThree = function() {
@@ -83,7 +83,7 @@ function Skybox(gameObject, positionX, positionY, positionZ) {
 		var mesh = new THREE.Mesh(geometry, material);
 		self.gameObject.scene.add(mesh);
 		
-		mesh.position.set(0, 0, -2500);
+		mesh.position.set(0, 0 + self.positionY, -2500);
 	}
 	
 	self.createWallFour = function() {
@@ -97,6 +97,6 @@ function Skybox(gameObject, positionX, positionY, positionZ) {
 		var mesh = new THREE.Mesh(geometry, material);
 		self.gameObject.scene.add(mesh);
 		
-		mesh.position.set(-2500, 0, 0);
+		mesh.position.set(-2500, 0 + self.positionY, 0);
 	}
 }

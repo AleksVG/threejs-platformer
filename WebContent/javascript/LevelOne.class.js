@@ -2,7 +2,7 @@ function LevelOne(gameObject) {
 	this.gameObject = gameObject;
 	this.platform = new Platform(gameObject);
 	this.playerAvatar = new PlayerAvatar(gameObject, 0, 60, 0);
-	this.skybox = new Skybox(gameObject, 0, 0, 0);
+	this.skybox = new Skybox(gameObject, 0, 1000, 0);
 	this.tree = new Tree(gameObject);
 	this.enemyOne_1 = new EnemyOne(gameObject, -570, 50, 205, "enemyOne_1", 90, 0, 50);
 	this.enemyOne_2 = new EnemyOne(gameObject, -570, 50, 655, "enemyOne_2", 90, 85, 35);
@@ -120,11 +120,11 @@ function LevelOne(gameObject) {
 		self.gameObject.scene.add(ambientLight);
 		
 		var directionalLight = new THREE.DirectionalLight(0xffec8b);
-		directionalLight.position.set(2500, 1000, 600);
+		directionalLight.position.set(2500, 2000, 600);
 		
-//		directionalLight.shadowCameraVisible = true;
-		directionalLight.shadowCameraNear = 2000;
-		directionalLight.shadowCameraFar = 4000;
+		directionalLight.shadowCameraVisible = true;
+		directionalLight.shadowCameraNear = 3000;
+		directionalLight.shadowCameraFar = 5000;
 		directionalLight.shadowCameraLeft = -1300;
 		directionalLight.shadowCameraRight = 200;
 		
