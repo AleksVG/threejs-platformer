@@ -1,4 +1,5 @@
 function LevelOne(gameObject) {
+	this.name = "LevelOne";
 	this.gameObject = gameObject;
 	this.platform = new Platform(gameObject);
 	this.playerAvatar = new PlayerAvatar(gameObject, 0, 60, 0);
@@ -122,7 +123,7 @@ function LevelOne(gameObject) {
 		var directionalLight = new THREE.DirectionalLight(0xffec8b);
 		directionalLight.position.set(2500, 2000, 600);
 		
-		directionalLight.shadowCameraVisible = true;
+//		directionalLight.shadowCameraVisible = true;
 		directionalLight.shadowCameraNear = 3000;
 		directionalLight.shadowCameraFar = 5000;
 		directionalLight.shadowCameraLeft = -1300;
@@ -134,28 +135,9 @@ function LevelOne(gameObject) {
 		
 		var fog = new THREE.Fog(0x0049ea, 0, 2000);
 		self.gameObject.scene.fog = fog;
-		
-//	    var spotLight = new THREE.SpotLight(0xffffff, 1.5);
-//	    spotLight.position.set(0, 100, 100);
-//	    spotLight.angle = 20 * (Math.PI / 180);
-//	    spotLight.expontent = 1;
-//	    spotLight.target.position.set(0, 0, 0);
-//	    self.gameObject.scene.add(spotLight);
-		
-//		var spotLight = new THREE.SpotLight(0xfffda0);
-//		spotLight.position.set(200, 4000, 200);
-//		spotLight.castShadow = true;
-//		var target = new THREE.Object3D();
-//		target.position.set(0, 0, 0);
-//		spotLight.target = target;
-//		spotLight.distance = 4800;
-//		spotLight.exponent = 0.0001;
-//		spotLight.intensity = 4;
-//		self.gameObject.scene.add(spotLight);
-		
-//		
-//	    var hemisphereLight = new THREE.HemisphereLight(0xc08439, 0x7bcfe5);
-//	    hemisphereLight.intensity = 0.95;
-//	    self.gameObject.scene.add(hemisphereLight);
+	
+	    var hemisphereLight = new THREE.HemisphereLight(0xc08439, 0x7bcfe5);
+	    hemisphereLight.intensity = 0.4;
+	    self.gameObject.scene.add(hemisphereLight);
 	}
 }

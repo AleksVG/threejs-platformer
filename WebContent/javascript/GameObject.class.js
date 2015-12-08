@@ -43,6 +43,7 @@ function GameObject(renderer) {
 			self.background_music.element.volume = 0.05;
 			self.background_music.play();
 			self.currentLevel = new LevelOne(self);
+			createParticles(5, true, 1, false, true, 0xffffff);
 			break;
 		case self.Level.Two:
 			self.background_music.pause();
@@ -60,12 +61,57 @@ function GameObject(renderer) {
 		
 		self.currentLevel.startLevel();
 	}
+	
+	function createParticles(size, transparent, opacity, vertexColors, sizeAttenuation, color) {	
+        var texture = THREE.ImageUtils.loadTexture("multimedia/firefly.png");
+        var geom = new THREE.Geometry();
+
+        var material = new THREE.PointCloudMaterial({
+            size: size,
+            transparent: transparent,
+            opacity: opacity,
+            map: texture,
+            blending: THREE.AdditiveBlending,
+            sizeAttenuation: sizeAttenuation,
+            color: color
+        });
+
+
+        var range = 4000;
+        for (var i = 0; i < 10000; i++) {
+            var particle = new THREE.Vector3(
+                    Math.random() * range - range / 2,
+                    Math.random() * range * 1.5,
+                    Math.random() * range - range / 2);
+            particle.velocityY = 0.1 + Math.random() / 20;
+            particle.velocityX = (Math.random() - 0.5) / 3;
+            geom.vertices.push(particle);
+        }
+
+        cloud = new THREE.PointCloud(geom, material);
+        cloud.sortParticles = true;
+
+        self.scene.add(cloud);
+	} 
+	
+	function updateParticles() {
+		var vertices = cloud.geometry.vertices;
+        vertices.forEach(function (v) {
+            v.y = v.y - v.velocityY;
+            v.x = v.x - v.velocityX;
+
+//            if (v.y <= 0) v.y = 60;
+//            if (v.x <= -20 || v.x >= 20) v.velocityX = v.velocityX * -1;
+        });
+	}
 
 	this.render = function(currentTime) {
 	    requestAnimationFrame(self.render);
 	    var elapsed = self.calculateElapsed(currentTime);
 	    	
 	    self.camera.update();
+	    if (self.currentLevel.name == "LevelOne")
+	    	updateParticles();
 	    
 	    if (self.usingDebugMode)
 	    	self.debugControls.update();
