@@ -11,6 +11,8 @@ function Sound(name, filePath, loop)
 	
 	elementSound.name = this.name;
 	elementSound.loop = "";
+	elementSound.controls = "controls";
+	
 
 	var elementSoundSource = document.createElement("source");
 	elementSoundSource.src = this.filePath;
@@ -28,5 +30,10 @@ function Sound(name, filePath, loop)
 	Sound.prototype.pause = function()
 	{
 		this.element.pause();
+	}
+	
+	Sound.prototype.volume = function(volume)
+	{
+		this.element.volume = volume;
 	}
 }

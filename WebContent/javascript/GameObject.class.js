@@ -34,7 +34,9 @@ function GameObject(renderer) {
 		case self.Level.Overworld:
 			self.background_music.pause();
 			self.background_music = audio_music_theme_overworld;
+
 			self.background_music.play();
+			self.background_music.volume = 0.2;
 			self.currentLevel = new Overworld(self);
 			break;
 		case self.Level.One:
@@ -58,7 +60,6 @@ function GameObject(renderer) {
 			self.currentLevel = new TestLevel(self);
 			break;
 		}
-		
 		self.currentLevel.startLevel();
 	}
 	
