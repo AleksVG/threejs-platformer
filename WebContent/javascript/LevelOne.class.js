@@ -115,6 +115,7 @@ function LevelOne(gameObject) {
 	this.setupCamera = function() {
 		self.gameObject.camera.initialize();
 		self.gameObject.menu.initialize();
+		self.gameObject.hud.initialize();
 	}
 
 	this.setupLights = function() {

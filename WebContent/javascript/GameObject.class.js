@@ -24,6 +24,9 @@ function GameObject(renderer) {
 		var scene = new Physijs.Scene;
 		var sceneMenu = new THREE.Scene();
 	    self.sceneMenu = sceneMenu;
+	    
+		var sceneHud = new THREE.Scene();
+	    self.sceneHud = sceneHud;
 		
 		
 	    scene.setGravity(new THREE.Vector3(0, -125, 0));

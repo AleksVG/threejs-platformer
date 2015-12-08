@@ -45,7 +45,7 @@ function Menu(gameObject) {
 	}
 	
 	
-	this.test = function (keyCode) {			
+	this.sendKeys = function (keyCode) {			
 
 		if ( keyCode == self.gameObject.Key.ENTER ) {
 			audio_sfx_menu_enter.play();

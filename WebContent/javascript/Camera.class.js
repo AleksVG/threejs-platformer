@@ -87,16 +87,18 @@ function Camera(gameObject) {
 	}
 	
 	this.positionCamera = function() {
+		if (self.camera != undefined) {
 	    self.camera.position.set(self.gameObject.playerAvatar.position.x - self.cameraX, self.gameObject.playerAvatar.position.y + self.cameraY, self.gameObject.playerAvatar.position.z + self.cameraZ);
 		self.camera.lookAt(new THREE.Vector3(self.gameObject.playerAvatar.position.x, self.gameObject.playerAvatar.position.y, self.gameObject.playerAvatar.position.z));
+		}
 	}
 	
 	this.onKeyDown = function(event) {
 
-		
-		
-		if ( (self.gameObject.showMenu) && ( (event.keyCode == self.gameObject.Key.UP_ARROW) || (event.keyCode == self.gameObject.Key.DOWN_ARROW) || (event.keyCode == self.gameObject.Key.ENTER) ) ) {
-			self.gameObject.menu.test(event.keyCode);
+		if ( self.gameObject.showMenu ) {
+			if ( (event.keyCode == self.gameObject.Key.UP_ARROW) || (event.keyCode == self.gameObject.Key.DOWN_ARROW) || (event.keyCode == self.gameObject.Key.ENTER) || (event.keyCode == self.gameObject.Key.SPACEBAR) ) {
+				self.gameObject.menu.test(event.keyCode);
+			}
 		} else {
 			self.gameObject.currentlyPressedKeys[event.keyCode] = true;
 			
@@ -115,9 +117,6 @@ function Camera(gameObject) {
 			}
 			self.gameObject.showMenu = !self.gameObject.showMenu;
 		}
-
-		
-
 	}
 
 	this.onKeyUp = function(event) {

@@ -26,6 +26,8 @@ function main() {
 	gameObject.camera = new Camera(gameObject);
 	
 	gameObject.menu = new Menu(gameObject);
+	gameObject.hud = new Hud(gameObject);
+	
 	gameObject.camera.setupInput();
 
 	gameObject.loadLevel(gameObject.Level.Overworld);
