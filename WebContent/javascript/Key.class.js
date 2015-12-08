@@ -23,6 +23,9 @@ function Key(gameObject, positionX, positionY, positionZ, name) {
 	    self.key.position.x = self.positionX;
 	    self.key.position.y = self.positionY;
 	    self.key.position.z = self.positionZ;
+		
+		self.key.receiveShadow = true;
+		self.key.castShadow = true;
 	    
 	    self.gameObject.correctFor3dsMaxRotation(self.key);
 	    self.gameObject.scene.add(self.key);

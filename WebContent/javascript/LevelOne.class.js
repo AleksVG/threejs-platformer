@@ -2,7 +2,7 @@ function LevelOne(gameObject) {
 	this.gameObject = gameObject;
 	this.platform = new Platform(gameObject);
 	this.playerAvatar = new PlayerAvatar(gameObject, 0, 60, 0);
-	this.skybox = new Skybox(gameObject, 0, 0, 0);
+	this.skybox = new Skybox(gameObject, 0, 1000, 0);
 	this.tree = new Tree(gameObject);
 	this.enemyOne_1 = new EnemyOne(gameObject, -570, 50, 205, "enemyOne_1", 90, 0, 50);
 	this.enemyOne_2 = new EnemyOne(gameObject, -570, 50, 655, "enemyOne_2", 90, 85, 35);
@@ -31,11 +31,11 @@ function LevelOne(gameObject) {
 	    jsonLoader.load("models/levels/level_one/level_1_plat_1_part_1.js", self.platform.createBasicPlatformObject);
 	    jsonLoader.load("models/levels/level_one/level_1_plat_1_part_2.js", self.platform.createBasicPlatformObject);
 	    
-	    jsonLoader.load("models/levels/level_one/level_1_fence_1.js", self.platform.createBasicPlatformObject);
-	    jsonLoader.load("models/levels/level_one/level_1_fence_2.js", self.platform.createBasicPlatformObject);
-	    jsonLoader.load("models/levels/level_one/level_1_fence_3.js", self.platform.createBasicPlatformObject);
-	    jsonLoader.load("models/levels/level_one/level_1_fence_4.js", self.platform.createBasicPlatformObject);
-	    jsonLoader.load("models/levels/level_one/level_1_fence_5.js", self.platform.createBasicPlatformObject);
+	    jsonLoader.load("models/levels/level_one/level_1_fence_1.js", self.platform.createBasicObject);
+	    jsonLoader.load("models/levels/level_one/level_1_fence_2.js", self.platform.createBasicObject);
+	    jsonLoader.load("models/levels/level_one/level_1_fence_3.js", self.platform.createBasicObject);
+	    jsonLoader.load("models/levels/level_one/level_1_fence_4.js", self.platform.createBasicObject);
+	    jsonLoader.load("models/levels/level_one/level_1_fence_5.js", self.platform.createBasicObject);
 	    
 	    jsonLoader.load("models/levels/level_one/level_1_tree_1.js", self.tree.createTree);
 	    jsonLoader.load("models/levels/level_one/level_1_tree_2.js", self.tree.createTree);
@@ -58,8 +58,8 @@ function LevelOne(gameObject) {
 	    jsonLoader.load("models/levels/level_one/level_1_falling_plat_2.js", self.platform.createFallingPlatformObject);
 	    jsonLoader.load("models/levels/level_one/level_1_falling_plat_3.js", self.platform.createFallingPlatformObject);
 	    
-	    jsonLoader.load("models/levels/level_one/level_1_obstacle_1.js", self.platform.createBasicPlatformObject);
-	    jsonLoader.load("models/levels/level_one/level_1_obstacle_2.js", self.platform.createBasicPlatformObject);
+	    jsonLoader.load("models/levels/level_one/level_1_obstacle_1.js", self.platform.createBasicObject);
+	    jsonLoader.load("models/levels/level_one/level_1_obstacle_2.js", self.platform.createBasicObject);
 	    
 	    jsonLoader.load("models/levels/level_one/level_1_stairs_1.js", self.platform.createBasicPlatformObject);
 	    jsonLoader.load("models/levels/level_one/level_1_stairs_2.js", self.platform.createBasicPlatformObject);
@@ -72,7 +72,7 @@ function LevelOne(gameObject) {
 	    jsonLoader.load("models/levels/level_one/level_1_stairs_2_3.js", self.platform.createBasicPlatformObject);
 	    
 	    jsonLoader.load("models/levels/level_one/level_1_tree_slide.js", self.platform.createBasicPlatformObject);
-	    jsonLoader.load("models/levels/level_one/level_1_tree_slide_side_1.js", self.platform.createBasicPlatformObject);
+	    jsonLoader.load("models/levels/level_one/level_1_tree_slide_side_1.js", self.platform.createBasicObject);
 	    jsonLoader.load("models/levels/level_one/level_1_tree_slide_side_2.js", self.platform.createBasicPlatformObject);
 
 	    jsonLoader.load("models/levels/level_one/level_1_finish_teleporter.js", self.levelOneFinishTeleporter.createTeleporter);
@@ -121,12 +121,19 @@ function LevelOne(gameObject) {
 		self.gameObject.scene.add(ambientLight);
 		
 		var directionalLight = new THREE.DirectionalLight(0xffec8b);
-		directionalLight.position.set(40, 20, 10);
+		directionalLight.position.set(2500, 2000, 600);
+		
+		directionalLight.shadowCameraVisible = true;
+		directionalLight.shadowCameraNear = 3000;
+		directionalLight.shadowCameraFar = 5000;
+		directionalLight.shadowCameraLeft = -1300;
+		directionalLight.shadowCameraRight = 200;
+		
 		directionalLight.intensity = 2;
 		directionalLight.castShadow = true;
 		self.gameObject.scene.add(directionalLight);
 		
-		var fog = new THREE.Fog(0x0049ea, 0, 2300);
+		var fog = new THREE.Fog(0x0049ea, 0, 2000);
 		self.gameObject.scene.fog = fog;
 		
 //	    var spotLight = new THREE.SpotLight(0xffffff, 1.5);
