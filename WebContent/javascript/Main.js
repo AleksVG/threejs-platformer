@@ -44,6 +44,7 @@ function setupRenderer() {
     renderer.setClearColor(new THREE.Color(0xEEEEEE, 1.0));
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.shadowMapEnabled = true;
+    //renderer.shadowMapSoft = true;
     
     document.getElementById("WebGL-output").appendChild(renderer.domElement);
     

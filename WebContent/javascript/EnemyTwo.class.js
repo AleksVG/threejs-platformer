@@ -45,6 +45,9 @@ function EnemyTwo(gameObject, positionX, positionY, positionZ, name, rotationY, 
 	    self.enemy.position.y = self.positionY;
 	    self.enemy.position.z = self.positionZ;
 		self.enemy.rotateZ(self.rotationY); // Z is Y axis...
+		
+		self.enemy.receiveShadow = true;
+		self.enemy.castShadow = true;
 	    
 	    self.gameObject.scene.add(self.enemy);
 		self.enemy.setAngularFactor(new THREE.Vector3(0, 1, 0));

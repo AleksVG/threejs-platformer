@@ -13,7 +13,7 @@ function Platform(gameObject) {
 	    mesh.boundingBox = new THREE.Box3().setFromObject(mesh);
 	    
 	    mesh.receiveShadow = true;
-	    mesh.castShadow = true;
+	    //mesh.castShadow = true;
 
 	    mesh.addEventListener('collision', function(other_object, relative_velocity, relative_rotation, contact_normal) {
 			if (other_object.name == "playerAvatar" && !self.gameObject.playerAvatar.onGround) {
@@ -38,7 +38,7 @@ function Platform(gameObject) {
 	    
 	    mesh.boundingBox = new THREE.Box3().setFromObject(mesh);
 	    mesh.receiveShadow = true;
-	    mesh.castShadow = true;
+	    //mesh.castShadow = true;
 
 	    mesh.addEventListener('collision', function(other_object, relative_velocity, relative_rotation, contact_normal) {
 			if (other_object.name == "playerAvatar" && !self.gameObject.playerAvatar.onGround) {
@@ -91,5 +91,31 @@ function Platform(gameObject) {
 				self.gameObject.scene.remove(mesh);
 			}, 3000);
 		}, 800);
+	}
+	
+	this.createBasicObject = function(geometry, materials) {
+	    var mesh = new Physijs.ConvexMesh(geometry, new THREE.MeshFaceMaterial(materials), 0);
+	    
+	    mesh.type = "object";
+	    
+	    self.gameObject.correctFor3dsMaxRotation(mesh);
+	    
+	    mesh.boundingBox = new THREE.Box3().setFromObject(mesh);
+	    
+	    mesh.receiveShadow = true;
+	    mesh.castShadow = true;
+
+	    mesh.addEventListener('collision', function(other_object, relative_velocity, relative_rotation, contact_normal) {
+			if (other_object.name == "playerAvatar" && !self.gameObject.playerAvatar.onGround) {
+				if (self.gameObject.playerAvatar.getBottomCollisionPointY() > (mesh.boundingBox.max.y - 2.5)) {
+					self.gameObject.playerAvatar.onGround = true;
+					self.gameObject.playerAvatar.setDamping(0.98, 1.0);
+					
+					self.gameObject.playerAvatar.onMovingPlatform = false;
+				}
+			}
+		});
+	    
+	    self.gameObject.scene.add(mesh);
 	}
 }

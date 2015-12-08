@@ -40,6 +40,7 @@ function GameObject(renderer) {
 		case self.Level.One:
 			self.background_music.pause();
 			self.background_music = audio_music_theme_level1;
+			self.background_music.element.volume = 0.05;
 			self.background_music.play();
 			self.currentLevel = new LevelOne(self);
 			break;

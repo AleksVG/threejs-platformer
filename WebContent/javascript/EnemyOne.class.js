@@ -44,10 +44,13 @@ function EnemyOne(gameObject, positionX, positionY, positionZ, name, rotationY, 
 		
 		self.rotationSound = new THREE.Audio(self.gameObject.audioListener);
 		self.rotationSound.load("sounds/rotating_robot.wav");
-		self.rotationSound.setRefDistance(20);
+		self.rotationSound.setRefDistance(50);
 		self.rotationSound.setLoop(true);
 		self.rotationSound.setRolloffFactor(2);
 		self.enemy.add(self.rotationSound);
+		
+		self.enemy.receiveShadow = true;
+		self.enemy.castShadow = true;
 	    
 	    self.gameObject.scene.add(self.enemy);
 	    
@@ -101,7 +104,7 @@ function EnemyOne(gameObject, positionX, positionY, positionZ, name, rotationY, 
 														Math.pow(self.enemy.position.z - objectToAttack.position.z, 2)));
 		
 		if (distanceBetweenObjects < self.attackRadius) {
-			audio_sfx_enemy_attack.play();
+//			audio_sfx_enemy_attack.play();
 			return true;
 		} else return false;
 	}
@@ -113,6 +116,16 @@ function EnemyOne(gameObject, positionX, positionY, positionZ, name, rotationY, 
 			attackSound.setRefDistance(60);
 			attackSound.setLoop(false);
 			attackSound.setRolloffFactor(2);
+			self.enemy.add(attackSound);
+			
+			self.rotationSound.source.stop();
+			
+			self.rotationSound = new THREE.Audio(self.gameObject.audioListener);
+			self.rotationSound.load("sounds/rotating_robot_attacking.wav");
+			self.rotationSound.setRefDistance(50);
+			self.rotationSound.setLoop(true);
+			self.rotationSound.setRolloffFactor(2);
+			self.enemy.add(self.rotationSound);
 			
 			self.isAttacking = true;
 		}
@@ -141,7 +154,19 @@ function EnemyOne(gameObject, positionX, positionY, positionZ, name, rotationY, 
 		// Temporary: just rotate
 		self.enemy.__dirtyRotation = true;
 		self.enemy.rotateY(0.01);
-		self.isAttacking = false;
+		
+		if (self.isAttacking) {
+			self.isAttacking = false;
+
+			self.rotationSound.source.stop();
+			
+			self.rotationSound = new THREE.Audio(self.gameObject.audioListener);
+			self.rotationSound.load("sounds/rotating_robot.wav");
+			self.rotationSound.setRefDistance(50);
+			self.rotationSound.setLoop(true);
+			self.rotationSound.setRolloffFactor(2);
+			self.enemy.add(self.rotationSound);
+		}
 	}
 }
 
