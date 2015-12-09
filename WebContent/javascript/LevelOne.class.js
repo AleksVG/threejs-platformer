@@ -2,6 +2,7 @@ function LevelOne(gameObject) {
 	this.name = "LevelOne";
 	this.gameObject = gameObject;
 	this.platform = new Platform(gameObject);
+	this.fallCatcher = new FallCatcher(gameObject);
 	this.playerAvatar = new PlayerAvatar(gameObject, 0, 60, 0);
 	this.skybox = new Skybox(gameObject, 0, 1000, 0);
 	this.tree = new Tree(gameObject);
@@ -81,6 +82,8 @@ function LevelOne(gameObject) {
 	    jsonLoader.load("models/levels/level_one/level_1_finish_pole_1.js", self.platform.createBasicPlatformObject);
 	    jsonLoader.load("models/levels/level_one/level_1_finish_pole_2.js", self.platform.createBasicPlatformObject);
 	    jsonLoader.load("models/levels/level_one/level_1_finish_flag.js", self.platform.createBasicPlatformObject);
+	    
+	    jsonLoader.load("models/levels/level_one/level_1_fall_catcher.js", self.fallCatcher.createFallCatcher);
 	    
 	    self.skybox.createBasicSkyboxObject();
 	    
