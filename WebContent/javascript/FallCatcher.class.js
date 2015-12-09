@@ -18,6 +18,8 @@ function FallCatcher(gameObject) {
 				self.gameObject.playerAvatar.damage(1);
 				console.log("working");
 			}
+			else
+				other_object.deactivate();
 		});
 	    
 	    self.gameObject.scene.add(mesh);

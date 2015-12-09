@@ -9,6 +9,7 @@ function GameObject(renderer) {
 	this.currentLevel = "notStarted";
 	this.currentLevelType = "";
 	this.levelKeys = [];
+	this.totalNumberOfKeys = 0;
 	this.showMenu = true;
 	
 	this.lives = 3;
