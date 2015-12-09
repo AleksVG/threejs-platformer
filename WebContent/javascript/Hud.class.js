@@ -8,15 +8,18 @@ function Hud(gameObject) {
 	this.initialize = function() {	
 		self.camera = new THREE.OrthographicCamera( 0, window.innerWidth, window.innerHeight, 0, 0, 10 );
 	
+		for (i = 1; i <= self.gameObject.lives; i++) { 
+			texture = "models/player_heart.png"
+			createSprite("heart_" + i, 50, 44, 1.0, false, 1.0, 0xffffff, texture, 50 * (i - 1));
+		 }
+		
 
-		texture = "models/player_heart.png"
-		createSprite("heart_01", 525, 441, 1.0, false, 1.0, 0xffffff, texture, 0);
 		//setSpriteVisibility("heart_01", false); 
 	}
 	
 	
 	function setSpriteVisibility(name, visibility) {
-		var object = self.gameObject.sceneMenu.getObjectByName( name, true );
+		var object = self.gameObject.sceneHud.getObjectByName( name, true );
 		object.visible = visibility;
 	}
 	
@@ -44,8 +47,8 @@ function Hud(gameObject) {
 		
 		sprite.name = name;
 		
-		sprite.position.set(window.innerWidth / 2, (window.innerHeight / 2) + position, -10);
+		sprite.position.set(window.innerWidth-scalex, (window.innerHeight) - scaley - position, -10);
 
-		self.gameObject.sceneMenu.add(sprite);
+		self.gameObject.sceneHud.add(sprite);
 	}
 }

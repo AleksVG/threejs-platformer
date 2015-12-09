@@ -10,6 +10,10 @@ function GameObject(renderer) {
 	this.levelKeys = [];
 	this.showMenu = true;
 	
+	this.lives = 3;
+	this.keys = 0;
+	
+	
 	var self = this;
 	
 	self.background_music = audio_music_theme_overworld;
@@ -129,6 +133,8 @@ function GameObject(renderer) {
 	    
 	    if (self.showMenu == true)
 	    	self.renderer.render(self.sceneMenu, self.menu.camera);
+	    
+	    self.renderer.render(self.sceneHud, self.hud.camera);
 	}
 
 	this.calculateElapsed = function(currentTime) {

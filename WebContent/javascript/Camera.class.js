@@ -97,7 +97,7 @@ function Camera(gameObject) {
 
 		if ( self.gameObject.showMenu ) {
 			if ( (event.keyCode == self.gameObject.Key.UP_ARROW) || (event.keyCode == self.gameObject.Key.DOWN_ARROW) || (event.keyCode == self.gameObject.Key.ENTER) || (event.keyCode == self.gameObject.Key.SPACEBAR) ) {
-				self.gameObject.menu.test(event.keyCode);
+				self.gameObject.menu.sendKeys(event.keyCode);
 			}
 		} else {
 			self.gameObject.currentlyPressedKeys[event.keyCode] = true;
