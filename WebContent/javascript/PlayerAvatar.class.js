@@ -177,9 +177,9 @@ function PlayerAvatar(gameObject, positionX, positionY, positionZ) {
 	}
 	
 	this.die = function() {
-		self.gameObject.lives = self.gameObject.lives - 1;
+		self.gameObject.lives -= 1;
 		audio_sfx_player_die.play();
-		self.gameObject.hud.updateLives();
+		self.gameObject.hud.update();
 		self.playerAvatar.setDamping(0, 0);
 		self.playerAvatar.setAngularFactor(new THREE.Vector3(1, 1, 1));
 		self.playerAvatar.setAngularVelocity(new THREE.Vector3(100, 100, 100));

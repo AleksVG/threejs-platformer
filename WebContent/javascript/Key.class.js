@@ -58,6 +58,8 @@ function Key(gameObject, positionX, positionY, positionZ, name) {
 				self.gameObject.scene.remove(self.key);
 				self.gameObject.levelKeys[self.name] = true;
 				self.gameObject.totalNumberOfKeys += 1;
+				self.gameObject.keys += 1;
+				self.gameObject.hud.update();
 				audio_sfx_key_take.play();
 				console.log("key picked up: " + self.gameObject.levelKeys[self.name]);
 			}
