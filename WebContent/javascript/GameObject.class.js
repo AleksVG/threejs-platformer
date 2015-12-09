@@ -13,7 +13,7 @@ function GameObject(renderer) {
 	
 	this.lives = 3;
 	this.keys = 0;
-	
+	this.graphicDetails = true;
 	
 	var self = this;
 	
