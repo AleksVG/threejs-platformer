@@ -107,7 +107,7 @@ function Camera(gameObject) {
 			}
 		}
 		
-		if (event.keyCode == self.gameObject.Key.ESCAPE) {
+		if ( (event.keyCode == self.gameObject.Key.ESCAPE) && (self.gameObject.newGame == false) ) {
 			if (self.gameObject.showMenu) {
 				self.gameObject.background_music.play();
 				audio_music_theme_menu.pause();
