@@ -8,6 +8,7 @@ function FallCatcher(gameObject) {
 	    
 	    mesh.type = "fall_catcher";
 	    mesh._physijs.collision_flags = 4;
+	    mesh.visible = false;
 	    
 	    self.gameObject.correctFor3dsMaxRotation(mesh);
 
