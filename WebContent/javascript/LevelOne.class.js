@@ -4,7 +4,7 @@ function LevelOne(gameObject) {
 	this.platform = new Platform(gameObject);
 	this.fallCatcher = new FallCatcher(gameObject);
 	this.playerAvatar = new PlayerAvatar(gameObject, 0, 60, 0);
-	this.skybox = new Skybox(gameObject, 0, 1000, 0);
+	this.skybox = new Skybox(gameObject, 0, 1000, 0, "blue_sky");
 	this.tree = new Tree(gameObject);
 	this.enemyOne_1 = new EnemyOne(gameObject, -570, 50, 205, "enemyOne_1", 90, 0, 50);
 	this.enemyOne_2 = new EnemyOne(gameObject, -570, 50, 655, "enemyOne_2", 90, 85, 35);

@@ -1,9 +1,10 @@
-function Skybox(gameObject, positionX, positionY, positionZ) {
+function Skybox(gameObject, positionX, positionY, positionZ, skyboxType) {
 	this.gameObject = gameObject;
 	this.positionX = positionX;
 	this.positionY = positionY;
 	this.positionZ = positionZ;
 	this.scale = 1;
+	this.skyboxType = skyboxType;
 	
 	var self = this;
 	
@@ -17,7 +18,11 @@ function Skybox(gameObject, positionX, positionY, positionZ) {
 	}
 	
 	self.createBottom = function() {
-		var texture = THREE.ImageUtils.loadTexture("models/skyboxes/blue_sky/skybox_bottom.png");
+		if (self.skyboxType == "blue_sky")
+			var texture = THREE.ImageUtils.loadTexture("models/skyboxes/blue_sky/skybox_bottom.png");
+		else if (self.skyboxType == "sunset")
+			var texture = THREE.ImageUtils.loadTexture("models/skyboxes/sunset/skybox_sunset_bottom.png");
+		
 		var material = new THREE.MeshBasicMaterial();
 		material.map = texture;
 		material.fog = false;
@@ -31,7 +36,11 @@ function Skybox(gameObject, positionX, positionY, positionZ) {
 	}
 	
 	self.createTop = function() {
-		var texture = THREE.ImageUtils.loadTexture("models/skyboxes/blue_sky/skybox_top.png");
+		if (self.skyboxType == "blue_sky")
+			var texture = THREE.ImageUtils.loadTexture("models/skyboxes/blue_sky/skybox_top.png");
+		else if (self.skyboxType == "sunset")
+			var texture = THREE.ImageUtils.loadTexture("models/skyboxes/sunset/skybox_sunset_top.png");
+		
 		var material = new THREE.MeshBasicMaterial();
 		material.map = texture;
 		material.fog = false;
@@ -45,7 +54,11 @@ function Skybox(gameObject, positionX, positionY, positionZ) {
 	}
 
 	self.createWallOne = function() {
-		var texture = THREE.ImageUtils.loadTexture("models/skyboxes/blue_sky/skybox_wall_1.png");
+		if (self.skyboxType == "blue_sky")
+			var texture = THREE.ImageUtils.loadTexture("models/skyboxes/blue_sky/skybox_wall_1.png");
+		else if (self.skyboxType == "sunset")
+			var texture = THREE.ImageUtils.loadTexture("models/skyboxes/sunset/skybox_sunset_wall_1.png");
+		
 		var material = new THREE.MeshBasicMaterial();
 		material.map = texture;
 		material.fog = false;
@@ -59,7 +72,11 @@ function Skybox(gameObject, positionX, positionY, positionZ) {
 	}
 	
 	self.createWallTwo = function() {
-		var texture = THREE.ImageUtils.loadTexture("models/skyboxes/blue_sky/skybox_wall_2.png");
+		if (self.skyboxType == "blue_sky")
+			var texture = THREE.ImageUtils.loadTexture("models/skyboxes/blue_sky/skybox_wall_2.png");
+		else if (self.skyboxType == "sunset")
+			var texture = THREE.ImageUtils.loadTexture("models/skyboxes/sunset/skybox_sunset_wall_4.png");
+		
 		var material = new THREE.MeshBasicMaterial();
 		material.map = texture;
 		material.fog = false;
@@ -73,7 +90,11 @@ function Skybox(gameObject, positionX, positionY, positionZ) {
 	}
 	
 	self.createWallThree = function() {
-		var texture = THREE.ImageUtils.loadTexture("models/skyboxes/blue_sky/skybox_wall_3.png");
+		if (self.skyboxType == "blue_sky")
+			var texture = THREE.ImageUtils.loadTexture("models/skyboxes/blue_sky/skybox_wall_3.png");
+		else if (self.skyboxType == "sunset")
+			var texture = THREE.ImageUtils.loadTexture("models/skyboxes/sunset/skybox_sunset_wall_3.png");
+		
 		var material = new THREE.MeshBasicMaterial();
 		material.map = texture;
 		material.fog = false;
@@ -87,7 +108,11 @@ function Skybox(gameObject, positionX, positionY, positionZ) {
 	}
 	
 	self.createWallFour = function() {
-		var texture = THREE.ImageUtils.loadTexture("models/skyboxes/blue_sky/skybox_wall_4.png");
+		if (self.skyboxType == "blue_sky")
+			var texture = THREE.ImageUtils.loadTexture("models/skyboxes/blue_sky/skybox_wall_4.png");
+		else if (self.skyboxType == "sunset")
+			var texture = THREE.ImageUtils.loadTexture("models/skyboxes/sunset/skybox_sunset_wall_2.png");
+		
 		var material = new THREE.MeshBasicMaterial();
 		material.map = texture;
 		material.fog = false;

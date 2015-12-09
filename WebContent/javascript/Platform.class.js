@@ -64,13 +64,10 @@ function Platform(gameObject) {
 	    mesh.castShadow = true;
 
 	    mesh.addEventListener('collision', function(other_object, relative_velocity, relative_rotation, contact_normal) {
-			if (other_object.name == "playerAvatar" && !self.gameObject.playerAvatar.onGround) {
-				if (self.gameObject.playerAvatar.getBottomCollisionPointY() > (mesh.boundingBox.max.y - 3)) {
-					self.platformFall(mesh);
-					console.log("onGround");
-					self.gameObject.playerAvatar.onGround = true;
-					self.gameObject.playerAvatar.setDamping(0.98, 1.0);
-				}
+			if (other_object.name == "playerAvatar") {
+				self.gameObject.playerAvatar.onGround = true;
+				self.gameObject.playerAvatar.setDamping(0.98, 1.0);
+				self.platformFall(mesh);
 			}
 			else if (other_object.type == "platform") {
 				self.gameObject.scene.remove(mesh);
