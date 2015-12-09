@@ -17,7 +17,7 @@ function GameObject(renderer) {
 	
 	var self = this;
 	
-	self.background_music = audio_music_theme_overworld;
+	self.background_music = audio_music_theme_menu;
 	
 	this.loadLevel = function(level) {
 		if (self.currentLevel != "notStarted")
@@ -42,7 +42,6 @@ function GameObject(renderer) {
 		case self.Level.Overworld:
 			self.background_music.pause();
 			self.background_music = audio_music_theme_overworld;
-			self.background_music.play();
 			self.background_music.element.volume = 0.05;
 			self.currentLevel = new Overworld(self);
 			self.currentLevelType = self.Level.Overworld;
@@ -51,7 +50,6 @@ function GameObject(renderer) {
 			self.background_music.pause();
 			self.background_music = audio_music_theme_level1;
 			self.background_music.element.volume = 0.05;
-			self.background_music.play();
 			self.currentLevel = new LevelOne(self);
 			self.currentLevelType = self.Level.One;
 			createParticles(5, true, 1, false, true, 0xffffff);
@@ -59,8 +57,7 @@ function GameObject(renderer) {
 		case self.Level.Two:
 			self.background_music.pause();
 			self.background_music = audio_music_theme_level2;
-			self.background_music.element.volume = 0.05;
-			self.background_music.play();
+			self.background_music.element.volume = 0.05;;
 			self.currentLevel = new LevelTwo(self);
 			self.currentLevelType = self.Level.Two;
 			break;
@@ -73,6 +70,10 @@ function GameObject(renderer) {
 			self.currentLevelType = self.Level.TestLevel;
 			break;
 		}
+		
+		if (self.showMenu == false)
+			self.background_music.play(); else audio_music_theme_menu.play();
+		
 		self.currentLevel.startLevel();
 	}
 	

@@ -114,7 +114,7 @@ function Menu(gameObject) {
 				
 				self.gameObject.sceneMenu.traverse( function( node ) {		    
 				    if ( (node instanceof THREE.Sprite) && (node.name == oldSelectedItemName) )  {
-				    	texture = self.MenuList[newSelectedItemNumber].btn;
+				    	texture = self.MenuList[oldSelectedItemNumber].btn;
 				        node.material = createSpriteMaterial(node.name, false, 1.0, 0xffffff, texture);
 				    	setSpriteVisibility(node.name, true);
 				    }
