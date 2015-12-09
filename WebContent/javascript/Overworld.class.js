@@ -1,6 +1,7 @@
 function Overworld(gameObject) {
 	this.gameObject = gameObject;
 	this.platform = new Platform(gameObject);
+	this.fallCatcher = new FallCatcher(gameObject);
 	this.playerAvatar = new PlayerAvatar(gameObject, 0, 20, -200);
 	this.levelOneTeleporter = new Teleporter(gameObject, gameObject.Level.One, 0, 0, 0);
 	this.levelTwoTeleporter = new Teleporter(gameObject, gameObject.Level.Two, 0, 0, 0);
@@ -46,6 +47,8 @@ function Overworld(gameObject) {
 	    jsonLoader.load("models/levels/overworld/Overworld_access_level_3.js", self.levelOneTeleporter.createTeleporter);
 	    jsonLoader.load("models/levels/overworld/Overworld_access_level_4.js", self.levelOneTeleporter.createTeleporter);
 	    jsonLoader.load("models/levels/overworld/Overworld_access_level_5.js", self.levelOneTeleporter.createTeleporter);
+
+	    jsonLoader.load("models/levels/overworld/Overworld_fall_catcher.js", self.fallCatcher.createFallCatcher);
 	    
 	    self.playerAvatar.createAvatar();
 	}

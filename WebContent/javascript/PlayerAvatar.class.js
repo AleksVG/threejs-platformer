@@ -117,7 +117,7 @@ function PlayerAvatar(gameObject, positionX, positionY, positionZ) {
 		
 		attachMethods();
 		self.playerAvatar.lastGroundY = 0;
-		self.playerAvatar.lives = 1;
+		self.playerAvatar.lives = 3;
 	}
 	
 	this.cameraFollow = function() {
@@ -140,6 +140,7 @@ function PlayerAvatar(gameObject, positionX, positionY, positionZ) {
 		self.playerAvatar.jump = jump;
 		self.playerAvatar.die = self.die;
 		self.playerAvatar.getBottomCollisionPointY = self.getBottomCollisionPointY;
+		self.playerAvatar.damage = self.damage;
 		
 		self.gameObject.playerInputEnabled = true;
 	}
@@ -342,6 +343,13 @@ function PlayerAvatar(gameObject, positionX, positionY, positionZ) {
 			self.playerAvatar.setDamping(0, 1);
 			self.playerAvatar.onGround = false;
 		}
+	}
+	
+	this.damage = function(damageTaken) {
+		self.playerAvatar.lives -= damageTaken;
+		
+		if (self.gameObject.playerAvatar.lives <= 0)
+			self.gameObject.playerAvatar.die();
 	}
 }
 

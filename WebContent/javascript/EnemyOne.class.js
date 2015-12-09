@@ -75,10 +75,10 @@ function EnemyOne(gameObject, positionX, positionY, positionZ, name, rotationY, 
 					audio_sfx_enemy_die.play();
 				}
 				else {
-					self.gameObject.playerAvatar.lives -= 1;
-					
-					if (self.gameObject.playerAvatar.lives <= 0)
-						self.gameObject.playerAvatar.die();
+					self.gameObject.playerAvatar.damage(1);
+					self.enemy.applyCentralImpulse(new THREE.Vector3(-contact_normal.x * 800, 0, -contact_normal.z * 800));
+					self.gameObject.playerAvatar.applyCentralImpulse(new THREE.Vector3(contact_normal.x * 800, 0, contact_normal.z * 800));
+					// play damage sound?
 				}
 			}
 
