@@ -1,3 +1,5 @@
+// EnemyTwo uses this class to fire balls. 
+
 function Projectile(gameObject, parentEnemy) {
 	this.gameObject = gameObject;
 	this.parentEnemy = parentEnemy;

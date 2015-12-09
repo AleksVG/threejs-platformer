@@ -19,6 +19,7 @@ function Tree(gameObject) {
 	    soundSource.position.y = mesh.boundingBox.center().y;
 	    soundSource.position.z = mesh.boundingBox.center().z;
 	    
+	    // Simulate bird chittering in trees
 	    var birdSound = new THREE.Audio(self.gameObject.audioListener);
 	    birdSound.load("sounds/birds-chirping.wav");
 	    birdSound.setRefDistance(30);

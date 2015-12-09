@@ -76,6 +76,7 @@ function PlayerAvatar(gameObject, positionX, positionY, positionZ) {
 	    self.baseBox.visible = false;
 	}
 
+	// Attach the loaded parts together into a cohesive avatar
 	function attachPartsTogether() {		
 		var pivotArmLeft = new THREE.Object3D();
 		var pivotArmRight = new THREE.Object3D();
@@ -120,14 +121,12 @@ function PlayerAvatar(gameObject, positionX, positionY, positionZ) {
 		self.playerAvatar.lives = 3;
 	}
 	
-	this.cameraFollow = function() {
-		
-	}
-	
+	// Used for collision detection. E.g if this point is above enemy.top.y, then player is above enemy, and we kill enemy
 	this.getBottomCollisionPointY = function() {
 		return self.playerAvatar.position.y - 8.5;
 	}
 
+	// Attach methods onto the Object3D playerAvatar mesh
 	function attachMethods() {
 		self.playerAvatar.addEventListener('collision', function(other_object, relative_velocity, relative_rotation, contact_normal) {
 
@@ -176,6 +175,7 @@ function PlayerAvatar(gameObject, positionX, positionY, positionZ) {
 		}, 1);
 	}
 	
+	// Called when player has no lives left
 	this.die = function() {
 		self.gameObject.lives -= 1;
 		audio_sfx_player_die.play();
@@ -189,7 +189,7 @@ function PlayerAvatar(gameObject, positionX, positionY, positionZ) {
 		}, 2000);
 	}
 
-
+	// Rotate player towards movement direction / speed vector
 	function rotateTowardsMovingDirection(vector) {
 		var lookAt = new THREE.Vector3();
 		lookAt.addVectors(vector, self.playerAvatar.position);	
@@ -197,6 +197,7 @@ function PlayerAvatar(gameObject, positionX, positionY, positionZ) {
 		self.playerAvatar.__dirtyRotation = true;
 	}
 
+	// Animate walk sequence
 	function animate() {		
 		self.animationStep += self.animationStepSpeed;
 		
@@ -345,6 +346,7 @@ function PlayerAvatar(gameObject, positionX, positionY, positionZ) {
 		}
 	}
 	
+	// Called when player takes damage. E.g hit by enemy, of falling off a platform
 	this.damage = function(damageTaken) {
 		self.playerAvatar.lives -= damageTaken;
 		

@@ -1,15 +1,19 @@
+// GameObject is the object representing the game. Every other object is given an
+// instance of GameObject. Through that instance, they can manipulate most aspects
+// of the game. GameObject operates as the glue between all other parts of the game.
+
 function GameObject(renderer) {
 	this.renderer = renderer;
 		
-	this.currentlyPressedKeys = {};
+	this.currentlyPressedKeys = {}; 
 	this.Key = {A: 65, S: 83, D: 68, W: 87, SPACEBAR: 32, ESCAPE: 27, ENTER: 13, LEFT_ARROW: 37, RIGHT_ARROW: 38, UP_ARROW: 38, DOWN_ARROW: 40 };
 	this.Level = {Overworld: "Overworld", One: "One", Two: "Two", Three: "Three", TestLevel: "TestLevel"};
 	this.lastTime = 0;
-	this.playerInputEnabled = false;
-	this.currentLevel = "notStarted";
-	this.currentLevelType = "";
-	this.levelKeys = [];
-	this.totalNumberOfKeys = 0;
+	this.playerInputEnabled = false; // if false, keyboard input does not affect player avatar
+	this.currentLevel = "notStarted"; // currentLevel holds the instance of the currently loaded level
+	this.currentLevelType = ""; // the level type of currentLevel. E.g this.Level.One, this.Level.Overworld
+	this.levelKeys = [];	// key objects inside the game world are stored in this array when they are picked up by player
+	this.totalNumberOfKeys = 0; // total number of keys the player has picked up
 	this.showMenu = true;
 	
 	this.lives = 3;
@@ -20,6 +24,8 @@ function GameObject(renderer) {
 	
 	self.background_music = audio_music_theme_menu;
 	
+	// loadLevel is called by teleporters, e.g. in Overworld when you walk onto level 1 teleporter, loadLevel is called
+	// with the argument Level.One
 	this.loadLevel = function(level) {
 		if (self.currentLevel != "notStarted")
 			self.currentLevel.deactivate();
@@ -79,6 +85,7 @@ function GameObject(renderer) {
 		self.currentLevel.startLevel();
 	}
 	
+	// Create "angle dust" particles in level 1
 	function createParticles(size, transparent, opacity, vertexColors, sizeAttenuation, color) {	
         var texture = THREE.ImageUtils.loadTexture("multimedia/firefly.png");
         var geom = new THREE.Geometry();
@@ -116,9 +123,6 @@ function GameObject(renderer) {
         vertices.forEach(function (v) {
             v.y = v.y - v.velocityY;
             v.x = v.x - v.velocityX;
-
-//            if (v.y <= 0) v.y = 60;
-//            if (v.x <= -20 || v.x >= 20) v.velocityX = v.velocityX * -1;
         });
 	}
 
@@ -184,6 +188,7 @@ function GameObject(renderer) {
 		}
 	}
 	
+	// In 3dsmax, the z and y axes are switched. This method corrects for that.
 	this.correctFor3dsMaxRotation = function(mesh) {
 	    var rotation = -90 * (Math.PI / 180);
 	    mesh.rotation.x = rotation;

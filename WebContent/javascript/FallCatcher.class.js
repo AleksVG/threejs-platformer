@@ -1,3 +1,5 @@
+// FallCatcher is an object below the levels which catches the player and other objects that falls off a platform
+
 function FallCatcher(gameObject) {
 	this.gameObject = gameObject;
 	
@@ -16,7 +18,6 @@ function FallCatcher(gameObject) {
 			if (other_object.name == "playerAvatar") {
 				self.gameObject.loadLevel(self.gameObject.currentLevelType);
 				self.gameObject.playerAvatar.damage(1);
-				console.log("working");
 			}
 			else
 				other_object.deactivate();

@@ -1,3 +1,6 @@
+// Key represents the collectable key objects inside the game world. The player must collect keys
+// to unlock new levels
+
 function Key(gameObject, positionX, positionY, positionZ, name) {
 	this.gameObject = gameObject;
 	this.positionX = positionX;

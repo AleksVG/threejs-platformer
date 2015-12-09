@@ -13,7 +13,6 @@ function Platform(gameObject) {
 	    mesh.boundingBox = new THREE.Box3().setFromObject(mesh);
 	    
 	    mesh.receiveShadow = true;
-	    //mesh.castShadow = true;
 
 	    mesh.addEventListener('collision', function(other_object, relative_velocity, relative_rotation, contact_normal) {
 			if (other_object.name == "playerAvatar" && !self.gameObject.playerAvatar.onGround) {
@@ -38,7 +37,6 @@ function Platform(gameObject) {
 	    
 	    mesh.boundingBox = new THREE.Box3().setFromObject(mesh);
 	    mesh.receiveShadow = true;
-	    //mesh.castShadow = true;
 
 	    mesh.addEventListener('collision', function(other_object, relative_velocity, relative_rotation, contact_normal) {
 			if (other_object.name == "playerAvatar" && !self.gameObject.playerAvatar.onGround) {

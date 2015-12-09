@@ -7,11 +7,6 @@ function Teleporter(gameObject, levelToLoad, positionX, positionY, positionZ) {
 	
 	var self = this;
 	
-	/*
-	 * Should be able to place teleporter where we want, and maybe have some particle effect 
-	 * on the teleporter.
-	 */
-	
 	this.createTeleporter = function(geometry, materials) {
 	    var mesh = new Physijs.ConvexMesh(geometry, new THREE.MeshFaceMaterial(materials), 0);
 	    

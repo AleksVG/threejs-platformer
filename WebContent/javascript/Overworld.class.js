@@ -17,6 +17,7 @@ function Overworld(gameObject) {
 	
 	var self = this;
 	
+	// Called by gameObject in loadLevel method
 	Overworld.prototype.startLevel = function() {
 	    self.setupLights();
 		self.loadModels();
@@ -79,10 +80,6 @@ function Overworld(gameObject) {
 	}
 
 	this.setupLights = function() {
-//		var ambientLight = new THREE.AmbientLight(0x222222);
-//		self.gameObject.scene.add(ambientLight);
-
-		
 		self.spotLight1 = self.createSpotLight(50, 47.5, -218, 3, 0xff984d);
 		self.spotLight2 = self.createSpotLight(50, 47.5, -140, 3, 0xff984d);
 		self.spotLight3 = self.createSpotLight(50, 47.5, -65, 3, 0xff984d);
@@ -127,6 +124,8 @@ function Overworld(gameObject) {
 		
 		return spotLight;
 	}
+	
+	// The following methods are used to simulate flickering of lights.
 	
 	this.posterLightTimeout = function() {
 		if (self.isActive) {

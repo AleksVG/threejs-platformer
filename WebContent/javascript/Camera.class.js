@@ -2,9 +2,9 @@ function Camera(gameObject) {
 	this.gameObject = gameObject;
 	
 	this.isMouseDown = false;
-	this.rotateStart = new THREE.Vector2();
-	this.rotateEnd = new THREE.Vector2();
-	this.rotateDelta = new THREE.Vector2();
+	this.rotateStart = new THREE.Vector2(); // mouse position when left mouse button is pressed
+	this.rotateEnd = new THREE.Vector2();	// mouse position when left mouse button is released
+	this.rotateDelta = new THREE.Vector2(); // difference between previous two
 	this.cameraX = 100;
 	this.cameraZ = 0;
 	this.cameraY = 30;
