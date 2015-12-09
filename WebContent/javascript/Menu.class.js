@@ -3,12 +3,13 @@ function Menu(gameObject) {
 	
 	var self = this;
 	
-	this.MenuListSize = 4;
+	this.MenuListSize = 5;
 	this.MenuList = {
-			1:	{name: "btn_newgame", value: 1, btn: "multimedia/menu_overworld_1.png", btnselected: "multimedia/menu_overworld_2.png"},
-			2:	{name: "btn_settings", value: 2, btn: "multimedia/menu_restart_1.png", btnselected: "multimedia/menu_restart_2.png"},
-			3:	{name: "btn_controls", value: 3, btn: "multimedia/menu_settings_1.png", btnselected: "multimedia/menu_settings_2.png"}, 
-			4:	{name: "btn_about", value: 4, btn: "multimedia/menu_controls_1.png", btnselected: "multimedia/menu_controls_2.png"}
+			1:	{name: "btn_overworld", value: 1, btn: "multimedia/menu_overworld_1.png", btnselected: "multimedia/menu_overworld_2.png"},
+			2:	{name: "btn_restart", value: 2, btn: "multimedia/menu_restart_1.png", btnselected: "multimedia/menu_restart_2.png"},
+			3:	{name: "btn_settings", value: 3, btn: "multimedia/menu_settings_1.png", btnselected: "multimedia/menu_settings_2.png"}, 
+			4:	{name: "btn_controls", value: 4, btn: "multimedia/menu_controls_1.png", btnselected: "multimedia/menu_controls_2.png"},
+			5:	{name: "btn_about", value: 5, btn: "multimedia/menu_about_1.png", btnselected: "multimedia/menu_about_2.png"}
 	};
 	
 	this.initialize = function() {	
@@ -26,21 +27,21 @@ function Menu(gameObject) {
 				var texture = sprite.btn;
 			}
 		
-			createSprite(sprite.name, 284, 54, 1.0, false, 1.0, 0xffffff, texture, 200 +  (-1 * i * 70)); 
+			createSprite(sprite.name, 269, 52, 1.0, false, 1.0, 0xffffff, texture, 200 +  (-1 * i * 70)); 
 		 }
 		
 		self.menu_window = false;
 		
-		texture = "models/menu_background.png"
-		createSprite("window_settings", 586, 374, 1.0, false, 1.0, 0xffffff, texture, 0);
+		texture = "multimedia/menu_window_settings1.png"
+		createSprite("window_settings", 940, 503, 1.0, false, 1.0, 0xffffff, texture, 0);
 		setSpriteVisibility("window_settings", false);
 		
-		texture = "models/controls_explanation.png"
-		createSprite("window_controls", 600, 413, 1.0, false, 1.0, 0xffffff, texture, 0);
+		texture = "multimedia/menu_window_controls.png"
+		createSprite("window_controls", 940, 503, 1.0, false, 1.0, 0xffffff, texture, 0);
 		setSpriteVisibility("window_controls", false);
 		
-		texture = "models/menu_background.png"
-		createSprite("window_about", 586, 374, 1.0, false, 1.0, 0xffffff, texture, 0);
+		texture = "multimedia/menu_window_about.png"
+		createSprite("window_about", 940, 503, 1.0, false, 1.0, 0xffffff, texture, 0);
 		setSpriteVisibility("window_about", false);
 	}
 	
@@ -52,7 +53,8 @@ function Menu(gameObject) {
 			
 
 			if (self.menu_window == false) {
-				setSpriteVisibility("btn_newgame", false);
+				setSpriteVisibility("btn_overworld", false);
+				setSpriteVisibility("btn_restart", false);
 				setSpriteVisibility("btn_settings", false);
 				setSpriteVisibility("btn_controls", false);
 				setSpriteVisibility("btn_about", false);
@@ -62,22 +64,23 @@ function Menu(gameObject) {
 						self.gameObject.showMenu = false;
 						self.gameObject.loadLevel(self.gameObject.Level.One);
 						break;
-					case 2: 
+					case 3: 
 						self.menu_window = true;
 						setSpriteVisibility("window_settings", true);
 						break;
-					case 3: 
+					case 4: 
 						self.menu_window = true;
 						setSpriteVisibility("window_controls", true);
 						break;
-					case 4: 
+					case 5: 
 						self.menu_window = true;
 						setSpriteVisibility("window_about", true);
 						break;
 				}
 			} else {
 				self.menu_window = false;
-				setSpriteVisibility("btn_newgame", true);
+				setSpriteVisibility("btn_overworld", true);
+				setSpriteVisibility("btn_restart", true);
 				setSpriteVisibility("btn_settings", true);
 				setSpriteVisibility("btn_controls", true);
 				setSpriteVisibility("btn_about", true);
@@ -114,7 +117,7 @@ function Menu(gameObject) {
 				
 				self.gameObject.sceneMenu.traverse( function( node ) {		    
 				    if ( (node instanceof THREE.Sprite) && (node.name == oldSelectedItemName) )  {
-				    	texture = self.MenuList[newSelectedItemNumber].btn;
+				    	texture = self.MenuList[oldSelectedItemNumber].btn;
 				        node.material = createSpriteMaterial(node.name, false, 1.0, 0xffffff, texture);
 				    	setSpriteVisibility(node.name, true);
 				    }
