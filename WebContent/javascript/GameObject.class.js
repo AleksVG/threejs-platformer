@@ -7,6 +7,7 @@ function GameObject(renderer) {
 	this.lastTime = 0;
 	this.playerInputEnabled = false;
 	this.currentLevel = "notStarted";
+	this.currentLevelType = "";
 	this.levelKeys = [];
 	this.showMenu = true;
 	
@@ -44,6 +45,7 @@ function GameObject(renderer) {
 			self.background_music.play();
 			self.background_music.element.volume = 0.05;
 			self.currentLevel = new Overworld(self);
+			self.currentLevelType = self.Level.Overworld;
 			break;
 		case self.Level.One:
 			self.background_music.pause();
@@ -51,6 +53,7 @@ function GameObject(renderer) {
 			self.background_music.element.volume = 0.05;
 			self.background_music.play();
 			self.currentLevel = new LevelOne(self);
+			self.currentLevelType = self.Level.One;
 			createParticles(5, true, 1, false, true, 0xffffff);
 			break;
 		case self.Level.Two:
@@ -59,12 +62,15 @@ function GameObject(renderer) {
 			self.background_music.element.volume = 0.05;
 			self.background_music.play();
 			self.currentLevel = new LevelTwo(self);
+			self.currentLevelType = self.Level.Two;
 			break;
 		case self.Level.TestLevel:
 			self.currentLevel = new TestLevel(self);
+			self.currentLevelType = self.Level.TestLevel;
 			break;
 		default:
 			self.currentLevel = new TestLevel(self);
+			self.currentLevelType = self.Level.TestLevel;
 			break;
 		}
 		self.currentLevel.startLevel();
