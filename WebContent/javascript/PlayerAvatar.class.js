@@ -326,7 +326,7 @@ function PlayerAvatar(gameObject, positionX, positionY, positionZ) {
 		
 		if (holdingSpace && self.playerAvatar.onGround) {
 			self.playerAvatar.onMovingPlatform = false;
-			
+			console.log(self.playerAvatar.position.x + ", " + self.playerAvatar.position.y + ", " + self.playerAvatar.position.z);
 			if (self.cameraSmoothingFinished)
 				self.playerAvatar.lastGroundY = self.playerAvatar.position.y;
 			

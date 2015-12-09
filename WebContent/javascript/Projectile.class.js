@@ -9,6 +9,20 @@ function Projectile(gameObject, parentEnemy) {
 		
 		var ball = new Physijs.SphereMesh(new THREE.SphereGeometry(2.5, 60, 60), ballMaterial, 0);
 		
+		ball.addEventListener('collision', function(other_object, relative_velocity, relative_rotation, contact_normal) {
+			if (other_object.name == "playerAvatar") {
+				self.gameObject.playerAvatar.damage(1);
+				self.gameObject.scene.remove(ball);
+				clearInterval(self.updateInterval);
+			}
+			else {
+				self.gameObject.scene.remove(ball);
+				clearInterval(self.updateInterval);
+			}
+			
+
+		});
+		
 //		audio_sfx_cannon.play();
 		var cannonSound = new THREE.Audio(self.gameObject.audioListener);
 		cannonSound.load("sounds/cannon_amplified.wav");
