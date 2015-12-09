@@ -14,7 +14,7 @@ function GameObject(renderer) {
 	
 	this.lives = 3;
 	this.keys = 0;
-	
+	this.graphicDetails = true;
 	
 	var self = this;
 	
@@ -52,6 +52,7 @@ function GameObject(renderer) {
 			self.background_music = audio_music_theme_level1;
 			self.background_music.element.volume = 0.05;
 			self.currentLevel = new LevelOne(self);
+			if (self.graphicDetails) 
 			self.currentLevelType = self.Level.One;
 			createParticles(5, true, 1, false, true, 0xffffff);
 			break;
@@ -126,7 +127,7 @@ function GameObject(renderer) {
 	    var elapsed = self.calculateElapsed(currentTime);
 	    	
 	    self.camera.update();
-	    if (self.currentLevel.name == "LevelOne")
+	    if (( self.currentLevel.name == "LevelOne") && (self.graphicDetails) )
 	    	updateParticles();
 	    
 	    if (self.usingDebugMode)

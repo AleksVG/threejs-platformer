@@ -32,7 +32,7 @@ function Menu(gameObject) {
 		
 		self.menu_window = false;
 		
-		texture = "multimedia/menu_window_settings1.png"
+		texture = self.gameObject.graphicDetails ? "multimedia/menu_window_settings1.png" : "multimedia/menu_window_settings2.png";
 		createSprite("window_settings", 940, 503, 1.0, false, 1.0, 0xffffff, texture, 0);
 		setSpriteVisibility("window_settings", false);
 		
@@ -48,9 +48,17 @@ function Menu(gameObject) {
 	
 	this.sendKeys = function (keyCode) {			
 
+		if ( keyCode == self.gameObject.Key.SPACEBAR ) {
+	    	self.gameObject.graphicDetails = !self.gameObject.graphicDetails;
+	    	self.gameObject.renderer.shadowMapEnabled = self.gameObject.graphicDetail;
+	    	texture = self.gameObject.graphicDetails ? "multimedia/menu_window_settings1.png" : "multimedia/menu_window_settings2.png";
+	    	var object = self.gameObject.sceneMenu.getObjectByName( "window_settings", true );
+	    	object.material = createSpriteMaterial("window_settings", false, 1.0, 0xffffff, texture);
+	        return;
+		}
+		
 		if ( keyCode == self.gameObject.Key.ENTER ) {
 			audio_sfx_menu_enter.play();
-			
 
 			if (self.menu_window == false) {
 				setSpriteVisibility("btn_overworld", false);
