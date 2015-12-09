@@ -68,9 +68,20 @@ function Menu(gameObject) {
 				setSpriteVisibility("btn_about", false);
 				switch (self.selectedMenuItem) {
 					case 1: 
-						audio_music_theme_menu.pause();
-						self.gameObject.showMenu = false;
-						self.gameObject.loadLevel(self.gameObject.Level.One);
+						if ( (self.gameObject.newGame == true) || (self.gameObject.currentLevel == self.gameObject.level.Overworld) ) {
+							audio_music_theme_menu.pause();
+							self.gameObject.background_music.play();
+							self.gameObject.showMenu = false;
+							self.gameObject.newGame = false;
+						} else {
+							audio_music_theme_menu.pause();
+							self.gameObject.showMenu = false;
+							self.gameObject.loadLevel(self.gameObject.Level.Overworld);
+						}
+						break;
+					case 2: 
+						self.menu_window = true;
+						setSpriteVisibility("window_settings", true);
 						break;
 					case 3: 
 						self.menu_window = true;

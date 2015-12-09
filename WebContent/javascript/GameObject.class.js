@@ -16,6 +16,7 @@ function GameObject(renderer) {
 	this.totalNumberOfKeys = 0; // total number of keys the player has picked up
 	this.showMenu = true;
 	
+	this.newGame = true;
 	this.lives = 3;
 	this.keys = 0;
 	this.graphicDetails = true;
