@@ -118,4 +118,37 @@ function Platform(gameObject) {
 	    
 	    self.gameObject.scene.add(mesh);
 	}
+	
+	this.createCustomPlatform = function(positionX, positionY, positionZ, width, length, height, texture, repeatS, repeatT) {
+		var texture = THREE.ImageUtils.loadTexture(texture);
+		var material = new THREE.MeshPhongMaterial();
+		material.map = texture;
+		material.map.wrapS = THREE.RepeatWrapping;
+		material.map.wrapT = THREE.RepeatWrapping;
+		material.map.repeat.set(repeatS, repeatT);
+		material.fog = true;
+		
+		var geometry = new THREE.BoxGeometry(length, height, width);
+		
+		var mesh = new Physijs.ConvexMesh(geometry, material, 0);
+		
+		mesh.position.set(positionX, positionY, positionZ);
+		
+	    mesh.boundingBox = new THREE.Box3().setFromObject(mesh);
+	    
+	    mesh.receiveShadow = true;
+		
+		mesh.addEventListener('collision', function(other_object, relative_velocity, relative_rotation, contact_normal) {
+			if (other_object.name == "playerAvatar" && !self.gameObject.playerAvatar.onGround) {
+				if (self.gameObject.playerAvatar.getBottomCollisionPointY() > (mesh.boundingBox.max.y - 2.5)) {
+					self.gameObject.playerAvatar.onGround = true;
+					self.gameObject.playerAvatar.setDamping(0.98, 1.0);
+					
+					self.gameObject.playerAvatar.onMovingPlatform = false;
+				}
+			}
+		});
+		
+		self.gameObject.scene.add(mesh);
+	}
 }
