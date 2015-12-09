@@ -55,6 +55,8 @@ function TestLevel(gameObject) {
 	
 	function setupCamera() {
 		self.gameObject.camera.initialize();
+		self.gameObject.menu.initialize();
+		self.gameObject.hud.initialize();
 	}
 
 	function setupLights() {

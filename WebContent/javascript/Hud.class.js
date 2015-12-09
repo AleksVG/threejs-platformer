@@ -12,9 +12,32 @@ function Hud(gameObject) {
 			texture = "models/player_heart.png"
 			createSprite("heart_" + i, 50, 44, 1.0, false, 1.0, 0xffffff, texture, 50 * (i - 1));
 		 }
+	}
+	
+	this.updateLives = function() {	
+		if (self.gameObject.lives == 3) {
+			setSpriteVisibility("heart_1", true);
+			setSpriteVisibility("heart_2", true);
+			setSpriteVisibility("heart_3", true);
+		}
 		
-
-		//setSpriteVisibility("heart_01", false); 
+		if (self.gameObject.lives == 2) {
+			setSpriteVisibility("heart_1", true);
+			setSpriteVisibility("heart_2", true);
+			setSpriteVisibility("heart_3", false);
+		}
+		
+		if (self.gameObject.lives == 1) {
+			setSpriteVisibility("heart_1", true);
+			setSpriteVisibility("heart_2", false);
+			setSpriteVisibility("heart_3", false);
+		}
+		
+		if (self.gameObject.lives == 0) {
+			setSpriteVisibility("heart_1", false);
+			setSpriteVisibility("heart_2", false);
+			setSpriteVisibility("heart_3", false);
+		}
 	}
 	
 	

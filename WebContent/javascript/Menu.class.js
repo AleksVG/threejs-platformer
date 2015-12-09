@@ -60,7 +60,7 @@ function Menu(gameObject) {
 					case 1: 
 						audio_music_theme_menu.pause();
 						self.gameObject.showMenu = false;
-						self.gameObject.loadLevel(self.gameObject.Level.LevelOne);
+						self.gameObject.loadLevel(self.gameObject.Level.One);
 						break;
 					case 2: 
 						self.menu_window = true;
