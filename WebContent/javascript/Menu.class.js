@@ -68,7 +68,7 @@ function Menu(gameObject) {
 				setSpriteVisibility("btn_about", false);
 				switch (self.selectedMenuItem) {
 					case 1: 
-						if ( (self.gameObject.newGame == true) || (self.gameObject.currentLevel == self.gameObject.level.Overworld) ) {
+						if ( (self.gameObject.newGame == true) || (self.gameObject.currentLevel == self.gameObject.Level.Overworld) ) {
 							audio_music_theme_menu.pause();
 							self.gameObject.background_music.play();
 							self.gameObject.showMenu = false;

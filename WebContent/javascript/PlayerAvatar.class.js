@@ -118,7 +118,7 @@ function PlayerAvatar(gameObject, positionX, positionY, positionZ) {
 		
 		attachMethods();
 		self.playerAvatar.lastGroundY = 0;
-		self.playerAvatar.lives = 3;
+		self.playerAvatar.lives = 1;
 	}
 	
 	// Used for collision detection. E.g if this point is above enemy.top.y, then player is above enemy, and we kill enemy
