@@ -26,6 +26,7 @@ function Tree(gameObject) {
 	    birdSound.setRolloffFactor(2);
 	    
 	    soundSource.add(birdSound);
+	    self.gameObject.currentLevel.levelSounds.push(birdSound);
 	    
 	    self.gameObject.scene.add(soundSource);
 	    self.gameObject.scene.add(mesh);

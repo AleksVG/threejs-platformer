@@ -96,6 +96,7 @@ function EnemyOne(gameObject, positionX, positionY, positionZ, name, rotationY, 
 	
 	this.deactivate = function() {
 		clearInterval(self.activateInterval);
+		self.rotationSound.source.stop();
 	}
 
 	function isWithinRange(objectToAttack) {

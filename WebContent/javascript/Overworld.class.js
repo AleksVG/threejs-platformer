@@ -13,6 +13,7 @@ function Overworld(gameObject) {
 	this.streetLight4WaitTime = 7000;
 	this.streetLightRandomTime = 20000;
 	this.streetLightMinimumTime = 8000;
+	this.isActive = false;
 	
 	var self = this;
 	
@@ -37,10 +38,7 @@ function Overworld(gameObject) {
 	    jsonLoader.load("models/levels/overworld/Overworld_street_light_4.js", self.platform.createBasicObject);
 	    jsonLoader.load("models/levels/overworld/Overworld_street_light_5.js", self.platform.createBasicObject);
 
-	    jsonLoader.load("models/levels/overworld/Overworld_prison_1.js", self.platform.createBasicObject);
-	    jsonLoader.load("models/levels/overworld/Overworld_prison_2.js", self.platform.createBasicObject);
-	    jsonLoader.load("models/levels/overworld/Overworld_prison_3.js", self.platform.createBasicObject);
-	    jsonLoader.load("models/levels/overworld/Overworld_prison_4.js", self.platform.createBasicObject);
+	    self.loadPrisons(jsonLoader);
 	    
 	    jsonLoader.load("models/levels/overworld/Overworld_access_level_1.js", self.levelOneTeleporter.createTeleporter);
 	    jsonLoader.load("models/levels/overworld/Overworld_access_level_2.js", self.levelTwoTeleporter.createTeleporter);
@@ -53,9 +51,26 @@ function Overworld(gameObject) {
 	    self.playerAvatar.createAvatar();
 	}
 	
-	this.activate = function() {}
+	this.loadPrisons = function(jsonLoader) {
+		if (self.gameObject.totalNumberOfKeys < 2) {
+			console.log("loading prison 1. Number of keys: " + self.gameObject.totalNumberOfKeys);
+		    jsonLoader.load("models/levels/overworld/Overworld_prison_1.js", self.platform.createBasicObject);
+		}
+		
+		if (self.gameObject.totalNumberOfKeys < 4)
+		    jsonLoader.load("models/levels/overworld/Overworld_prison_2.js", self.platform.createBasicObject);
+
+	    jsonLoader.load("models/levels/overworld/Overworld_prison_3.js", self.platform.createBasicObject);
+	    jsonLoader.load("models/levels/overworld/Overworld_prison_4.js", self.platform.createBasicObject);
+	}
 	
-	this.deactivate = function() {}
+	this.activate = function() {
+		self.isActive = true;
+	}
+	
+	this.deactivate = function() {
+		self.isActive = false;
+	}
 	
 	this.setupCamera = function() {
 		self.gameObject.camera.initialize();
@@ -114,108 +129,114 @@ function Overworld(gameObject) {
 	}
 	
 	this.posterLightTimeout = function() {
-		setTimeout(function() {
-			self.posterPointLight.intensity = 3;
-			
-			self.posterLightWaitTime = (Math.random() * 2500) + 700;
-			
+		if (self.isActive) {
 			setTimeout(function() {
-				self.posterPointLight.intensity = 0;
+				self.posterPointLight.intensity = 3;
 				
-				setTimeout(self.posterLightTimeout, self.posterLightWaitTime);
-			}, 200);
-		}, self.posterLightWaitTime);
+				self.posterLightWaitTime = (Math.random() * 2500) + 700;
+				
+				setTimeout(function() {
+					self.posterPointLight.intensity = 0;
+					
+					setTimeout(self.posterLightTimeout, self.posterLightWaitTime);
+				}, 200);
+			}, self.posterLightWaitTime);
+		}
 	}
 	
 	this.streetLight1Flicker = function() {
-		console.log("flicker1");
-		setTimeout(function() {
-			self.spotLight1.intensity = 0;
-			
-			self.streetLight1WaitTime = (Math.random() * self.streetLightRandomTime) + self.streetLightMinimumTime;
-			
-			setTimeout(function() {
-				self.spotLight1.intensity = 3;
-			}, 100);
-			
+		if (self.isActive) {
 			setTimeout(function() {
 				self.spotLight1.intensity = 0;
-			}, 500);
-			
-			setTimeout(function() {
-				self.spotLight1.intensity = 3;
 				
-				setTimeout(self.streetLight1Flicker, self.streetLight1WaitTime);
-			}, 700);
-		}, self.streetLightWaitTime);
+				self.streetLight1WaitTime = (Math.random() * self.streetLightRandomTime) + self.streetLightMinimumTime;
+				
+				setTimeout(function() {
+					self.spotLight1.intensity = 3;
+				}, 100);
+				
+				setTimeout(function() {
+					self.spotLight1.intensity = 0;
+				}, 500);
+				
+				setTimeout(function() {
+					self.spotLight1.intensity = 3;
+					
+					setTimeout(self.streetLight1Flicker, self.streetLight1WaitTime);
+				}, 700);
+			}, self.streetLightWaitTime);
+		}
 	}
 	
 	this.streetLight2Flicker = function() {
-		console.log("flicker2");
-		setTimeout(function() {
-			self.spotLight2.intensity = 0;
-			
-			self.streetLight2WaitTime = (Math.random() * self.streetLightRandomTime) + self.streetLightMinimumTime;
-			
-			setTimeout(function() {
-				self.spotLight2.intensity = 3;
-			}, 100);
-			
+		if (self.isActive) {
 			setTimeout(function() {
 				self.spotLight2.intensity = 0;
-			}, 500);
-			
-			setTimeout(function() {
-				self.spotLight2.intensity = 3;
 				
-				setTimeout(self.streetLight2Flicker, self.streetLight2WaitTime);
-			}, 700);
-		}, self.streetLightWaitTime);
+				self.streetLight2WaitTime = (Math.random() * self.streetLightRandomTime) + self.streetLightMinimumTime;
+				
+				setTimeout(function() {
+					self.spotLight2.intensity = 3;
+				}, 100);
+				
+				setTimeout(function() {
+					self.spotLight2.intensity = 0;
+				}, 500);
+				
+				setTimeout(function() {
+					self.spotLight2.intensity = 3;
+					
+					setTimeout(self.streetLight2Flicker, self.streetLight2WaitTime);
+				}, 700);
+			}, self.streetLightWaitTime);
+		}
 	}
 	
 	this.streetLight3Flicker = function() {
-		console.log("flicker3");
-		setTimeout(function() {
-			self.spotLight3.intensity = 0;
-			
-			self.streetLight3WaitTime = (Math.random() * self.streetLightRandomTime) + self.streetLightMinimumTime;
-			
-			setTimeout(function() {
-				self.spotLight3.intensity = 3;
-			}, 100);
-			
+		if (self.isActive) {
 			setTimeout(function() {
 				self.spotLight3.intensity = 0;
-			}, 500);
-			
-			setTimeout(function() {
-				self.spotLight3.intensity = 3;
 				
-				setTimeout(self.streetLight3Flicker, self.streetLight3WaitTime);
-			}, 700);
-		}, self.streetLightWaitTime);
+				self.streetLight3WaitTime = (Math.random() * self.streetLightRandomTime) + self.streetLightMinimumTime;
+				
+				setTimeout(function() {
+					self.spotLight3.intensity = 3;
+				}, 100);
+				
+				setTimeout(function() {
+					self.spotLight3.intensity = 0;
+				}, 500);
+				
+				setTimeout(function() {
+					self.spotLight3.intensity = 3;
+					
+					setTimeout(self.streetLight3Flicker, self.streetLight3WaitTime);
+				}, 700);
+			}, self.streetLightWaitTime);
+		}
 	}
 	
 	this.streetLight4Flicker = function() {
-		console.log("flicker4");
-		setTimeout(function() {
-			self.spotLight4.intensity = 0;
-			
-			self.streetLight3WaitTime = (Math.random() * self.streetLightRandomTime) + self.streetLightMinimumTime;
-			
-			setTimeout(function() {
-				self.spotLight4.intensity = 3;
-			}, 100);
-			
+		if (self.isActive) {
 			setTimeout(function() {
 				self.spotLight4.intensity = 0;
-			}, 500);
-			
-			setTimeout(function() {
-				self.spotLight4.intensity = 3;
 				
-				setTimeout(self.streetLight4Flicker, self.streetLight3WaitTime);
-			}, 700);
-		}, self.streetLightWaitTime);
+				self.streetLight3WaitTime = (Math.random() * self.streetLightRandomTime) + self.streetLightMinimumTime;
+				
+				setTimeout(function() {
+					self.spotLight4.intensity = 3;
+				}, 100);
+				
+				setTimeout(function() {
+					self.spotLight4.intensity = 0;
+				}, 500);
+				
+				setTimeout(function() {
+					self.spotLight4.intensity = 3;
+					
+					setTimeout(self.streetLight4Flicker, self.streetLight3WaitTime);
+				}, 700);
+			}, self.streetLightWaitTime);
+		}
 	}
 }

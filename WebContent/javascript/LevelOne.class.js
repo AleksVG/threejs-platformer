@@ -12,6 +12,7 @@ function LevelOne(gameObject) {
 	this.key_1 = new Key(gameObject, -570, 65, 400, "level_1_key_1");
 	this.key_2 = new Key(gameObject, -820, -140, 820, "level_1_key_2");
 	this.levelOneFinishTeleporter = new Teleporter(gameObject, gameObject.Level.Overworld, 0, 0, 0);
+	this.levelSounds = [];
 	
 	this.enemies = [this.enemyOne_1, this.enemyOne_2, this.enemyTwo_1];
 	
@@ -95,24 +96,47 @@ function LevelOne(gameObject) {
 	    
 	    self.playerAvatar.createAvatar();
 	    
-	    self.key_1.createKey();
-	    self.key_2.createKey();
+	    self.createKeys();
+	}
+	
+	this.createKeys = function() {
+	    if (!self.gameObject.levelKeys["level_1_key_1"])
+	    	self.key_1.createKey();
+	    
+	    if (!self.gameObject.levelKeys["level_1_key_2"])
+	    	self.key_2.createKey();
 	}
 	
 	this.activate = function() {
-		for (i = 0; i < self.enemies.length; i++)
+		for (var i = 0; i < self.enemies.length; i++)
 			self.enemies[i].activate();
 		
-		self.key_1.activate();
-		self.key_2.activate();
+		self.activateKeys();
+	}
+	
+	this.activateKeys = function() {
+	    if (!self.gameObject.levelKeys["level_1_key_1"])
+	    	self.key_1.activate();
+	    if (!self.gameObject.levelKeys["level_1_key_2"])
+	    	self.key_2.activate();
 	}
 	
 	this.deactivate = function() {
-		for (i = 0; i < self.enemies.length; i++)
+		for (var i = 0; i < self.enemies.length; i++)
 			self.enemies[i].deactivate();
 		
-		self.key_1.deactivate();
-		self.key_2.deactivate();
+		self.deactivateKeys();
+		
+		for (var i = 0; i < self.levelSounds.length; i++) {
+			self.levelSounds[i].source.stop();
+		}
+	}
+	
+	this.deactivateKeys = function() {
+	    if (!self.gameObject.levelKeys["level_1_key_1"])
+			self.key_1.deactivate();
+	    if (!self.gameObject.levelKeys["level_1_key_2"])
+			self.key_2.deactivate();
 	}
 	
 	this.setupCamera = function() {
