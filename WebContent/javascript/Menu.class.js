@@ -5,10 +5,10 @@ function Menu(gameObject) {
 	
 	this.MenuListSize = 4;
 	this.MenuList = {
-			1:	{name: "btn_newgame", value: 1, btn: "models/menu_btn_newgame.png", btnselected: "models/menu_btn_newgame_selected.png"},
-			2:	{name: "btn_settings", value: 2, btn: "models/menu_btn_newgame.png", btnselected: "models/menu_btn_newgame_selected.png"},
-			3:	{name: "btn_controls", value: 3, btn: "models/menu_btn_newgame.png", btnselected: "models/menu_btn_newgame_selected.png"}, 
-			4:	{name: "btn_about", value: 4, btn: "models/menu_btn_newgame.png", btnselected: "models/menu_btn_newgame_selected.png"}
+			1:	{name: "btn_newgame", value: 1, btn: "multimedia/menu_overworld_1.png", btnselected: "multimedia/menu_overworld_2.png"},
+			2:	{name: "btn_settings", value: 2, btn: "multimedia/menu_restart_1.png", btnselected: "multimedia/menu_restart_2.png"},
+			3:	{name: "btn_controls", value: 3, btn: "multimedia/menu_settings_1.png", btnselected: "multimedia/menu_settings_2.png"}, 
+			4:	{name: "btn_about", value: 4, btn: "multimedia/menu_controls_1.png", btnselected: "multimedia/menu_controls_2.png"}
 	};
 	
 	this.initialize = function() {	
@@ -26,7 +26,7 @@ function Menu(gameObject) {
 				var texture = sprite.btn;
 			}
 		
-			createSprite(sprite.name, 476, 90, 1.0, false, 1.0, 0xffffff, texture, 200 +  (-1 * i * 100)); 
+			createSprite(sprite.name, 284, 54, 1.0, false, 1.0, 0xffffff, texture, 200 +  (-1 * i * 70)); 
 		 }
 		
 		self.menu_window = false;
